@@ -1,0 +1,39 @@
+{
+  "name": "Eduactivity",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config=config/webpack.dev.js",
+    "dev": "nodemon --watch config --watch src/server src/server/main.js",
+    "build": "webpack --config=config/webpack.dev.js",
+    "babel": "babel node_modules/core-js/fn/promise src/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/register": "^7.6.2",
+    "webpack": "^4.41.2"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/runtime": "^7.6.3",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.0.6",
+    "babel-polyfill": "^6.26.0",
+    "css-loader": "^3.2.0",
+    "express": "^4.17.1",
+    "extract-loader": "^3.1.0",
+    "file-loader": "^4.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.0.0",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-dev-server": "^3.9.0",
+    "webpack-hot-middleware": "^2.25.0"
+  }
+}
