@@ -1,9 +1,9 @@
 require("babel-runtime/regenerator");
+require("@babel/register");
 require("webpack-hot-middleware/client?reload=true");
-
 require("./main.css");
-var index = require("./index.html");
-debugger
+require("./index.html");
+require('./app')
 
 var a = async (args) => {
   const {
