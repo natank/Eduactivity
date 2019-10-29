@@ -9,17 +9,29 @@ const compiler = webpack(config);
 
 const webpackDevMiddleware = require("webpack-dev-middleware")(
   compiler,
-  config.devServer
+  {
+    writeToDisk: (filePath) => {
+      // instruct the dev server to the home.html file to disk 
+      // so that the route handler will be able to read it 
+      return /home\.html$/.test(filePath);
+    }
+  }
+  // config.devServer,
+
 )
 const webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
 
 server.use(webpackDevMiddleware);
 server.use(webpackHotMiddleware);
 
-const staticMiddleware = express.static("dist");
+const staticMiddleware = express.static("/dist");
 server.use(staticMiddleware);
 
-debugger
+server.get('', (req, res, next) => {
+  debugger
+  res.sendFile(__dirname + '/dist/home.html')
+})
+
 server.listen(8080, () => {
   console.log("Server is listening")
 })

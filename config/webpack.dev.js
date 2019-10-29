@@ -10,7 +10,7 @@ module.exports = {
   mode: "development",
   output: {
     filename: "[name]-bundle.js",
-    path: path.resolve(__dirname, "../dist"),
+    path: path.resolve(__dirname, "../src/server/dist"),
     publicPath: "/"
   },
   devServer: {
@@ -25,47 +25,54 @@ module.exports = {
   devtool: "source-map",
   module: {
     rules: [{
-        test: /\.js$/,
-        use: [{
-          loader: "babel-loader"
-        }],
-        exclude: /node_modules/
+      test: /\.js$/,
+      use: [{
+        loader: "babel-loader"
+      }],
+      exclude: /node_modules/
+    },
+    {
+      test: /\.css$/,
+      use: [{
+        loader: "style-loader"
       },
       {
-        test: /\.css$/,
-        use: [{
-            loader: "style-loader"
-          },
-          {
-            loader: "css-loader"
-          }
-        ]
-      },
-      {
-        test: /\.html$/,
-        use: [{
-          loader: "html-loader",
-          options: {
-            attrs: ["img:src"]
-          }
-        }]
-      },
-      {
-        test: /\.(jpg|gif|png)$/,
-        use: [{
-          loader: "file-loader",
-          options: {
-            name: "images/[name]-[hash:8].[ext]"
-          }
-        }]
+        loader: "css-loader"
       }
+      ]
+    },
+    {
+      test: /\.html$/,
+      use: [{
+        loader: "html-loader",
+        options: {
+          attrs: ["img:src"]
+        }
+      }]
+    },
+    {
+      test: /\.pug$/,
+      use: [{
+        loader: "pug-loader"
+      }]
+    },
+    {
+      test: /\.(jpg|gif|png)$/,
+      use: [{
+        loader: "file-loader",
+        options: {
+          name: "images/[name]-[hash:8].[ext]"
+        }
+      }]
+    }
     ]
   },
   plugins: [
-    
+
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
-      template: "./src/index.html"
+      template: "./src/index.pug",
+      filename: "home.html"
     })
   ]
 }
