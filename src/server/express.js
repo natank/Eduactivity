@@ -13,7 +13,7 @@ const webpackDevMiddleware = require("webpack-dev-middleware")(
     writeToDisk: (filePath) => {
       // instruct the dev server to the home.html file to disk 
       // so that the route handler will be able to read it 
-      return /home\.html$/.test(filePath);
+      return /.+\.html$/.test(filePath);
     }
   }
   // config.devServer,
