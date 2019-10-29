@@ -5,8 +5,8 @@ const server = express();
 
 const webpack = require("webpack");
 const config = require("../../config/webpack.dev.js");
-const compiler = webpack(config);
 
+const compiler = webpack(config);
 const webpackDevMiddleware = require("webpack-dev-middleware")(
   compiler,
   {
@@ -20,17 +20,19 @@ const webpackDevMiddleware = require("webpack-dev-middleware")(
 
 )
 const webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
+const shopRoutes = require("./routes/shop");
+const adminRoutes = require("./routes/admin")
+
 
 server.use(webpackDevMiddleware);
 server.use(webpackHotMiddleware);
-
+server.use
 const staticMiddleware = express.static("/dist");
 server.use(staticMiddleware);
 
-server.get('', (req, res, next) => {
-  debugger
-  res.sendFile(__dirname + '/dist/home.html')
-})
+server.use('/', shopRoutes)
+server.use('/admin', adminRoutes)
+
 
 server.listen(8080, () => {
   console.log("Server is listening")
