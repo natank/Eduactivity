@@ -1,6 +1,7 @@
 const express = require('express'),
-  router = express.Router();
+  router = express.Router(),
+  adminController = require('');
 
-router.get('/', (req, res, next) => res.send("<h1>Hi from admin</h1>"))
+router.get('/product')
 
 module.exports = router
