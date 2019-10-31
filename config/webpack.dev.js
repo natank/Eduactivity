@@ -68,11 +68,22 @@ module.exports = {
     ]
   },
   plugins: [
-
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
       template: "./src/index.pug",
       filename: "home.html"
+    }),
+    new HTMLWebpackPlugin({
+      template: "./src/server/views/admin/createProduct.pug",
+      filename: "createProduct.html"
+    }),
+    new HTMLWebpackPlugin({
+      template: "./src/server/views/admin/createTopic.pug",
+      filename: "createTopic.html"
+    }),
+    new HTMLWebpackPlugin({
+      template: "./src/server/views/admin/createCategory.pug",
+      filename: "createCategory.html"
     })
   ]
 }

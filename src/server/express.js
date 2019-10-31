@@ -1,7 +1,5 @@
 import express from "express";
-import path from "path";
 
-const server = express();
 
 const webpack = require("webpack");
 const config = require("../../config/webpack.dev.js");
@@ -16,20 +14,23 @@ const webpackDevMiddleware = require("webpack-dev-middleware")(
       return /.+\.html$/.test(filePath);
     }
   }
-  // config.devServer,
-
 )
+
 const webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
 const shopRoutes = require("./routes/shop");
 const adminRoutes = require("./routes/admin")
 
+const server = express();
+
+// server.set('view engine', 'pug')
 
 server.use(webpackDevMiddleware);
 server.use(webpackHotMiddleware);
-server.use
+
 const staticMiddleware = express.static("/dist");
 server.use(staticMiddleware);
 
+server.set
 server.use('/', shopRoutes)
 server.use('/admin', adminRoutes)
 
