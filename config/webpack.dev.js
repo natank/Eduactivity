@@ -1,11 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
 const HTMLWebpackPlugin = require("html-webpack-plugin")
-const chokidar = require('chokidar');
 
 module.exports = {
   entry: {
-    main: ["./src/main.js"]
+    main: ["./src/assets/main.js"]
   },
   mode: "development",
   output: {
@@ -70,20 +69,32 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
-      template: "./src/index.pug",
+      template: "./src/assets/index.pug",
       filename: "home.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/server/views/admin/createProduct.pug",
+      template: "./src/assets/views/admin/createProduct.pug",
       filename: "createProduct.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/server/views/admin/createTopic.pug",
+      template: "./src/assets/views/admin/createTopic.pug",
       filename: "createTopic.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/server/views/admin/createCategory.pug",
+      template: "./src/assets/views/admin/createCategory.pug",
       filename: "createCategory.html"
+    }),
+    new HTMLWebpackPlugin({
+      template: "./src/assets/views/admin/products.pug",
+      filename: "products.html"
+    }),
+    new HTMLWebpackPlugin({
+      template: "./src/assets/views/admin/categories.pug",
+      filename: "categories.html"
+    }),
+    new HTMLWebpackPlugin({
+      template: "./src/assets/views/admin/topics.pug",
+      filename: "topics.html"
     })
   ]
 }

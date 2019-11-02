@@ -1,5 +1,6 @@
 import express from "express";
-
+const mongoConnect = require('./util/database').mongoConnect;
+const MONGODB_URI = require('./util/database').dbURI;
 
 const webpack = require("webpack");
 const config = require("../../config/webpack.dev.js");
@@ -22,7 +23,7 @@ const adminRoutes = require("./routes/admin")
 
 const server = express();
 
-// server.set('view engine', 'pug')
+server.set('view engine', 'pug')
 
 server.use(webpackDevMiddleware);
 server.use(webpackHotMiddleware);
@@ -35,6 +36,9 @@ server.use('/', shopRoutes)
 server.use('/admin', adminRoutes)
 
 
-server.listen(8080, () => {
-  console.log("Server is listening")
-})
+const connect = (async function (server) {
+  await mongoConnect();
+  server.listen(8080, () => {
+    console.log("Server is listening")
+  })
+})(server)
