@@ -1,7 +1,7 @@
 import express from "express";
 const mongoConnect = require('./util/database').mongoConnect;
 const MONGODB_URI = require('./util/database').dbURI;
-
+const bodyParser = require('body-parser');
 const webpack = require("webpack");
 const config = require("../../config/webpack.dev.js");
 
@@ -22,6 +22,15 @@ const shopRoutes = require("./routes/shop");
 const adminRoutes = require("./routes/admin")
 
 const server = express();
+
+server.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
+server.use(
+  bodyParser.json()
+)
 
 server.set('view engine', 'pug')
 

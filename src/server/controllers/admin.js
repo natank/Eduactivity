@@ -56,9 +56,10 @@ exports.postDeleteTopic = function (req, res, next) {
 }
 
 exports.postCreateProduct = async function (req, res, next) {
+    const title = req.body.title;
     try {
         let product = await Product.create({
-            title: "Unicorn",
+            title: req.body.title,
             price: 1.2,
             description: "Lorem ipsum dolor sit amet",
             imageUrl: "http://image",

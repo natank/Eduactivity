@@ -1,13 +1,15 @@
 const formidable = require('formidable'),
-  path = require('path');
+  path = require('path'),
+  fs = require('fs');
+
 async function uploadProductFiles(req, res, next) {
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
     const oldPrintablePath = files.printable.path;
     const oldImageUrlPath = files.imageurl.path;
     const currentTime = getCurrentTime()
-    const newPrintableName = files.prinble.name + currentTime;
-    const newImageUrlName = files.imageUrl.name + currentTime;
+    const newPrintableName = files.printable.name + currentTime;
+    const newImageUrlName = files.imageurl.name + currentTime;
 
     const newPrintablePath = path.join(
       __dirname,
