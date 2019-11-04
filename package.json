@@ -1,5 +1,5 @@
 {
-  "name": "Eduactivity",
+  "name": "eduactivity",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,14 @@
     "build": "webpack --config=config/webpack.dev.js",
     "babel": "babel node_modules/core-js/fn/promise src/main.js"
   },
+  "browserslist": [
+    "defaults",
+    "not ie < 11",
+    "last 2 versions",
+    "> 1%",
+    "iOS 7",
+    "last 3 iOS versions"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",

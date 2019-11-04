@@ -70,9 +70,9 @@ module.exports = {
         {
           loader: 'postcss-loader',
           options: {
-            sourceMap: true,
+            sourceMap: isDevelopment,
             config: {
-              path: 'postcss.config.js'
+              path: './config/postcss.config.js'
             }
           }
         },
@@ -84,7 +84,7 @@ module.exports = {
         }
       ]
     },
-      
+
     {
       test: /\.html$/,
       use: [{
@@ -114,9 +114,9 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
-            filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-            chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
-          }),
+      filename: isDevelopment ? '[name].css' : '[name].[hash].css',
+      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
+    }),
     new HTMLWebpackPlugin({
       template: "./src/assets/index.pug",
       filename: "home.html"
@@ -146,7 +146,7 @@ module.exports = {
       filename: "topics.html"
     })
   ],
-  resolve:{
+  resolve: {
     extensions: ['.js', '.jsx', '.scss']
   }
 }
