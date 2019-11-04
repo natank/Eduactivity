@@ -1,6 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
 const HTMLWebpackPlugin = require("html-webpack-plugin")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const isDevelopment = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: {
@@ -41,6 +43,49 @@ module.exports = {
       ]
     },
     {
+      test: /\.module\.s(a|c)ss$/,
+      loader: [
+        isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+            sourceMap: isDevelopment
+          }
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: isDevelopment
+          }
+        }
+      ]
+    },
+    {
+      test: /\.s(a|c)ss$/,
+      exclude: /\.module.(s(a|c)ss)$/,
+      loader: [
+        isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
+        'css-loader',
+        {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true,
+            config: {
+              path: 'postcss.config.js'
+            }
+          }
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: isDevelopment
+          }
+        }
+      ]
+    },
+      
+    {
       test: /\.html$/,
       use: [{
         loader: "html-loader",
@@ -68,6 +113,10 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+            filename: isDevelopment ? '[name].css' : '[name].[hash].css',
+            chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
+          }),
     new HTMLWebpackPlugin({
       template: "./src/assets/index.pug",
       filename: "home.html"
@@ -96,5 +145,8 @@ module.exports = {
       template: "./src/assets/views/admin/topics.pug",
       filename: "topics.html"
     })
-  ]
+  ],
+  resolve:{
+    extensions: ['.js', '.jsx', '.scss']
+  }
 }

@@ -36,6 +36,8 @@ exports.getTopics = function (req, res, next) {
 }
 
 exports.getProducts = function (req, res, next) {
+    // get products from db
+    
     res.sendFile(path.resolve(__dirname, '../dist/products.html'))
 }
 
@@ -56,15 +58,15 @@ exports.postDeleteTopic = function (req, res, next) {
 }
 
 exports.postCreateProduct = async function (req, res, next) {
-    const title = req.body.title;
     try {
+        const {title, price, description, imageName, printableName, category} = req.fields;
         let product = await Product.create({
-            title: req.body.title,
-            price: 1.2,
-            description: "Lorem ipsum dolor sit amet",
-            imageUrl: "http://image",
-            fileUrl: "http://file",
-            category: mongoose.Types.ObjectId('4edd40c86762e0f123456789'),
+            title: title,
+            price: price,
+            description: description,
+            imageName: imageName,
+            printableName: printableName,
+            category: category,
             createdBy: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
         })
         res.redirect('/admin/createProduct')

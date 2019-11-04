@@ -9,7 +9,7 @@ async function uploadProductFiles(req, res, next) {
     const oldImageUrlPath = files.imageurl.path;
     const currentTime = getCurrentTime()
     const newPrintableName = files.printable.name + currentTime;
-    const newImageUrlName = files.imageurl.name + currentTime;
+    const newImageName = files.imageurl.name + currentTime;
 
     const newPrintablePath = path.join(
       __dirname,
@@ -20,13 +20,14 @@ async function uploadProductFiles(req, res, next) {
     const newImageUrlPath = path.join(
       __dirname,
       '../images',
-      newImageUrlName
+      newImageName
     )
     try {
       await renamePath(oldPrintablePath, newPrintablePath)
       await renamePath(oldImageUrlPath, newImageUrlPath)
-      req.printableName = newPrintablePath;
-      req.imageUrlName = newImageUrlName;
+      req.fields = fields;
+      req.fields.printableName = newPrintableName;
+      req.fields.imageName = newImageName;
       next()
     } catch (err) {
       next(err)

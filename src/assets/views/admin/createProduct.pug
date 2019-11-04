@@ -4,7 +4,7 @@ html
     title
       = htmlWebpackPlugin.options.title
     body
-      h1
+      p
         | Add Product
       form(action="/admin/createProduct" method='POST' enctype="multipart/form-data")
         div.row 
@@ -23,7 +23,7 @@ html
         div.row
           label(for='price')| Price 
           input(type='text', name='price')
-        select(name="Category" multiple).marg-bottom-1
+        select(name="category" multiple).marg-bottom-1
           option(value='' disabled selected) Choose Category
           option(value='holidays') Holidays
           option(value='birthday') Birthday

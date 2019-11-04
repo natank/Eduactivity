@@ -16,17 +16,17 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
-  imageUrl: {
+  imageName: {
     type: String,
     required: true
   },
-  fileUrl: {
+  printableName: {
     type: String,
     required: true
   },
   category: {
-    type: ObjectId,
-    ref: 'Category'
+    type: String,
+    required: true
   },
   createdBy: {
     type: ObjectId,
