@@ -6,29 +6,30 @@ html
     body
       p
         | Add Product
-      form(action="/admin/createProduct" method='POST' enctype="multipart/form-data")
-        div.row 
+      form(action="/admin/createProduct" method='POST' enctype="multipart/form-data").border.border-info
+        div.form-group
           label(for='title') 
             | Title: 
-          input(type='text', name='title')
-        div.row 
+          input(type='text', name='title', required).form-control
+        div.form-group
           label(for='printable') 
             | Printable File: 
-          input(type='file', name='printable', accept=".pdf")
-        div.row 
+          input(type='file', name='printable', accept=".pdf" required).form-control-file
+        div.form-group
           label(for='imageurl') 
             | Image: 
-          input(type='file', name='imageurl' accept="image/*")
+          input(type='file', name='imageurl' accept="image/*").form-control-file
 
-        div.row
+        div.form-group
           label(for='price')| Price 
-          input(type='text', name='price')
-        select(name="category" multiple).marg-bottom-1
-          option(value='' disabled selected) Choose Category
-          option(value='holidays') Holidays
-          option(value='birthday') Birthday
-          option(value='party') Party
-
-        div.row
-          textarea(class="textarea" rows='4', cols='50', name='description', placeholder="Product Description")
-        input(class='btn' type='submit', value='Submit')
+          input(type='text', name='price', required).form-control
+        div.form-group
+          label(for="category")
+          select(name="category" multiple).form-control
+            option(value='holidays') Holidays
+            option(value='birthday') Birthday
+            option(value='party') Party
+        div.form-group
+          label(for="description") Product Description
+          textarea(name='description', placeholder="Product Description", required).form-control
+        button(class='btn btn-info' type='submit', value='Submit') SUBMIT
