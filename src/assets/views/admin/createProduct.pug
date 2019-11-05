@@ -1,35 +1,32 @@
-doctype html
-html
-  head
-    title
-      = htmlWebpackPlugin.options.title
-    body
-      p
-        | Add Product
-      form(action="/admin/createProduct" method='POST' enctype="multipart/form-data").border.border-info
-        div.form-group
-          label(for='title') 
-            | Title: 
-          input(type='text', name='title', required).form-control
-        div.form-group
-          label(for='printable') 
-            | Printable File: 
-          input(type='file', name='printable', accept=".pdf" required).form-control-file
-        div.form-group
-          label(for='imageurl') 
-            | Image: 
-          input(type='file', name='imageurl' accept="image/*").form-control-file
+include ../includes/head
+body
+  include ../includes/header.pug
+  p
+    | Add Products
+  form(action="/admin/createProduct" method='POST' enctype="multipart/form-data").border.border-info
+    div.form-group
+      label(for='title') 
+        | Title: 
+      input(type='text', name='title', required).form-control
+    div.form-group
+      label(for='printable') 
+        | Printable File: 
+      input(type='file', name='printable', accept=".pdf" required).form-control-file
+    div.form-group
+      label(for='imageurl') 
+        | Image: 
+      input(type='file', name='imageurl' accept="image/*").form-control-file
 
-        div.form-group
-          label(for='price')| Price 
-          input(type='text', name='price', required).form-control
-        div.form-group
-          label(for="category")
-          select(name="category" multiple).form-control
-            option(value='holidays') Holidays
-            option(value='birthday') Birthday
-            option(value='party') Party
-        div.form-group
-          label(for="description") Product Description
-          textarea(name='description', placeholder="Product Description", required).form-control
-        button(class='btn btn-info' type='submit', value='Submit') SUBMIT
+    div.form-group
+      label(for='price')| Price 
+      input(type='text', name='price', required).form-control
+    div.form-group
+      label(for="category")
+      select(name="category" multiple).form-control
+        option(value='holidays') Holidays
+        option(value='birthday') Birthday
+        option(value='party') Party
+    div.form-group
+      label(for="description") Product Description
+      textarea(name='description', placeholder="Product Description", required).form-control
+    button(class='btn btn-info' type='submit', value='Submit') SUBMIT

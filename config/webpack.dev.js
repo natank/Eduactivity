@@ -144,7 +144,7 @@ module.exports = {
     new HTMLWebpackPlugin({
       template: "./src/assets/views/admin/topics.pug",
       filename: "topics.html"
-    })
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.scss']
