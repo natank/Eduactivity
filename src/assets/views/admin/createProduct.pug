@@ -1,9 +1,9 @@
-include ../includes/head
-body
-  include ../includes/header.pug
-  p
+extends ../templates/container.pug
+block content
+  include ../includes/header.pug 
+  h2.text-center.my-4
     | Add Products
-  form(action="/admin/createProduct" method='POST' enctype="multipart/form-data").border.border-info
+  form(action="/admin/createProduct" method='POST' enctype="multipart/form-data").border.border-info.w-75.align-self-center.p-4
     div.form-group
       label(for='title') 
         | Title: 
@@ -21,7 +21,7 @@ body
       label(for='price')| Price 
       input(type='text', name='price', required).form-control
     div.form-group
-      label(for="category")
+      label(for='category')| Select categories
       select(name="category" multiple).form-control
         option(value='holidays') Holidays
         option(value='birthday') Birthday

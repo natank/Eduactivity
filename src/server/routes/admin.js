@@ -3,6 +3,7 @@ const express = require('express'),
   adminController = require('../controllers/admin');
 const uploadFile = require('../middleware/uploadProductFiles')
 
+router.get('/', adminController.getDashboard);
 router.get('/createProduct', adminController.getCreateProduct);
 router.get('/createCategory', adminController.getCreateCategory);
 router.get('/createTopic', adminController.getCreateTopic);
