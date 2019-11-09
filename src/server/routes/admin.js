@@ -23,5 +23,7 @@ router.post('/createCategory', adminController.postCreateCategory);
 router.post('/editCategory', adminController.postEditCategory);
 router.post('/createTopic', adminController.postCreateTopic);
 router.post('/editTopic', adminController.postEditTopic);
+router.post('/filterTopics', adminController.postFilterTopics);
+router.post('/filterProducts', adminController.postFilterProducts);
 
 module.exports = router;

@@ -3,3 +3,26 @@ block content
   include ../includes/header.pug 
   h1.text-center.my-4
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
+  a.btn.btn-primary.btn-lg.mx-auto(href='/admin/createCategory', role='button') 
+    | Create Category
+  .categories.my-5
+    .category.card
+      img(src=require("../../images/xmas.png") alt="xmas")
+      .card-body
+        h5.card-title Holidays
+        p.class-text
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
+        a(href="/admin/category").btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
+          Edit
+        a(href="/admin/delete-category").btn.btn-outline-primary.btn-lg.btn-block Delete
+    .topic.card
+      img(src=require("../../images/xmas.png") alt="xmas")
+      .card-body
+        h5.card-title Birthday
+        p.class-text
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
+        a(href="/admin/topic").btn.btn-outline-primary.btn-large.btn-lg.btn-block.
+          Edit
+        a(href="/admin/delete-topic").btn.btn-outline-primary.btn-lg.btn-block Delete
+
+

@@ -8,14 +8,6 @@ const topicSchema = new Schema({
     type: String,
     required: true
   },
-  products: {
-    type: [{
-      type: ObjectId,
-      ref: 'Product',
-      required: true
-    }],
-    required: true
-  },
   description: {
     type: String,
     required: true

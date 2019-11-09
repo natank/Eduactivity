@@ -102,3 +102,10 @@ exports.postCreateTopic = function (req, res, next) {
 exports.postEditTopic = function (req, res, next) {
     res.redirect()
 }
+exports.postFilterTopics = function (req, res, next) {
+    res.redirect()
+}
+exports.postFilterProducts = function (req, res, next) {
+    res.redirect()
+}
+
