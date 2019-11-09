@@ -3,38 +3,31 @@
 
 
 body {
-  margin: 0;
-  //background-color: rgb(182, 100, 27);
-  // background: linear-gradient(to bottom, white, black);
-  background-color: $body-bg;
-  font-family: sans-serif;
+  font-family:'Roboto1', sans-serif;
 }
 
-.profile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  flex-flow: column;
-}
-
-img {
-  border-radius: 100%;
-  width: 300px;
-  box-shadow: 0 0 20px black;
-}
-
-h1 {
-  color: white;
-  font-size: 5em;
-  font-family: sans-serif;
-  text-shadow: 0 0 20px black;
-}
-
-.marg-bottom-1{
-  margin-bottom: 2rem
-}
 
 .navbar-brand {
   font-family: 'McLaren', cursive;
+}
+
+.categories, .topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px,1fr));
+  column-gap: 1rem;
+  row-gap: 2rem;
+  justify-items: center;
+  .card {
+    max-width: 350px
+  }
+}
+
+.dashboard{
+  &__options {
+    font-size: 1.5rem
+  }
+}
+
+.btn- {
+  max-width: 15rem;
 }

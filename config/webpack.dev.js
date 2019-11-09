@@ -118,7 +118,7 @@ module.exports = {
       chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets/index.pug",
+      template: "./src/assets//views/shop/home.pug",
       filename: "home.html"
     }),
     new HTMLWebpackPlugin({
@@ -145,6 +145,19 @@ module.exports = {
       template: "./src/assets/views/admin/topics.pug",
       filename: "topics.html"
     }),
+    new HTMLWebpackPlugin({
+      template: "./src/assets/views/admin/dashboard.pug",
+      filename: "dashboard.html"
+    }),
+    new HTMLWebpackPlugin({
+      template: "./src/assets/views/shop/topic.pug",
+      filename: "topic.html"
+    }),
+    new HTMLWebpackPlugin({
+      template: "./src/assets/views/shop/product.pug",
+      filename: "product.html"
+    }),
+
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.scss']

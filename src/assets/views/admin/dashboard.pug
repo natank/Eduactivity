@@ -1,0 +1,19 @@
+extends ../templates/container.pug
+block content
+  include ../includes/header.pug 
+  h1.text-center.my-4
+    | DIY PRINTABLES FOR HOLIDAYS & PARTIES
+
+  h2.text-center.mb-4  
+    | Dashboard
+  .dashboard__options.list-group.w-25.mx-auto.text-center
+    a.list-group-item.list-group-item-action(href='/admin/categories')
+      | Categories
+    a.list-group-item.list-group-item-action(href='/admin/topics')
+      | Topics
+    a.list-group-item.list-group-item-action(href='/admin/products')
+      | Products
+
+
+  include ../includes/footer.pug 
+

@@ -16,6 +16,10 @@ const topicSchema = new Schema({
     }],
     required: true
   },
+  description: {
+    type: String,
+    required: true
+  },
   category: {
     type: ObjectId,
     ref: 'Category'

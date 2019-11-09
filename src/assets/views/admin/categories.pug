@@ -1,10 +1,5 @@
-doctype html
-html
-    head
-        title
-            = htmlWebpackPlugin.options.title
-        body
-            .profile
-                img(src=require("../images/link.jpg"), alt="sdads")
-                h1
-                   | Categories
+extends ../templates/container.pug
+block content
+  include ../includes/header.pug 
+  h1.text-center.my-4
+    | DIY PRINTABLES FOR HOLIDAYS & PARTIES

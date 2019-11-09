@@ -1,0 +1,16 @@
+extends ../templates/container.pug
+block content
+  include ../includes/header.pug 
+  h1.text-center.my-4
+    | DIY PRINTABLES FOR HOLIDAYS & PARTIES
+
+  h2.text-center.mb-4  
+    | XMAS Maze
+  .product
+    .card(style='width: 33%;').mx-auto
+      img(src=require("../../images/maze.jpg"), alt="maze").card-img-top
+      .card-body.text-center
+        a.btn.btn-primary(href='#') Print Now
+
+  include ../includes/footer.pug 
+

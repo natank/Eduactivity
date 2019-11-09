@@ -7,6 +7,10 @@ import path from "path";
 import Product from '../models/Product';
 import mongoose from 'mongoose';
 
+
+exports.getDashboard = function (req, res, next) {
+    res.sendFile(path.resolve(__dirname, '../dist/dashboard.html'))
+}
 exports.getCreateProduct = function (req, res, next) {
     res.sendFile(path.resolve(__dirname, '../dist/createProduct.html'))
 }
@@ -37,7 +41,7 @@ exports.getTopics = function (req, res, next) {
 
 exports.getProducts = function (req, res, next) {
     // get products from db
-    
+
     res.sendFile(path.resolve(__dirname, '../dist/products.html'))
 }
 
@@ -59,7 +63,7 @@ exports.postDeleteTopic = function (req, res, next) {
 
 exports.postCreateProduct = async function (req, res, next) {
     try {
-        const {title, price, description, imageName, printableName, category} = req.fields;
+        const { title, price, description, imageName, printableName, category } = req.fields;
         let product = await Product.create({
             title: title,
             price: price,
