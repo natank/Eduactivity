@@ -10,9 +10,11 @@ router.get('/createTopic', adminController.getCreateTopic);
 router.get('/editProduct', adminController.getEditProduct);
 router.get('/editCategory', adminController.getEditCategory);
 router.get('/editTopic', adminController.getEditTopic);
+
 router.get('/topics', adminController.getTopics);
 router.get('/categories', adminController.getCategories);
 router.get('/products', adminController.getProducts);
+
 router.post('/deleteProduct', adminController.postDeleteProduct);
 router.post('/deleteCategory', adminController.postDeleteCategory);
 router.post('/deleteTopic', adminController.postDeleteTopic);

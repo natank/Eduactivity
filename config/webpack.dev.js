@@ -157,7 +157,6 @@ module.exports = {
       template: "./src/assets/views/shop/product.pug",
       filename: "product.html"
     }),
-
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.scss']

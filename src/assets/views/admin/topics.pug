@@ -5,6 +5,14 @@ block content
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
   a.btn.btn-primary.btn-lg.mx-auto(href='/admin/createTopic', role='button') 
     | Create Topic
+  form.w-25.mx-auto
+    div.form-group
+      label(for="categories") Filter by Category
+      select(name="categories" id="categories").form-control
+        option(value="BIRTHDAY") BIRTHDAY
+        option(value="PARTIES") PARTIES
+        option(value="EDUCATIONAL") EDUCATIONAL
+      input(type="submit").btn.btn-primary.mx-auto.d-block.mt-4
   .topics.my-5
     .topic.card
       img(src=require("../../images/xmas.png") alt="xmas")

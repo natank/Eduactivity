@@ -5,6 +5,8 @@
  */
 import path from "path";
 import Product from '../models/Product';
+import Topic from '../models/Topic';
+import Category from '../models/Category';
 import mongoose from 'mongoose';
 
 
@@ -73,7 +75,7 @@ exports.postCreateProduct = async function (req, res, next) {
             category: category,
             createdBy: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
         })
-        res.redirect('/admin/createProduct')
+        res.redirect('/admin/products')
         console.log(product)
     } catch (err) {
         next(err)
@@ -84,11 +86,16 @@ exports.postCreateProduct = async function (req, res, next) {
 exports.postEditProduct = async function (req, res, next) {
     const id = mongoose.Types.ObjectId('4edd40c86762e0fb12000003');
     const result = await Product.update({ _id: id }, {})
-    res.redirect('/product')
+    res.redirect('/admin/products')
 }
 
-exports.postCreateCategory = function (req, res, next) {
-    res.redirect()
+exports.postCreateCategory = async function (req, res, next) {
+    const { title } = { ...req.body }
+    const category = await Category.create({
+        title,
+        createdBy: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
+    })
+    res.redirect('/admin/categories')
 }
 
 exports.postEditCategory = function (req, res, next) {
