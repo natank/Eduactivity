@@ -20,6 +20,10 @@ const topicSchema = new Schema({
     type: ObjectId,
     ref: 'User',
     required: true
+  },
+  imageName: {
+    type: String,
+    required: true
   }
 
 })

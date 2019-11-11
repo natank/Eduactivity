@@ -102,8 +102,16 @@ exports.postEditCategory = function (req, res, next) {
     res.redirect()
 }
 
-exports.postCreateTopic = function (req, res, next) {
-    res.redirect()
+exports.postCreateTopic = async function (req, res, next) {
+    const {title, description, category, imageName} = req.fields
+    await Topic.create({
+        title,
+        category: mongoose.Types.ObjectId('4edd40c86762e0fb12000003'),
+        description,
+        imageName,
+        createdBy: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
+    })
+    res.redirect('topics')
 }
 
 exports.postEditTopic = function (req, res, next) {
