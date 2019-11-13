@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const HTMLWebpackPlugin = require("html-webpack-plugin")
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const isDevelopment = process.env.NODE_ENV !== 'production'
+const isDevelopment = false//process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: {
@@ -35,7 +35,7 @@ module.exports = {
     {
       test: /\.css$/,
       use: [{
-        loader: "style-loader"
+        loader:  MiniCssExtractPlugin.loader
       },
       {
         loader: "css-loader"
@@ -114,8 +114,8 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? '[name].css' : '[name].[hash].css',
-      chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
+      filename: isDevelopment ? '[name].css' : '[name].css',
+      chunkFilename: isDevelopment ? '[id].css' : '[id].css'
     }),
     new HTMLWebpackPlugin({
       template: "./src/views/shop/home.pug",
@@ -133,10 +133,10 @@ module.exports = {
       template: "./src/views/admin/createCategory.pug",
       filename: "createCategory.html"
     }),
-    new HTMLWebpackPlugin({
-      template: "./src/views/admin/products.pug",
-      filename: "products.html"
-    }),
+    // new HTMLWebpackPlugin({
+    //   template: "./src/views/admin/products.pug",
+    //   filename: "products.html"
+    // }),
     new HTMLWebpackPlugin({
       template: "./src/views/admin/categories.pug",
       filename: "categories.html"

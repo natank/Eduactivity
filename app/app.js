@@ -1,4 +1,5 @@
 import express from "express";
+import path from 'path';
 const mongoConnect = require('./util/database').mongoConnect;
 const MONGODB_URI = require('./util/database').dbURI;
 const bodyParser = require('body-parser');
@@ -21,33 +22,31 @@ const webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
 const shopRoutes = require("./routes/shop");
 const adminRoutes = require("./routes/admin")
 
-const server = express();
+const app = express();
 
-server.use(
+app.use(
   bodyParser.urlencoded({
     extended: false
   })
 );
-server.use(
+app.use(
   bodyParser.json()
 )
 
-server.set('view engine', 'pug')
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, "../src/views"))
+app.use(webpackDevMiddleware);
+app.use(webpackHotMiddleware);
 
-server.use(webpackDevMiddleware);
-server.use(webpackHotMiddleware);
+app.use(express.static("/dist"));
 
-const staticMiddleware = express.static("/dist");
-server.use(staticMiddleware);
-
-server.set
-server.use('/', shopRoutes)
-server.use('/admin', adminRoutes)
+app.use('/', shopRoutes)
+app.use('/admin', adminRoutes)
 
 
-const connect = (async function (server) {
+const connect = (async function (app) {
   await mongoConnect();
-  server.listen(8080, () => {
-    console.log("Server is listening")
+  app.listen(8080, () => {
+    console.log("app is listening")
   })
-})(server)
+})(app)

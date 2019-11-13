@@ -8,7 +8,7 @@ import Product from '../models/Product';
 import Topic from '../models/Topic';
 import Category from '../models/Category';
 import mongoose from 'mongoose';
-
+import updateTemplate from '../util/updateTemplate';
 
 exports.getDashboard = function (req, res, next) {
     res.sendFile(path.resolve(__dirname, '../../dist/dashboard.html'))
@@ -44,7 +44,7 @@ exports.getTopics = function (req, res, next) {
 exports.getProducts = function (req, res, next) {
     // get products from db
 
-    res.sendFile(path.resolve(__dirname, '../../dist/products.html'))
+    res.render('admin/products', {})
 }
 
 exports.getCategories = function (req, res, next) {
