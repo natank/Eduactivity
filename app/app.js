@@ -3,7 +3,7 @@ const mongoConnect = require('./util/database').mongoConnect;
 const MONGODB_URI = require('./util/database').dbURI;
 const bodyParser = require('body-parser');
 const webpack = require("webpack");
-const config = require("../../config/webpack.dev.js");
+const config = require("../config/webpack.dev.js");
 
 const compiler = webpack(config);
 const webpackDevMiddleware = require("webpack-dev-middleware")(

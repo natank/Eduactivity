@@ -11,44 +11,44 @@ import mongoose from 'mongoose';
 
 
 exports.getDashboard = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../dist/dashboard.html'))
+    res.sendFile(path.resolve(__dirname, '../../dist/dashboard.html'))
 }
 exports.getCreateProduct = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../dist/createProduct.html'))
+    res.sendFile(path.resolve(__dirname, '../../dist/createProduct.html'))
 }
 
 exports.getCreateCategory = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../dist/createCategory.html'))
+    res.sendFile(path.resolve(__dirname, '../../dist/createCategory.html'))
 }
 
 exports.getCreateTopic = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../dist/createTopic.html'))
+    res.sendFile(path.resolve(__dirname, '../../dist/createTopic.html'))
 }
 
 exports.getEditProduct = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../dist/createProduct.html'))
+    res.sendFile(path.resolve(__dirname, '../../dist/createProduct.html'))
 }
 
 exports.getEditCategory = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../dist/createCategory.html'))
+    res.sendFile(path.resolve(__dirname, '../../dist/createCategory.html'))
 }
 
 exports.getEditTopic = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../dist/createCategory.html'))
+    res.sendFile(path.resolve(__dirname, '../../dist/createCategory.html'))
 }
 
 exports.getTopics = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../dist/topics.html'))
+    res.sendFile(path.resolve(__dirname, '../../dist/topics.html'))
 }
 
 exports.getProducts = function (req, res, next) {
     // get products from db
 
-    res.sendFile(path.resolve(__dirname, '../dist/products.html'))
+    res.sendFile(path.resolve(__dirname, '../../dist/products.html'))
 }
 
 exports.getCategories = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../dist/categories.html'))
+    res.sendFile(path.resolve(__dirname, '../../dist/categories.html'))
 }
 
 exports.postDeleteProduct = function (req, res, next) {

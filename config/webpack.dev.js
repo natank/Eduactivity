@@ -6,12 +6,12 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: {
-    main: ["./src/assets/main.js"]
+    main: ["./src/main.js"]
   },
   mode: "development",
   output: {
     filename: "[name]-bundle.js",
-    path: path.resolve(__dirname, "../src/server/dist"),
+    path: path.resolve(__dirname, "../dist"),
     publicPath: "/"
   },
   devServer: {
@@ -118,43 +118,43 @@ module.exports = {
       chunkFilename: isDevelopment ? '[id].css' : '[id].[hash].css'
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets//views/shop/home.pug",
+      template: "./src/views/shop/home.pug",
       filename: "home.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets/views/admin/createProduct.pug",
+      template: "./src/views/admin/createProduct.pug",
       filename: "createProduct.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets/views/admin/createTopic.pug",
+      template: "./src/views/admin/createTopic.pug",
       filename: "createTopic.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets/views/admin/createCategory.pug",
+      template: "./src/views/admin/createCategory.pug",
       filename: "createCategory.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets/views/admin/products.pug",
+      template: "./src/views/admin/products.pug",
       filename: "products.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets/views/admin/categories.pug",
+      template: "./src/views/admin/categories.pug",
       filename: "categories.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets/views/admin/topics.pug",
+      template: "./src/views/admin/topics.pug",
       filename: "topics.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets/views/admin/dashboard.pug",
+      template: "./src/views/admin/dashboard.pug",
       filename: "dashboard.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets/views/shop/topic.pug",
+      template: "./src/views/shop/topic.pug",
       filename: "topic.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/assets/views/shop/product.pug",
+      template: "./src/views/shop/product.pug",
       filename: "product.html"
     }),
   ],
