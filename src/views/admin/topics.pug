@@ -14,23 +14,23 @@ block content
         option(value="EDUCATIONAL") EDUCATIONAL
       input(type="submit").btn.btn-primary.mx-auto.d-block.mt-4
   .topics.my-5
-    .topic.card
-      img(src=require("../../images/xmas.png") alt="xmas")
-      .card-body
-        h5.card-title Xmas
-        p.class-text
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
-        a(href="/admin/topic").btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
-          Edit
-        a(href="/admin/delete-topic").btn.btn-outline-primary.btn-lg.btn-block Delete
-    .topic.card
-      img(src=require("../../images/xmas.png") alt="xmas")
-      .card-body
-        h5.card-title Xmas
-        p.class-text
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
-        a(href="/admin/topic").btn.btn-outline-primary.btn-large.btn-lg.btn-block.
-          Edit
-        a(href="/admin/delete-topic").btn.btn-outline-primary.btn-lg.btn-block Delete
+    for topic in topics
+      .card.topic
+        - const title = topic.title
+        - const description = topic.description
+        - const category = topic.category
+        - const imgUrl = "/images/"+topic.imageName
+        - const editUrl = "/admin/editTopic/"+topic._id
+        - const deleteUrl = "/admin/deleteTopic/"+topic._id
+
+        img(src= imgUrl alt= title).img-fluid
+        .card-body
+          h5.card-title= title
+          p.class-text #{description }
+          
+          a(href=editUrl).btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
+            Edit
+          a(href=deleteUrl).btn.btn-outline-primary.btn-lg.btn-block Delete
+      
 
 

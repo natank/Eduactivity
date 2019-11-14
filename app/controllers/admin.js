@@ -14,37 +14,53 @@ exports.getDashboard = function (req, res, next) {
     res.sendFile(path.resolve(__dirname, '../../dist/dashboard.html'))
 }
 exports.getCreateProduct = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../../dist/createProduct.html'))
+    res.render('admin/createProduct', {edit: false});
 }
 
 exports.getCreateCategory = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../../dist/createCategory.html'))
+    res.render('admin/createCategory', {edit: false})
 }
 
 exports.getCreateTopic = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../../dist/createTopic.html'))
+    res.render('admin/createTopic', {edit: false})
 }
 
-exports.getEditProduct = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../../dist/createProduct.html'))
+exports.getEditProduct = async function (req, res, next) {
+    try{
+        let product = await Product.findById(req.params.id);
+        res.render('admin/createProduct', {product: product, isEdit: true})
+    }catch(err){
+        next(err)
+    }
+    
 }
 
 exports.getEditCategory = function (req, res, next) {
     res.sendFile(path.resolve(__dirname, '../../dist/createCategory.html'))
 }
 
-exports.getEditTopic = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../../dist/createCategory.html'))
+exports.getEditTopic = async function (req, res, next) {
+    try{
+        const topic = await Topic.findById(req.params.id);
+        
+        res.render('admin/createTopic', {topic: topic, isEdit: true})
+    } catch(err){
+        next(err)
+    }
 }
 
-exports.getTopics = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../../dist/topics.html'))
+exports.getTopics = async function (req, res, next) {
+    try{
+        const topics = await Topic.find();
+        res.render('admin/topics', {topics: topics})
+    } catch(err){
+        next(err)
+    }
 }
 
-exports.getProducts = await function (req, res, next) {
-    // get products from db
+exports.getProducts = async function (req, res, next) {
     try {
-        let products = await Product.find();
+        const products = await Product.find();
         res.render('admin/products', { products: products })
     } catch (err) {
         next(err)

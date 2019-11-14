@@ -122,28 +122,12 @@ module.exports = {
       filename: "home.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/views/admin/createProduct.pug",
-      filename: "createProduct.html"
-    }),
-    new HTMLWebpackPlugin({
-      template: "./src/views/admin/createTopic.pug",
-      filename: "createTopic.html"
-    }),
-    new HTMLWebpackPlugin({
       template: "./src/views/admin/createCategory.pug",
       filename: "createCategory.html"
     }),
-    // new HTMLWebpackPlugin({
-    //   template: "./src/views/admin/products.pug",
-    //   filename: "products.html"
-    // }),
     new HTMLWebpackPlugin({
       template: "./src/views/admin/categories.pug",
       filename: "categories.html"
-    }),
-    new HTMLWebpackPlugin({
-      template: "./src/views/admin/topics.pug",
-      filename: "topics.html"
     }),
     new HTMLWebpackPlugin({
       template: "./src/views/admin/dashboard.pug",

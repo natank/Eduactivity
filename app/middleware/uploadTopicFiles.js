@@ -16,7 +16,7 @@ async function uploadTopicFiles(req, res, next) {
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
     const oldImageUrlPath = files.imageurl.path;
-    const newImageName = `${currentTimef()}${files.imageurl.name}`;
+    const newImageName = `${currentTime()}${files.imageurl.name}`;
 
     const newImageUrlPath = path.join(
       __dirname,

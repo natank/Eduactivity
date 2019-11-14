@@ -39,6 +39,7 @@ app.use(webpackDevMiddleware);
 app.use(webpackHotMiddleware);
 
 app.use(express.static(path.join(__dirname, '../dist')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/', shopRoutes)
 app.use('/admin', adminRoutes)

@@ -1,13 +1,20 @@
 extends ../templates/container.pug
 block content
+  - const _id = isEdit ? topic._id : null
+  - const title = isEdit ? topic.title : null
+  - const imageUrl = isEdit ? topic.imageUrl : null
+  - const category = isEdit ? topic.category : null
+  - const description = isEdit ? topic.description : null
+  - const action = isEdit ? "/admin/editTopic" : "/admin/CreateTopic"
   include ../includes/header.pug 
   h2.text-center.my-4
-    | Add Topic
+    | #{isEdit ? "Edit Topic" : "Add Topic"}
   form(action="/admin/createTopic" method='POST' enctype="multipart/form-data").border.border-info.w-75.align-self-center.p-4
+    input(type="hidden", id=prodId, name=_id, value= _id)
     div.form-group
       label(for='title') 
         | Title: 
-      input(type='text', name='title', required).form-control
+      input(type='text', name='title', required, value= title).form-control
     div.form-group
       label(for='imageurl') 
         | Topic Image: 
@@ -21,5 +28,5 @@ block content
         option(value='party') Party
     div.form-group
       label(for="description") Topic Description
-      textarea(name='description', placeholder="Product Description", required).form-control
+      textarea(name='description', placeholder="Product Description", required).form-control #{description}
     button(class='btn btn-info' type='submit', value='Submit') SUBMIT
