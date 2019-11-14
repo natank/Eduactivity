@@ -35,7 +35,7 @@ module.exports = {
     {
       test: /\.css$/,
       use: [{
-        loader:  MiniCssExtractPlugin.loader
+        loader: MiniCssExtractPlugin.loader
       },
       {
         loader: "css-loader"
@@ -105,7 +105,7 @@ module.exports = {
       use: [{
         loader: "file-loader",
         options: {
-          name: "images/[name]-[hash:8].[ext]"
+          name: "images/[name].[ext]"
         }
       }]
     }

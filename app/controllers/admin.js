@@ -41,10 +41,14 @@ exports.getTopics = function (req, res, next) {
     res.sendFile(path.resolve(__dirname, '../../dist/topics.html'))
 }
 
-exports.getProducts = function (req, res, next) {
+exports.getProducts = await function (req, res, next) {
     // get products from db
-
-    res.render('admin/products', {})
+    try {
+        let products = await Product.find();
+        res.render('admin/products', { products: products })
+    } catch (err) {
+        next(err)
+    }
 }
 
 exports.getCategories = function (req, res, next) {
@@ -103,7 +107,7 @@ exports.postEditCategory = function (req, res, next) {
 }
 
 exports.postCreateTopic = async function (req, res, next) {
-    const {title, description, category, imageName} = req.fields
+    const { title, description, category, imageName } = req.fields
     await Topic.create({
         title,
         category: mongoose.Types.ObjectId('4edd40c86762e0fb12000003'),

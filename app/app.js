@@ -38,7 +38,7 @@ app.set('views', path.join(__dirname, "../src/views"))
 app.use(webpackDevMiddleware);
 app.use(webpackHotMiddleware);
 
-app.use(express.static("/dist"));
+app.use(express.static(path.join(__dirname, '../dist')));
 
 app.use('/', shopRoutes)
 app.use('/admin', adminRoutes)

@@ -13,24 +13,16 @@ block content
         option(value="NEW YEAR") NEW YEAR
         option(value="Unicorns") UNICORNS
       input(type="submit").btn.btn-primary.mx-auto.d-block.mt-4
-  .categories.my-5
-    .category.card
-      img(src="../images/xmas.png" alt="xmas")
-      .card-body
-        h5.card-title Holidays
-        p.class-text
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
-        a(href="/admin/product").btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
-          Edit
-        a(href="/admin/delete-product").btn.btn-outline-primary.btn-lg.btn-block Delete
-    .topic.card
-      img(src="../images/xmas.png" alt="xmas")
-      .card-body
-        h5.card-title Birthday
-        p.class-text
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
-        a(href="/admin/topic").btn.btn-outline-primary.btn-large.btn-lg.btn-block.
-          Edit
-        a(href="/admin/delete-topic").btn.btn-outline-primary.btn-lg.btn-block Delete
+  .products.my-5
+    - for product in products
+      .card.product
+        img(src= product.imageUrl alt= #{product.title})
+        .card-body
+          h5.card-title = #{product.title}
+          p.class-text
+            = product.description
+          a(href= /admin/product).btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
+            Edit
+          a(href= /admin/delete-product/#{product._id}).btn.btn-outline-primary.btn-lg.btn-block Delete
 
 
