@@ -2,11 +2,13 @@
  * uploadTopicFiles
  * This middleware takes care of uploading topic files.
  * Uses 'formidable' library and expect enctype="multipar/form-data" in the client side.
- * Saves the image in the file system
- * Populates the 'fields' key in the req object with imageUrl
+ * Saves the image in the file system.
+ * 
+ * If image exists, populates the 'fields' key in the req object with imageName with string value
+ * otherwise populates the 'fields' key with imageName of null
  * 
  */
-const 
+const
   formidable = require('formidable'),
   path = require('path'),
   currentTime = require('../util/currentTime'),
@@ -15,23 +17,26 @@ const
 async function uploadTopicFiles(req, res, next) {
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
-    const oldImageUrlPath = files.imageurl.path;
-    const newImageName = `${currentTime()}${files.imageurl.name}`;
+    let newImageName = null;
+    if (files.imageurl.size) {
+      const oldImageUrlPath = files.imageurl.path;
+      newImageName = `${currentTime()}${files.imageurl.name}`;
 
-    const newImageUrlPath = path.join(
-      __dirname,
-      '../images',
-      newImageName
-    );
+      const newImageUrlPath = path.join(
+        __dirname,
+        '../images',
+        newImageName
+      );
 
-    try {
-      await renamePath(oldImageUrlPath, newImageUrlPath)
-      req.fields = fields;
-      req.fields.imageName = newImageName;
-      next()
-    } catch (err) {
-      next(err)
+      try {
+        await renamePath(oldImageUrlPath, newImageUrlPath)
+      } catch (err) {
+        next(err)
+      }
     }
+    req.fields = fields;
+    req.fields.imageName = newImageName;
+    next()
   })
 }
 

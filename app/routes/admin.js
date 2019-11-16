@@ -1,9 +1,9 @@
 const express = require('express'),
   router = express.Router(),
   adminController = require('../controllers/admin');
-  const uploadProductFiles = require('../middleware/uploadProductFiles')
-  const uploadTopicFiles = require('../middleware/uploadTopicFiles')
-  
+const uploadProductFiles = require('../middleware/uploadProductFiles')
+const uploadTopicFiles = require('../middleware/uploadTopicFiles')
+
 router.get('/', adminController.getDashboard);
 router.get('/createProduct', adminController.getCreateProduct);
 router.get('/createCategory', adminController.getCreateCategory);
@@ -26,7 +26,7 @@ router.post('/createCategory', adminController.postCreateCategory);
 router.post('/editCategory', adminController.postEditCategory);
 
 router.post('/createTopic', uploadTopicFiles, adminController.postCreateTopic);
-router.post('/editTopic', adminController.postEditTopic);
+router.post('/editTopic', uploadTopicFiles, adminController.postEditTopic);
 
 router.post('/filterTopics', adminController.postFilterTopics);
 router.post('/filterProducts', adminController.postFilterProducts);

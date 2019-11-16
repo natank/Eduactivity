@@ -8,31 +8,32 @@ import Product from '../models/Product';
 import Topic from '../models/Topic';
 import Category from '../models/Category';
 import mongoose from 'mongoose';
-import updateTemplate from '../util/updateTemplate';
+import fs from 'fs'
 
 exports.getDashboard = function (req, res, next) {
     res.sendFile(path.resolve(__dirname, '../../dist/dashboard.html'))
 }
 exports.getCreateProduct = function (req, res, next) {
-    res.render('admin/createProduct', {edit: false});
+    res.render('admin/createProduct', { edit: false });
 }
 
 exports.getCreateCategory = function (req, res, next) {
-    res.render('admin/createCategory', {edit: false})
+    res.render('admin/createCategory', { edit: false })
 }
 
-exports.getCreateTopic = function (req, res, next) {
-    res.render('admin/createTopic', {edit: false})
+exports.getCreateTopic = async function (req, res, next) {
+    const categories = await Category.find({}, 'title');
+    res.render('admin/createTopic', { edit: false, categories: categories })
 }
 
 exports.getEditProduct = async function (req, res, next) {
-    try{
+    try {
         let product = await Product.findById(req.params.id);
-        res.render('admin/createProduct', {product: product, isEdit: true})
-    }catch(err){
+        res.render('admin/createProduct', { product: product, isEdit: true })
+    } catch (err) {
         next(err)
     }
-    
+
 }
 
 exports.getEditCategory = function (req, res, next) {
@@ -40,20 +41,31 @@ exports.getEditCategory = function (req, res, next) {
 }
 
 exports.getEditTopic = async function (req, res, next) {
-    try{
-        const topic = await Topic.findById(req.params.id);
-        
-        res.render('admin/createTopic', {topic: topic, isEdit: true})
-    } catch(err){
+    try {
+        const topic = await Topic.findById(req.params.id).populate({
+            path: 'category',
+            select: 'title'
+        })
+        const category = await Category.findById(topic.category._id);
+        topic.category = category;
+        let categories = await Category.find({}, 'title');
+
+        categories = categories.map(category => {
+            category.id === topic.category.id ? category.selected = true : category.selected = false;
+            return category;
+        })
+        res.render('admin/createTopic', { topic: topic, isEdit: true, categories: categories })
+    } catch (err) {
         next(err)
     }
 }
 
 exports.getTopics = async function (req, res, next) {
-    try{
+    try {
         const topics = await Topic.find();
-        res.render('admin/topics', {topics: topics})
-    } catch(err){
+
+        res.render('admin/topics', { topics: topics })
+    } catch (err) {
         next(err)
     }
 }
@@ -67,8 +79,15 @@ exports.getProducts = async function (req, res, next) {
     }
 }
 
-exports.getCategories = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../../dist/categories.html'))
+exports.getCategories = async function (req, res, next) {
+    try {
+        const categories = await Category.find();
+
+        res.render('admin/categories', { categories: categories })
+
+    } catch (err) {
+        next(err)
+    }
 }
 
 exports.postDeleteProduct = function (req, res, next) {
@@ -126,7 +145,7 @@ exports.postCreateTopic = async function (req, res, next) {
     const { title, description, category, imageName } = req.fields
     await Topic.create({
         title,
-        category: mongoose.Types.ObjectId('4edd40c86762e0fb12000003'),
+        category: category,
         description,
         imageName,
         createdBy: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
@@ -134,8 +153,30 @@ exports.postCreateTopic = async function (req, res, next) {
     res.redirect('topics')
 }
 
-exports.postEditTopic = function (req, res, next) {
-    res.redirect()
+exports.postEditTopic = async function (req, res, next) {
+    const { title, description, category, imageName, _id } = req.fields
+    const keys = { title, description, category, imageName }
+    debugger
+    console.log('in edit topic')
+    if (keys.imageName) { // the image was updated
+        const topic = await Topic.findById(_id, 'imageName')
+        debugger
+        const oldImagePath = `./app/images/${topic.imageName}`
+        if (fs.existsSync(oldImagePath)) {
+            fs.unlinkSync(oldImagePath, err => {
+                if (err) next(err)
+            })
+        }
+    } else {
+        delete keys.imageName
+    }
+
+    try {
+        const topic = await Topic.updateOne({ id: _id }, keys)
+    } catch (err) {
+        next(err)
+    }
+    res.redirect('topics')
 }
 exports.postFilterTopics = function (req, res, next) {
     res.redirect()

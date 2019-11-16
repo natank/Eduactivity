@@ -126,10 +126,6 @@ module.exports = {
       filename: "createCategory.html"
     }),
     new HTMLWebpackPlugin({
-      template: "./src/views/admin/categories.pug",
-      filename: "categories.html"
-    }),
-    new HTMLWebpackPlugin({
       template: "./src/views/admin/dashboard.pug",
       filename: "dashboard.html"
     }),

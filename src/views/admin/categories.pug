@@ -7,23 +7,10 @@ block content
     | Create Category
   form.w-25.mx-auto
   .categories.my-5
-    .category.card
-      img(src=require("../../images/xmas.png") alt="xmas")
-      .card-body
-        h5.card-title Holidays
-        p.class-text
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
-        a(href="/admin/category").btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
-          Edit
-        a(href="/admin/delete-category").btn.btn-outline-primary.btn-lg.btn-block Delete
-    .topic.card
-      img(src=require("../../images/xmas.png") alt="xmas")
-      .card-body
-        h5.card-title Birthday
-        p.class-text
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
-        a(href="/admin/topic").btn.btn-outline-primary.btn-large.btn-lg.btn-block.
-          Edit
-        a(href="/admin/delete-topic").btn.btn-outline-primary.btn-lg.btn-block Delete
-
-
+    each category in categories
+      .category.card
+        .card-body
+          h5.card-title= category.title
+          a(href="/admin/category").btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
+            Edit
+          a(href="/admin/delete-category").btn.btn-outline-primary.btn-lg.btn-block Delete

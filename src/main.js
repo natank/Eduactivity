@@ -7,7 +7,6 @@ require("./views/admin/createProduct.pug");
 require("./views/admin/createTopic.pug");
 require("./views/admin/dashboard.pug");
 require("./views/admin/topics.pug");
-require("./views/admin/categories.pug");
 require("./views/shop/home.pug");
 require("./views/shop/topic.pug");
 require("./views/shop/product.pug");

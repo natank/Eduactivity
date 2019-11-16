@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 /* connect */
 let _db;
 
-// let _dbURI = 'mongodb://nati:welcome10@ds241408.mlab.com:41408/eduactivity'
-let _dbURI = 'mongodb://localhost:27017/eduactivity'
+let _dbURI = 'mongodb://nati:welcome10@ds241408.mlab.com:41408/eduactivity'
+// let _dbURI = 'mongodb://localhost:27017/eduactivity'
 
 
 async function mongoConnect() {

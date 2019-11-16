@@ -9,8 +9,9 @@ block content
   include ../includes/header.pug 
   h2.text-center.my-4
     | #{isEdit ? "Edit Topic" : "Add Topic"}
-  form(action="/admin/createTopic" method='POST' enctype="multipart/form-data").border.border-info.w-75.align-self-center.p-4
-    input(type="hidden", id=prodId, name=_id, value= _id)
+  form(action= action method='POST' enctype="multipart/form-data").border.border-info.w-75.align-self-center.p-4
+    if isEdit
+      input(type="hidden", id=prodId, name= '_id', value= _id)
     div.form-group
       label(for='title') 
         | Title: 
@@ -23,9 +24,8 @@ block content
     div.form-group
       label(for='category')| Select category
       select(name="category" multiple).form-control
-        option(value='holidays') Holidays
-        option(value='birthday') Birthday
-        option(value='party') Party
+        each category in categories
+          option(value=category._id selected = category.selected) #{category.title}
     div.form-group
       label(for="description") Topic Description
       textarea(name='description', placeholder="Product Description", required).form-control #{description}
