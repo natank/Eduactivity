@@ -1,6 +1,6 @@
 extends ../templates/container.pug
 block content
-  - const _id = isEdit ? topic._id : null
+  - const topicId = isEdit ? topic._id : null
   - const title = isEdit ? topic.title : null
   - const imageUrl = isEdit ? topic.imageUrl : null
   - const category = isEdit ? topic.category : null
@@ -11,15 +11,15 @@ block content
     | #{isEdit ? "Edit Topic" : "Add Topic"}
   form(action= action method='POST' enctype="multipart/form-data").border.border-info.w-75.align-self-center.p-4
     if isEdit
-      input(type="hidden", id=prodId, name= '_id', value= _id)
+      input(type="hidden", id=topicId, name= 'topicId', value= topicId)
     div.form-group
       label(for='title') 
         | Title: 
       input(type='text', name='title', required, value= title).form-control
     div.form-group
-      label(for='imageurl') 
+      label(for='fileurl') 
         | Topic Image: 
-      input(type='file', name='imageurl' accept="image/*").form-control-file
+      input(type='file', name='fileurl' accept="image/*").form-control-file
 
     div.form-group
       label(for='category')| Select category

@@ -154,25 +154,48 @@ exports.postCreateTopic = async function (req, res, next) {
 }
 
 exports.postEditTopic = async function (req, res, next) {
-    const { title, description, category, imageName, _id } = req.fields
-    const keys = { title, description, category, imageName }
-    debugger
-    console.log('in edit topic')
-    if (keys.imageName) { // the image was updated
-        const topic = await Topic.findById(_id, 'imageName')
+    const { title, description, category, topicId } = req.fields,
+    fileName = req.fileName,
+    filePath = req.filePath,
+    fileExist = req.fileExist;
+
+    const keys = { title, description, category, imageName: fileName }
+    if (fileExist) { // new image was updated
         debugger
-        const oldImagePath = `./app/images/${topic.imageName}`
-        if (fs.existsSync(oldImagePath)) {
-            fs.unlinkSync(oldImagePath, err => {
+        let topic
+        try{
+            topic = await Topic.findById(topicId, 'imageName')
+            if(!topic) throw(err)
+        } catch(err){
+            next(err)
+        }
+        // delete the previous image
+        const fileToDelete = `./app/images/${topic.imageName}`
+        if (fs.existsSync(fileToDelete)) {
+            fs.unlinkSync(fileToDelete, err => {
                 if (err) next(err)
             })
+        }
+
+        // save the new file to images folder
+        const imagePath = path.join(
+             __dirname,
+             '../images',
+            fileName
+        );
+
+        try {
+            await renamePath(filePath, imagePath)
+        } catch (err) {
+            next(err)
         }
     } else {
         delete keys.imageName
     }
 
     try {
-        const topic = await Topic.updateOne({ id: _id }, keys)
+        // const topic = await Topic.findOneAndUpdate({ _id: _id }, keys);
+        const topic = await Topic.updateOne({ _id: _id }, keys);
     } catch (err) {
         next(err)
     }
