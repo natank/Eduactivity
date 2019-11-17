@@ -8,7 +8,8 @@ import Product from '../models/Product';
 import Topic from '../models/Topic';
 import Category from '../models/Category';
 import mongoose from 'mongoose';
-import fs from 'fs'
+import fs from 'fs';
+import renamePath from '../util/renamePath';
 
 exports.getDashboard = function (req, res, next) {
     res.sendFile(path.resolve(__dirname, '../../dist/dashboard.html'))
@@ -195,7 +196,7 @@ exports.postEditTopic = async function (req, res, next) {
 
     try {
         // const topic = await Topic.findOneAndUpdate({ _id: _id }, keys);
-        const topic = await Topic.updateOne({ _id: _id }, keys);
+        const topic = await Topic.updateOne({ _id: topicId }, keys);
     } catch (err) {
         next(err)
     }

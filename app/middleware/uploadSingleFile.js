@@ -22,7 +22,6 @@ const
   formidable = require('formidable'),
   path = require('path'),
   currentTime = require('../util/currentTime'),
-  renamePath = require('../util/renamePath'),
   form = new formidable.IncomingForm();
   
 let formFields, formFiles

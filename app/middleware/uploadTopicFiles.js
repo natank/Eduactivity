@@ -11,8 +11,8 @@
 const
   formidable = require('formidable'),
   path = require('path'),
-  currentTime = require('../util/currentTime'),
-  renamePath = require('../util/renamePath');
+  currentTime = require('../util/currentTime')
+  
 
 async function uploadTopicFiles(req, res, next) {
   const form = new formidable.IncomingForm();
