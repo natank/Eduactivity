@@ -12,9 +12,9 @@ router.get('/createTopic', adminController.getCreateTopic);
 router.get('/editProduct/:id', adminController.getEditProduct);
 router.get('/editCategory/:id', adminController.getEditCategory);
 router.get('/editTopic/:id', adminController.getEditTopic);
-router.get('/deleteProduct/:id', adminController.postDeleteProduct);
-router.get('/deleteCategory/:id', adminController.postDeleteCategory);
-router.get('/deleteTopic/:id', adminController.postDeleteTopic);
+router.get('/deleteProduct/:id', adminController.getDeleteProduct);
+router.get('/deleteCategory/:id', adminController.getDeleteCategory);
+router.get('/deleteTopic/:id', adminController.getDeleteTopic);
 
 router.get('/topics', adminController.getTopics);
 router.get('/categories', adminController.getCategories);

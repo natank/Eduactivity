@@ -91,16 +91,25 @@ exports.getCategories = async function (req, res, next) {
     }
 }
 
-exports.postDeleteProduct = function (req, res, next) {
+exports.getDeleteProduct = function (req, res, next) {
 
 }
 
-exports.postDeleteCategory = function (req, res, next) {
+exports.getDeleteCategory = function (req, res, next) {
 
 }
 
-exports.postDeleteTopic = function (req, res, next) {
+exports.getDeleteTopic = async function (req, res, next) {
+    const topicId = req.params.id;
 
+    try {
+        const topic = await Topic.findById(topicId).populate('imageName');
+        fs.unlinkSync(`../images/{topic.imageName}`)
+        await Topic.deleteOne({ _id: topicId })
+    } catch (err) {
+        next(err)
+    }
+    res.redirect('/admin/topics')
 }
 
 exports.postCreateProduct = async function (req, res, next) {
@@ -156,18 +165,18 @@ exports.postCreateTopic = async function (req, res, next) {
 
 exports.postEditTopic = async function (req, res, next) {
     const { title, description, category, topicId } = req.fields,
-    fileName = req.fileName,
-    filePath = req.filePath,
-    fileExist = req.fileExist;
+        fileName = req.fileName,
+        filePath = req.filePath,
+        fileExist = req.fileExist;
 
     const keys = { title, description, category, imageName: fileName }
     if (fileExist) { // new image was updated
         debugger
         let topic
-        try{
+        try {
             topic = await Topic.findById(topicId, 'imageName')
-            if(!topic) throw(err)
-        } catch(err){
+            if (!topic) throw (err)
+        } catch (err) {
             next(err)
         }
         // delete the previous image
@@ -180,8 +189,8 @@ exports.postEditTopic = async function (req, res, next) {
 
         // save the new file to images folder
         const imagePath = path.join(
-             __dirname,
-             '../images',
+            __dirname,
+            '../images',
             fileName
         );
 
