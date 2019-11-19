@@ -11,16 +11,16 @@
 const
   formidable = require('formidable'),
   path = require('path'),
-  currentTime = require('../util/currentTime')
-  
+  currentTime = require('../util/currentTime'),
+  renamePath = require('../util/renamePath');
 
 async function uploadTopicFiles(req, res, next) {
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
     let newImageName = null;
-    if (files.imageurl.size) {
-      const oldImageUrlPath = files.imageurl.path;
-      newImageName = `${currentTime()}${files.imageurl.name}`;
+    if (files.fileurl.size) {
+      const oldImageUrlPath = files.fileurl.path;
+      newImageName = `${currentTime()}${files.fileurl.name}`;
 
       const newImageUrlPath = path.join(
         __dirname,

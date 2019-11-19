@@ -103,8 +103,9 @@ exports.getDeleteTopic = async function (req, res, next) {
     const topicId = req.params.id;
 
     try {
-        const topic = await Topic.findById(topicId).populate('imageName');
-        fs.unlinkSync(`../images/{topic.imageName}`)
+        const topic = await Topic.findById(topicId).select('imageName');
+        console.log(topic)
+        fs.unlinkSync(path.resolve(__dirname, `../images/${topic.imageName}`));
         await Topic.deleteOne({ _id: topicId })
     } catch (err) {
         next(err)
