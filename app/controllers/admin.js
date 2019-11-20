@@ -95,8 +95,18 @@ exports.getDeleteProduct = function (req, res, next) {
 
 }
 
-exports.getDeleteCategory = function (req, res, next) {
-
+exports.getDeleteCategory = async function (req, res, next) {
+    const categoryId = req.params.id;
+    try {
+        const topicsCount = await Topic.countDocuments({ category: categoryId })
+        if (topicsCount === 0) {
+            await Category.deleteOne({ _id: categoryId })
+        } else {
+            console.log("There are topics related to this category. Please delete them first")
+        }
+    } catch (err) {
+        next(err)
+    }
 }
 
 exports.getDeleteTopic = async function (req, res, next) {
