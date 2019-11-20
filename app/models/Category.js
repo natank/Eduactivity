@@ -8,14 +8,6 @@ const categorySchema = new Schema({
     type: String,
     required: true
   },
-  topics: {
-    type: [{
-      type: ObjectId,
-      ref: 'Topic',
-      required: true
-    }],
-    required: true
-  },
   createdBy: {
     type: ObjectId,
     ref: 'User',

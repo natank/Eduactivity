@@ -37,8 +37,9 @@ exports.getEditProduct = async function (req, res, next) {
 
 }
 
-exports.getEditCategory = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../../dist/createCategory.html'))
+exports.getEditCategory = async  function (req, res, next) {
+    const category = await Category.findById(req.params.id);
+    res.render('admin/createCategory', {category: category, isEdit: true})
 }
 
 exports.getEditTopic = async function (req, res, next) {
@@ -104,6 +105,7 @@ exports.getDeleteCategory = async function (req, res, next) {
         } else {
             console.log("There are topics related to this category. Please delete them first")
         }
+        res.redirect('/admin/categories')
     } catch (err) {
         next(err)
     }
@@ -158,8 +160,14 @@ exports.postCreateCategory = async function (req, res, next) {
     res.redirect('/admin/categories')
 }
 
-exports.postEditCategory = function (req, res, next) {
-    res.redirect()
+exports.postEditCategory = async function (req, res, next) {
+    try{
+        await Category.update({_id: req.body.id},{title: req.body.title})
+    } catch(err){
+        next(err)
+    }
+
+    res.redirect('/admin/categories')
 }
 
 exports.postCreateTopic = async function (req, res, next) {

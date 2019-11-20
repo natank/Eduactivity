@@ -40,8 +40,4 @@ async function uploadTopicFiles(req, res, next) {
   })
 }
 
-
-
-
-
 module.exports = uploadTopicFiles;

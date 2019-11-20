@@ -11,6 +11,6 @@ block content
       .category.card
         .card-body
           h5.card-title= category.title
-          a(href="/admin/category").btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
+          a(href="/admin/editCategory/"+category._id).btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
             Edit
-          a(href="/admin/delete-category").btn.btn-outline-primary.btn-lg.btn-block Delete
+          a(href="/admin/deleteCategory/"+category._id).btn.btn-outline-primary.btn-lg.btn-block Delete
