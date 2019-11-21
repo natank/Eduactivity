@@ -1,15 +1,19 @@
 extends ../templates/container.pug
 block content
-  - const _id = isEdit ? product._id : null
+  - const prodId = isEdit ? product._id : null
   - const title = isEdit ? product.title: ''
   - const description = isEdit ? product.description : ''
   - const price = isEdit ? product.price : ''
+  - const topicName = isEdit ? product.topic : ''
   - const action = isEdit ? "/admin/editProduct" : "/admin/createProduct"
+  - const isRequired = !isEdit
+
   include ../includes/header.pug 
   h2.text-center.my-4
     | #{isEdit ? "Edit Product" : "Add Product"}
   form(action= action method='POST' enctype="multipart/form-data").border.border-info.w-75.align-self-center.p-4
-    input(type="hidden", id=prodId, name=_id, value= _id)
+    - if(isEdit)
+        input(type="hidden", id="id", name= "prodId", value= prodId)
     div.form-group
       label(for='title') 
         | Title:
@@ -17,21 +21,22 @@ block content
     div.form-group
       label(for='printable') 
         | Printable File: 
-      input(type='file', name='printable', accept=".pdf" required).form-control-file
+      input(type='file', name='printable', accept=".pdf" required=isRequired).form-control-file
     div.form-group
       label(for='imageurl') 
         | Image: 
-      input(type='file', name='imageurl' accept="image/*").form-control-file
+      input(type='file', name='imageurl' accept="image/*" required=isRequired).form-control-file
 
     div.form-group
       label(for='price')| Price 
       input(type='text', name='price', required, value=price).form-control
     div.form-group
-      label(for='category')| Select categories
-      select(name="category" multiple).form-control
-        option(value='holidays') Holidays
-        option(value='birthday') Birthday
-        option(value='party') Party
+      label(for='topics')| Select categories
+      select(name="topic" multiple).form-control
+        each topic in topics
+          - let isSelected = false
+          - if(topicName === topic.title) isSelected = true
+          option(value= topic.title selected= isSelected).text-uppercase  #{topic.title}
     div.form-group
       label(for="description") Product Description
       textarea(name='description', placeholder="Product Description", required).form-control #{description}

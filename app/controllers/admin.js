@@ -14,8 +14,13 @@ import renamePath from '../util/renamePath';
 exports.getDashboard = function (req, res, next) {
     res.sendFile(path.resolve(__dirname, '../../dist/dashboard.html'))
 }
-exports.getCreateProduct = function (req, res, next) {
-    res.render('admin/createProduct', { edit: false });
+exports.getCreateProduct = async function (req, res, next) {
+    try{
+        let topics = await Topic.find({}, 'title' )
+        res.render('admin/createProduct', { isEdit: false, topics: topics });
+    } catch(err){
+        next(err)
+    }
 }
 
 exports.getCreateCategory = function (req, res, next) {
@@ -30,7 +35,8 @@ exports.getCreateTopic = async function (req, res, next) {
 exports.getEditProduct = async function (req, res, next) {
     try {
         let product = await Product.findById(req.params.id);
-        res.render('admin/createProduct', { product: product, isEdit: true })
+        let topics = await Topic.find({}, 'title')
+        res.render('admin/createProduct', { product: product, isEdit: true, topics: topics })
     } catch (err) {
         next(err)
     }
@@ -65,8 +71,8 @@ exports.getEditTopic = async function (req, res, next) {
 exports.getTopics = async function (req, res, next) {
     try {
         const topics = await Topic.find();
-
-        res.render('admin/topics', { topics: topics })
+        const categories = await Category.find({}, 'title')
+        res.render('admin/topics', { topics: topics, categories: categories, filterBy: null })
     } catch (err) {
         next(err)
     }
@@ -92,8 +98,24 @@ exports.getCategories = async function (req, res, next) {
     }
 }
 
-exports.getDeleteProduct = function (req, res, next) {
+exports.getDeleteProduct = async function (req, res, next) {
+    try{
+        const product = await Product.findById(req.params.id);
+        let {imageName, printableName} = product;
+        let imagePath = path.resolve(__dirname, `../images/${imageName}`)
+        let printablePath = path.resolve(__dirname, `../images/${printableName}`)
 
+        if(fs.existsSync(imagePath)){
+            fs.unlinkSync(imagePath)
+        }
+        if(fs.existsSync(printablePath)){
+            fs.unlinkSync(printablePath)
+        }
+        await Product.deleteOne({_id:req.params.id})
+    } catch(err){
+        next(err)
+    }
+    res.redirect('/admin/products')
 }
 
 exports.getDeleteCategory = async function (req, res, next) {
@@ -116,7 +138,6 @@ exports.getDeleteTopic = async function (req, res, next) {
 
     try {
         const topic = await Topic.findById(topicId).select('imageName');
-        console.log(topic)
         fs.unlinkSync(path.resolve(__dirname, `../images/${topic.imageName}`));
         await Topic.deleteOne({ _id: topicId })
     } catch (err) {
@@ -127,14 +148,14 @@ exports.getDeleteTopic = async function (req, res, next) {
 
 exports.postCreateProduct = async function (req, res, next) {
     try {
-        const { title, price, description, imageName, printableName, category } = req.fields;
+        const { title, price, description, imageName, printableName, topic } = req.fields;
         let product = await Product.create({
             title: title,
             price: price,
             description: description,
             imageName: imageName,
             printableName: printableName,
-            category: category,
+            topic: topic,
             createdBy: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
         })
         res.redirect('/admin/products')
@@ -146,8 +167,22 @@ exports.postCreateProduct = async function (req, res, next) {
 }
 
 exports.postEditProduct = async function (req, res, next) {
-    const id = mongoose.Types.ObjectId('4edd40c86762e0fb12000003');
-    const result = await Product.update({ _id: id }, {})
+    const {title, price, description, imageName, printableName, topic, prodId } = req.fields;
+
+    // check if new files where uploaded and update the db
+    let newValues = {title, price, description,topic}
+    if(imageName) {
+        newValues.imageName = imageName
+    }
+    if(printableName){
+        newValues.printableName = printableName
+    }    
+    try
+        {
+            await Product.updateOne({_id: prodId}, newValues)
+        } catch(err){
+        next(err)
+        }
     res.redirect('/admin/products')
 }
 
@@ -162,7 +197,7 @@ exports.postCreateCategory = async function (req, res, next) {
 
 exports.postEditCategory = async function (req, res, next) {
     try{
-        await Category.update({_id: req.body.id},{title: req.body.title})
+        await Category.updateOne({_id: req.body.id},{title: req.body.title})
     } catch(err){
         next(err)
     }

@@ -21,7 +21,7 @@ router.get('/categories', adminController.getCategories);
 router.get('/products', adminController.getProducts);
 
 router.post('/createProduct', uploadProductFiles, adminController.postCreateProduct);
-router.post('/editProduct', adminController.postEditProduct);
+router.post('/editProduct', uploadProductFiles, adminController.postEditProduct);
 
 router.post('/createCategory', adminController.postCreateCategory);
 router.post('/editCategory', adminController.postEditCategory);

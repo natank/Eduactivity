@@ -6,13 +6,16 @@ block content
   a.btn.btn-primary.btn-lg.mx-auto(href='/admin/createTopic', role='button') 
     | Create Topic
   form.w-25.mx-auto
-    div.form-group
+    div.form-group(action=)
       label(for="categories") Filter by Category
-      select(name="categories" id="categories").form-control
-        option(value="BIRTHDAY") BIRTHDAY
-        option(value="PARTIES") PARTIES
-        option(value="EDUCATIONAL") EDUCATIONAL
-      input(type="submit").btn.btn-primary.mx-auto.d-block.mt-4
+      - const isFiltered = (filterBy===null ? false : true)
+
+      select(name="categories" id="categories").form-control 
+        option(name="all" id="all", selected = !isFiltered) All Categories
+        each category in categories
+          option(value=category.title ) #{category.title}
+
+      input(type="submit" onclick=getFilteredTopics).btn.btn-primary.mx-auto.d-block.mt-4
   .topics.my-5
     for topic in topics
       .card.topic
@@ -27,9 +30,9 @@ block content
         .card-body
           h5.card-title= title
           p.class-text #{description }
-          
-          a(href=editUrl).btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
-            Edit
+
+          a(href=editUrl).btn.btn-outline-primary.btn-large.btn-lg.btn-block
+           | Edit
           a(href=deleteUrl).btn.btn-outline-primary.btn-lg.btn-block Delete
       
 

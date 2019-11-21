@@ -4,36 +4,57 @@ const formidable = require('formidable'),
   currentTime = require('../util/currentTime'),
   renamePath = require('../util/renamePath');
 
-async function uploadProductFiles(req, res, next) {
+/**
+ * 
+ * @param {req}  req.fields.printableName, req.fields.imageName will be set to the names of the uploaded files, otherwise null
+ * 
+ * @param {*} res 
+ * @param {*} next 
+ */
+
+  async function uploadProductFiles(req, res, next) {
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
-    const oldPrintablePath = files.printable.path;
-    const oldImageUrlPath = files.imageurl.path;
-    const newPrintableName = `${currentTime()}${files.printable.name}`;
-    const newImageName = `${currentTime()}${files.imageurl.name}`;
-
-    const newPrintablePath = path.join(
+    const tempPrintablePath = files.printable.path;
+    const tempImagePath = files.imageurl.path;
+    const printableDir = path.join(
+      __dirname,
+      '../printables',
+    )
+    
+    const imageDir = path.join(
       __dirname,
       '../images',
-      newPrintableName
     )
-
-    const newImageUrlPath = path.join(
-      __dirname,
-      '../images',
-      newImageName
-    )
-    try {
-      await renamePath(oldPrintablePath, newPrintablePath)
-      await renamePath(oldImageUrlPath, newImageUrlPath)
-      req.fields = fields;
-      req.fields.printableName = newPrintableName;
-      req.fields.imageName = newImageName;
-      next()
-    } catch (err) {
-      next(err)
+    
+    req.fields = fields;
+    // upload the printable
+    if(files.printable.name){
+      req.fields.printableName = `${currentTime()}${files.printable.name}`;
+      const printablePath = path.join(printableDir, req.fields.printableName)
+      try{
+        await renamePath(tempPrintablePath, printablePath)
+      } catch(err){
+        next(err)
+      }
+    } else{
+      req.fields.printableName = null;
     }
+    // upload the image
+    if(files.imageurl.name){
+      req.fields.imageName = `${currentTime()}${files.imageurl.name}`;
+      const imagePath = path.join(imageDir, req.fields.imageName);
+      try{
+        await renamePath(tempImagePath, imagePath)
+      } catch(err){
+        next(err)
+      }
+    } else {
+      req.fields.imageName = null;
+    }
+    next()
   })
+  
 }
 
 module.exports = uploadProductFiles;
