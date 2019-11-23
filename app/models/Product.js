@@ -25,7 +25,8 @@ const productSchema = new Schema({
     required: true
   },
   topic: {
-    type: String,
+    type: ObjectId,
+    ref: 'Topic',
     required: true
   },
   createdBy: {

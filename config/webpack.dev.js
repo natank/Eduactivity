@@ -1,6 +1,5 @@
 const path = require("path");
 const webpack = require("webpack");
-const HTMLWebpackPlugin = require("html-webpack-plugin")
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const isDevelopment = false//process.env.NODE_ENV !== 'production'
 
@@ -116,27 +115,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: isDevelopment ? '[name].css' : '[name].css',
       chunkFilename: isDevelopment ? '[id].css' : '[id].css'
-    }),
-    new HTMLWebpackPlugin({
-      template: "./src/views/shop/home.pug",
-      filename: "home.html"
-    }),
-    new HTMLWebpackPlugin({
-      template: "./src/views/admin/createCategory.pug",
-      filename: "createCategory.html"
-    }),
-    new HTMLWebpackPlugin({
-      template: "./src/views/admin/dashboard.pug",
-      filename: "dashboard.html"
-    }),
-    new HTMLWebpackPlugin({
-      template: "./src/views/shop/topic.pug",
-      filename: "topic.html"
-    }),
-    new HTMLWebpackPlugin({
-      template: "./src/views/shop/product.pug",
-      filename: "product.html"
-    }),
+    })
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.scss']

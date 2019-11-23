@@ -5,15 +5,14 @@ block content
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
   a.btn.btn-primary.btn-lg.mx-auto(href='/admin/createTopic', role='button') 
     | Create Topic
-  form.w-25.mx-auto
-    div.form-group(action=)
+  form.w-25.mx-auto(action='/admin/topics')
+    div.form-group
       label(for="categories") Filter by Category
-      - const isFiltered = (filterBy===null ? false : true)
-
-      select(name="categories" id="categories").form-control 
-        option(name="all" id="all", selected = !isFiltered) All Categories
+      select(name="filter" id="categories").form-control 
+        option(name="all" value="all", selected) ALL CATEGORIES
         each category in categories
-          option(value=category.title ) #{category.title}
+          - const selected = category.id === filter
+          option(value=category.id selected=selected) #{category.title.toUpperCase()}
 
       input(type="submit" onclick=getFilteredTopics).btn.btn-primary.mx-auto.d-block.mt-4
   .topics.my-5
@@ -25,15 +24,16 @@ block content
         - const imgUrl = "/images/"+topic.imageName
         - const editUrl = "/admin/editTopic/"+topic._id
         - const deleteUrl = "/admin/deleteTopic/"+topic._id
-
         img(src= imgUrl alt= title).img-fluid
         .card-body
           h5.card-title= title
           p.class-text #{description }
+          p.class-text Category: 
+            span.text-uppercase #{ category.title.toUpperCase() }
 
           a(href=editUrl).btn.btn-outline-primary.btn-large.btn-lg.btn-block
-           | Edit
+            | Edit
           a(href=deleteUrl).btn.btn-outline-primary.btn-lg.btn-block Delete
-      
+
 
 

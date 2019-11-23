@@ -13,7 +13,7 @@ block content
     | #{isEdit ? "Edit Product" : "Add Product"}
   form(action= action method='POST' enctype="multipart/form-data").border.border-info.w-75.align-self-center.p-4
     - if(isEdit)
-        input(type="hidden", id="id", name= "prodId", value= prodId)
+      input(type="hidden", id="id", name= "prodId", value= prodId)
     div.form-group
       label(for='title') 
         | Title:
@@ -31,12 +31,12 @@ block content
       label(for='price')| Price 
       input(type='text', name='price', required, value=price).form-control
     div.form-group
-      label(for='topics')| Select categories
+      label(for='topics')| Select Topicss
       select(name="topic" multiple).form-control
         each topic in topics
           - let isSelected = false
           - if(topicName === topic.title) isSelected = true
-          option(value= topic.title selected= isSelected).text-uppercase  #{topic.title}
+          option(value= topic._id selected= isSelected).text-uppercase  #{topic.title}
     div.form-group
       label(for="description") Product Description
       textarea(name='description', placeholder="Product Description", required).form-control #{description}

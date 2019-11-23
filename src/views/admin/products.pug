@@ -5,13 +5,14 @@ block content
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
   a.btn.btn-primary.btn-lg.mx-auto.my-4(href='/admin/createProduct', role='button')
     | Create Product
-  form.w-25.mx-auto
+  form(action='products' ).w-25.mx-auto
     div.form-group
-      label(for="topics") Filter by Topic
-      select(name="topics" id="topics").form-control
-        option(value="XMAS") XMAS
-        option(value="NEW YEAR") NEW YEAR
-        option(value="Unicorns") UNICORNS
+      label(for="topic") Filter by Topic
+      select(name="topic" id="topic").form-control
+        option(value='all' selected) ALL PRODUCTS
+        each topic in topics
+          - const selected = topic.id === filter
+          option(value=topic.id selected=selected) #{topic.title.toUpperCase()}
       input(type="submit").btn.btn-primary.mx-auto.d-block.mt-4
   .products.my-5
     for product in products
@@ -25,8 +26,11 @@ block content
         .card-body
           h4.card-title #{product.title}
           p.class-text
+            | Topic: 
+            span.text-uppercase #{product.topic.title}
+          p.class-text
             = product.description
-          
+
           a(href= editUrl).btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
             Edit
           a(href= deleteUrl).btn.btn-outline-primary.btn-lg.btn-block Delete

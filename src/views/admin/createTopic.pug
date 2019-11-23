@@ -25,7 +25,7 @@ block content
       label(for='category')| Select category
       select(name="category" multiple).form-control
         each category in categories
-          option(value=category._id selected = category.selected) #{category.title}
+          option(value=category._id selected = category.selected).text-uppercase #{category.title}
     div.form-group
       label(for="description") Topic Description
       textarea(name='description', placeholder="Product Description", required).form-control #{description}
