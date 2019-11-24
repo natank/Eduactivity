@@ -12,7 +12,7 @@ import fs from 'fs';
 import renamePath from '../util/renamePath';
 
 exports.getDashboard = function (req, res, next) {
-    res.sendFile(path.resolve(__dirname, '../../dist/dashboard.html'))
+    res.render('./admin/dashboard')
 }
 exports.getCreateProduct = async function (req, res, next) {
     try {
@@ -181,7 +181,6 @@ exports.postCreateProduct = async function (req, res, next) {
             createdBy: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
         })
         res.redirect('/admin/products')
-        console.log(product)
     } catch (err) {
         next(err)
     }

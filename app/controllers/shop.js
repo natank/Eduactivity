@@ -1,9 +1,10 @@
 const path = require('path');
 const Category = require('../models/Category');
 const Topic = require('../models/Topic');
+const Product = require('../models/Product');
 
 exports.getHome = async function (req, res, next) {
-  console.log("get index");
+  
   try {
     const categories = await Category.find({}, 'title')
     let topicsPerCategoryPromise = categories.map(category => {
@@ -21,11 +22,18 @@ exports.getHome = async function (req, res, next) {
   } catch (err) {
     next(err)
   }
-  // res.sendFile(path.resolve(__dirname, '../../dist/index.html'))
 }
 
-exports.getTopic = function (req, res, next) {
-  res.sendFile(path.resolve(__dirname, '../../dist/topic.html'))
+exports.getTopic = async function (req, res, next) {
+  try{
+    const topic = await Topic.findById(req.params.id);
+    const products = await Product.find({topic: req.params.id});
+
+    res.render('./shop/topic', {topic: topic, products: products})
+  } catch(err){
+    next(err)
+  }
+    
 }
 
 exports.getProduct = function (req, res, next) {

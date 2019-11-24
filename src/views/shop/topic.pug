@@ -4,29 +4,17 @@ block content
   h1.text-center.my-4
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
 
-  h2.text-center.mb-4  
-    | XMAS Printables
-  .topics
-    .card(style='width: 18rem;')
-      img(src=require("../../images/maze.jpg"), alt="maze").card-img-top
-      .card-body
-        h5.card-title Maze
-        p.card-text
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
-        a.btn.btn-primary(href='/product') Buy Now
-    .card(style='width: 18rem;')
-      img(src=require("../../images/puzzle.jpg"), alt="maze").card-img-top
-      .card-body
-        h5.card-title Puzzle
-        p.card-text
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
-        a.btn.btn-primary(href='/product') Buy Now
-    .card(style='width: 18rem;')
-      img(src=require("../../images/puzzle.jpg"), alt="maze").card-img-top
-      .card-body
-        h5.card-title Maze
-        p.card-text
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pretium tellus eu pulvinar condimentum. Proin eleifend odio lacus. Nullam convallis magna dolor.
-        a.btn.btn-primary(href='/product') Buy Now
+  h2.text-center.mb-4 #{topic.title} Printables
+  .products
+    each product in products
+      - const imagePath = `/images/${product.imageName}`
+      - const productPath = `/product/${product.id}`
+      .card(style='width: 18rem;')
+        img(src= imagePath alt="maze").card-img-top
+        .card-body
+          h5.card-title #{product.title}
+          p.card-text
+            | #{product.description}
+          a.btn.btn-primary(href=productPath) Learn More
   include ../includes/footer.pug 
 
