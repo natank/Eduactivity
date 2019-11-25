@@ -1,0 +1,24 @@
+extends ../templates/container.pug
+block content
+    include ../includes/header.pug 
+    .login
+        form(action='action_page.php' method='post').login__form
+            .imgcontainer
+                img.avatar(src='img_avatar2.png' alt='Avatar')
+            .container
+                label(for='uname')
+                b Username
+                input(type='text' placeholder='Enter Username' name='uname' required)
+                label(for='psw')
+                b Password
+                input(type='password' placeholder='Enter Password' name='psw' required)
+                button(type='submit') Login
+                label
+                input(type='checkbox' checked name='remember')
+                |  Remember me
+
+            .container(style='background-color:#f1f1f1')
+                button.cancelbtn(type='button') Cancel
+                span.psw
+                    | Forgot 
+                    a(href='#') password?

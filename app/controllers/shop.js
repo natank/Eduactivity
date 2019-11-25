@@ -36,6 +36,13 @@ exports.getTopic = async function (req, res, next) {
     
 }
 
-exports.getProduct = function (req, res, next) {
+exports.getProduct = async function (req, res, next) {
+  try{
+
+  }catch(err){
+    next(err)
+  }
+  const prodId = req.params.id;
+  const product = 
   res.sendFile(path.resolve(__dirname, '../../dist/product.html'))
 }

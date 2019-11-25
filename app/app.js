@@ -20,7 +20,8 @@ const webpackDevMiddleware = require("webpack-dev-middleware")(
 
 const webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
 const shopRoutes = require("./routes/shop");
-const adminRoutes = require("./routes/admin")
+const adminRoutes = require("./routes/admin");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/', shopRoutes)
 app.use('/admin', adminRoutes)
+app.use('/auth', authRoutes)
 
 
 const connect = (async function (app) {
