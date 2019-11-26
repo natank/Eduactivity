@@ -1,10 +1,8 @@
 extends ../templates/container.pug
 block content
     include ../includes/header.pug 
-    .login
-        form(action='action_page.php' method='post').login__form
-            .imgcontainer
-                img.avatar(src='img_avatar2.png' alt='Avatar')
+    .auth.d-flex.flex-column.justify-content-center.align-items-center
+        form(action='action_page.php' method='post').auth__form
             .container
                 label(for='uname')
                 b Username

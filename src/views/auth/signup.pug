@@ -1,4 +1,22 @@
 extends ../templates/container.pug
 block content
-  include ../includes/header.pug 
-  h1.text-center SIGNUP
+    include ../includes/header.pug 
+    .auth.d-flex.flex-column.justify-content-center.align-items-center
+        form(action='action_page.php' method='post').auth__form
+            .container
+                label(for='uname')
+                b Username
+                input(type='text' placeholder='Enter Username' name='uname' required)
+                label(for='psw')
+                b Password
+                input(type='password' placeholder='Enter Password' name='psw' required)
+                button(type='submit') Login
+                label
+                input(type='checkbox' checked name='remember')
+                |  Remember me
+
+            .container(style='background-color:#f1f1f1')
+                button.cancelbtn(type='button') Cancel
+                span.psw
+                    | Forgot 
+                    a(href='#') password?
