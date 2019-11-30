@@ -1,4 +1,59 @@
 @import url(//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css);
+.auth {
+  height: 92vh; }
+  .auth__form {
+    border: 3px solid #f1f1f1;
+    width: 25%;
+    margin: auto;
+    /* Full-width inputs */
+    /* Set a style for all buttons */
+    /* Extra style for the cancel button (red) */
+    /* Center the avatar image inside this container */
+    /* Avatar image */
+    /* Add padding to containers */
+    /* The "Forgot password" text */
+    /* Change styles for span and cancel button on extra small screens */ }
+    .auth__form input[type=text], .auth__form input[type=password] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box; }
+    .auth__form button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      /* Add a hover effect for buttons */ }
+      .auth__form button:hover {
+        opacity: 0.8; }
+    .auth__form .cancelbtn {
+      width: auto;
+      padding: 10px 18px;
+      background-color: #f44336; }
+    .auth__form .imgcontainer {
+      text-align: center;
+      margin: 24px 0 12px 0; }
+    .auth__form img.avatar {
+      width: 40%;
+      border-radius: 50%; }
+    .auth__form .container {
+      padding: 16px; }
+    .auth__form span.psw {
+      float: right;
+      padding-top: 16px; }
+    @media screen and (max-width: 300px) {
+      .auth__form span.psw {
+        display: block;
+        float: none; }
+      .auth__form .cancelbtn {
+        width: 100%; } }
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -8551,57 +8606,6 @@ a.text-dark:hover, a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6; } }
 
-form .login {
-  border: 3px solid #f1f1f1;
-  /* Full-width inputs */
-  /* Set a style for all buttons */
-  /* Extra style for the cancel button (red) */
-  /* Center the avatar image inside this container */
-  /* Avatar image */
-  /* Add padding to containers */
-  /* The "Forgot password" text */
-  /* Change styles for span and cancel button on extra small screens */ }
-  form .login input[type=text], form .login input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box; }
-  form .login button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    /* Add a hover effect for buttons */ }
-    form .login button:hover {
-      opacity: 0.8; }
-  form .login .cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336; }
-  form .login .imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0; }
-  form .login img.avatar {
-    width: 40%;
-    border-radius: 50%; }
-  form .login .container {
-    padding: 16px; }
-  form .login span.psw {
-    float: right;
-    padding-top: 16px; }
-  @media screen and (max-width: 300px) {
-    form .login span.psw {
-      display: block;
-      float: none; }
-    form .login .cancelbtn {
-      width: 100%; } }
-
 body {
   font-family: 'Roboto1', sans-serif; }
 
@@ -8627,6 +8631,9 @@ body {
 
 .container-page {
   background-color: aliceblue; }
+
+html {
+  font-size: 16px; }
 
 
 /*# sourceMappingURL=main.css.map*/

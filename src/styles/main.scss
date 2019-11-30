@@ -1,12 +1,15 @@
 @import "custom";
 @import "auth";
 
+
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+
+
+
 body {
   font-family:'Roboto1', sans-serif;
 }
-
 
 .navbar-brand {
   font-family: 'McLaren', cursive;

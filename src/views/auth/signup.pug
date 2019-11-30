@@ -1,22 +1,21 @@
 extends ../templates/container.pug
 block content
-    include ../includes/header.pug 
-    .auth.d-flex.flex-column.justify-content-center.align-items-center
-        form(action='action_page.php' method='post').auth__form
-            .container
-                label(for='uname')
-                b Username
-                input(type='text' placeholder='Enter Username' name='uname' required)
-                label(for='psw')
-                b Password
-                input(type='password' placeholder='Enter Password' name='psw' required)
-                button(type='submit') Login
-                label
-                input(type='checkbox' checked name='remember')
-                |  Remember me
+  include ../includes/header.pug
+  main.d-flex.flex-column.align-items-center.flex-grow-1
+    if(errorMessage.length > 0)
+      div.user-message.user-message--error #{errorMessage}
+    form.signup-form(action="/signup" method="POST").w-25.d-flex.flex-column.justify-content-center.flex-grow-1
+      input(type="hidden" name=_csrf value=csrfToken)
+      div.form-group
+        label(for="email") E-Mail
+        input.form-control(class=validationErrors.find(e=>e.param==='email') ? 'invalid':'' type="text" name="email" id="email" value= oldInput.email)
 
-            .container(style='background-color:#f1f1f1')
-                button.cancelbtn(type='button') Cancel
-                span.psw
-                    | Forgot 
-                    a(href='#') password?
+      div.form-group
+        label(for="password") Password
+        input.form-control(class= (validationErrors.find(e=>e.param==='password') ? 'invalid':'') type="password" name="password" value=oldInput.password)
+
+      div.form-group
+        label(for="password") Confirm Password
+        input.form-control(class= (validationErrors.find(e=>e.param==='password') ? 'invalid':'') type="password" name="confirmPassword" value=oldInput.password)
+
+      button.btn.btn-primary(type="submit") Signup
