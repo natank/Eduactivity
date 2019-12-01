@@ -3,7 +3,7 @@ const {
   check,
   body
 } = require('express-validator/check');
-const User = require('../models/user');
+const User = require('../models/User');
 const authController = require('../controllers/auth');
 const bcrypt = require('bcryptjs');
 

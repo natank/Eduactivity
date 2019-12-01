@@ -7,6 +7,11 @@ const userSchema = new Schema({
   name: {
     type: String
   },
+  admin: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
   email: {
     type: String,
     required: true

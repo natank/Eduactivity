@@ -2,7 +2,7 @@ import express from "express";
 import path from 'path';
 import session from 'express-session';
 import webpack from 'webpack';
-
+import User from './models/User';
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const mongoConnect = require('./util/database').mongoConnect;
@@ -114,6 +114,9 @@ const userMW = (function (app) {
 
         if (user) {
           req.user = user;
+          console.log(`user = ${user}`)
+          res.locals.user = user.email
+          console.log(`user = ${res.locals.user}`)
         }
       } catch (err) {
         throw new Error(err);

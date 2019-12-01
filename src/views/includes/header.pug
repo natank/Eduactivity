@@ -13,12 +13,22 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
     form.form-inline.my-2.my-lg-0.mr-0.justify-content-end.mx-4
       input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search')
       button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+
     ul.nav.navbar-nav.navbar-right
-      li.mx-2
-        a(href='/auth/signup').btn
-          span.glyphicon.glyphicon-user
-          |  Sign Up
-      li
-        a(href='/auth/login').btn
-          span.glyphicon.glyphicon-log-in
-          |  Login
+      if !isLoggedIn
+        li.mx-2
+          a(href='/auth/signup').btn
+            span.glyphicon.glyphicon-user
+            |  Sign Up
+        li
+          a(href='/auth/login').btn
+            span.glyphicon.glyphicon-log-in
+            |  Login
+      else
+        li
+          span.btn.text-info Hello #{user}
+
+        li
+          a(href='/auth/logout').btn
+            span.glyphicon.glyphicon-log-out
+            |  Logout

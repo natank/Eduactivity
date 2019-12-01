@@ -3,7 +3,7 @@ const {
     validationResult
 } = require('express-validator/check')
 
-let User = require('../models/user');
+let User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const transporter = require('../util/mailer').transporter;
 
@@ -141,7 +141,7 @@ exports.postSignup = async (req, res, next) => {
                 password: hashedPassword
             });
             let result = await user.save();
-            res.redirect('/login');
+            res.redirect('login');
             await transporter.sendMail({
                 to: email,
                 from: 'shop@nodecomplete.com',
