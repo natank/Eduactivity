@@ -5,12 +5,13 @@ block content
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
 
   h2.text-center.mb-4  
-    | XMAS Maze
+    | #{product.title}
   .product
     .card(style='width: 33%;').mx-auto
       img(src=require("../../images/maze.jpg"), alt="maze").card-img-top
       .card-body.text-center
-        a.btn.btn-primary(href='#') Print Now
+        -const path = `/addToCart/${product.id}`
+        a.btn.btn-primary(href='/addToCart/') Add to Cart
 
   include ../includes/footer.pug 
 

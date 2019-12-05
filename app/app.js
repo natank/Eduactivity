@@ -114,9 +114,7 @@ const userMW = (function (app) {
 
         if (user) {
           req.user = user;
-          console.log(`user = ${user}`)
           res.locals.user = user.email
-          console.log(`user = ${res.locals.user}`)
         }
       } catch (err) {
         throw new Error(err);
