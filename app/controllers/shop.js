@@ -4,7 +4,7 @@ const Topic = require('../models/Topic');
 const Product = require('../models/Product');
 
 exports.getHome = async function (req, res, next) {
-  
+
   try {
     const categories = await Category.find({}, 'title')
     let topicsPerCategoryPromise = categories.map(category => {
@@ -25,26 +25,26 @@ exports.getHome = async function (req, res, next) {
 }
 
 exports.getTopic = async function (req, res, next) {
-  try{
+  try {
     const topic = await Topic.findById(req.params.id);
-    const products = await Product.find({topic: req.params.id});
+    const products = await Product.find({ topic: req.params.id });
 
-    res.render('./shop/topic', {topic: topic, products: products})
-  } catch(err){
+    res.render('./shop/topic', { topic: topic, products: products })
+  } catch (err) {
     next(err)
   }
-    
+
 }
 
 exports.getProduct = async function (req, res, next) {
-  try{
+  try {
 
-  }catch(err){
+  } catch (err) {
     next(err)
   }
   const prodId = req.params.id;
   const product = await Product.findById(prodId);
-  res.render('./shop/product', {product: product})
+  res.render('./shop/product', { product: product })
   res.sendFile(path.resolve(__dirname, '../../dist/product.html'))
 }
 
@@ -75,12 +75,18 @@ exports.getCart = async (req, res, next) => {
 };
 
 exports.postCart = async (req, res, next) => {
+
   const prodId = req.body.productId;
   try {
-    const product = await Product.findById(prodId);
-    let result = await req.user.addToCart(product);
+
+    await Product.estimatedDocumentCount({ _id: prodId }, async (err, num) => {
+      if (err) throw (err)
+      else if (num > 0) {
+        let result = await req.user.addToCart(prodId);
+      }
+      res.redirect('/cart');
+    });
     // console.log(result);
-    res.redirect('/cart');
   } catch (err) {
     const error = new Error(err)
     error.httpStatusCode = 500;
@@ -96,8 +102,8 @@ exports.postCartDeleteProduct = async (req, res, next) => {
   }).execPopulate();
 
   user.cart = user.cart.filter(item => {
-    let removeThisItem = item.item.product._id.toString() !== prodId;
-    return removeThisItem;
+    let leaveInCart = item.product.toString() !== prodId;
+    return leaveInCart;
   });
   try {
     await user.save();

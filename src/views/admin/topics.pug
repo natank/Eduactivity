@@ -6,6 +6,7 @@ block content
   a.btn.btn-primary.btn-lg.mx-auto(href='/admin/createTopic', role='button') 
     | Create Topic
   form.w-25.mx-auto(action='/admin/topics')
+    input(type="hidden" name="_csrf" value=csrfToken)
     div.form-group
       label(for="categories") Filter by Category
       select(name="filter" id="categories").form-control 

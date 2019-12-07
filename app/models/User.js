@@ -44,14 +44,14 @@ const userSchema = new Schema({
 
 
 
-userSchema.methods.addToCart = async function (product) {
+userSchema.methods.addToCart = async function (prodId) {
 
   let user = this;
   let cart = [...user.cart]
   let p = new Promise(async (resolve, reject) => {
 
     const cartItemIndex = cart.findIndex(item => {
-      return item.product._id.toString() === product._id.toString();
+      return item.product.toString() === prodId.toString();
     });
     let newQuantity = 1;
     let cartItem;
@@ -60,9 +60,10 @@ userSchema.methods.addToCart = async function (product) {
         cartItem = await cart[cartItemIndex];
         cartItem.quantity += 1
         user = await user.save();
+
       } else { // item yet not exist in cart
         cartItem = {
-          product: product._id,
+          product: prodId,
           quantity: newQuantity
         }
         cart.push(cartItem)
@@ -70,8 +71,8 @@ userSchema.methods.addToCart = async function (product) {
 
         user = await user.save();
         if (!user) reject(`error saving cart item:\n${err}`)
-        resolve();
       }
+      resolve();
     } catch (err) {
       reject(err);
     }

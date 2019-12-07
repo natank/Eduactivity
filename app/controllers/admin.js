@@ -34,7 +34,7 @@ exports.getCreateTopic = async function (req, res, next) {
 
 exports.getEditProduct = async function (req, res, next) {
     try {
-        let product = await Product.findById(req.params.id);
+        let product = await Product.findById(req.params.id).populate({ path: 'topic', select: 'title' });
         let topics = await Topic.find({}, 'title')
         res.render('admin/createProduct', { product: product, isEdit: true, topics: topics })
     } catch (err) {
@@ -245,7 +245,6 @@ exports.postEditTopic = async function (req, res, next) {
 
     const keys = { title, description, category, imageName: fileName }
     if (fileExist) { // new image was updated
-        debugger
         let topic
         try {
             topic = await Topic.findById(topicId, 'imageName')

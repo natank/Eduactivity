@@ -12,6 +12,7 @@ block content
   h2.text-center.my-4
     | #{isEdit ? "Edit Product" : "Add Product"}
   form(action= action method='POST' enctype="multipart/form-data").border.border-info.w-75.align-self-center.p-4
+    input(type="hidden" name="_csrf" value=csrfToken)
     - if(isEdit)
       input(type="hidden", id="id", name= "prodId", value= prodId)
     div.form-group
@@ -35,8 +36,8 @@ block content
       select(name="topic" multiple).form-control
         each topic in topics
           - let isSelected = false
-          - if(topicName === topic.title) isSelected = true
-          option(value= topic._id selected= isSelected).text-uppercase  #{topic.title}
+          - if(product.topic.id === topic.id) isSelected = true
+          option(value= topic.id selected= isSelected).text-uppercase  #{topic.title}
     div.form-group
       label(for="description") Product Description
       textarea(name='description', placeholder="Product Description", required).form-control #{description}

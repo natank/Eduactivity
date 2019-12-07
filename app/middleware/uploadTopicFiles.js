@@ -15,29 +15,29 @@ const
   renamePath = require('../util/renamePath');
 
 async function uploadTopicFiles(req, res, next) {
-  const form = new formidable.IncomingForm();
-  form.parse(req, async function (err, fields, files) {
-    let newImageName = null;
-    if (files.fileurl.size) {
-      const oldImageUrlPath = files.fileurl.path;
-      newImageName = `${currentTime()}${files.fileurl.name}`;
+  let newImageName = null;
+  const files = req.files;
+  const fields = req.fields;
 
-      const newImageUrlPath = path.join(
-        __dirname,
-        '../images',
-        newImageName
-      );
+  if (files.fileurl.size) {
+    const oldImageUrlPath = files.fileurl.path;
+    newImageName = `${currentTime()}${files.fileurl.name}`;
 
-      try {
-        await renamePath(oldImageUrlPath, newImageUrlPath)
-      } catch (err) {
-        next(err)
-      }
+    const newImageUrlPath = path.join(
+      __dirname,
+      '../images',
+      newImageName
+    );
+
+    try {
+      await renamePath(oldImageUrlPath, newImageUrlPath)
+    } catch (err) {
+      next(err)
     }
-    req.fields = fields;
-    req.fields.imageName = newImageName;
-    next()
-  })
+  }
+  fields.imageName = newImageName;
+  next()
+
 }
 
 module.exports = uploadTopicFiles;

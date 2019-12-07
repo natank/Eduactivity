@@ -5,6 +5,7 @@ const uploadProductFiles = require('../middleware/uploadProductFiles')
 const uploadTopicFiles = require('../middleware/uploadTopicFiles');
 const uploadSingleFile = require('../middleware/uploadSingleFile');
 
+
 router.get('/', adminController.getDashboard);
 router.get('/createProduct', adminController.getCreateProduct);
 router.get('/createCategory', adminController.getCreateCategory);

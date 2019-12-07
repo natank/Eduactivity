@@ -6,8 +6,9 @@ block content
   include ../includes/header.pug 
   h2.text-center.my-4
     | #{isEdit ? "Edit Category" : "Add Category"}
-  
+
   form(action=action method='POST').border.border-info.w-75.align-self-center.p-4
+    input(type="hidden" name="_csrf" value=csrfToken)
     input(type="hidden", name="id", value= id)
     div.form-group
       label(for='title') 

@@ -10,16 +10,17 @@ block content
           li.cart__item
             h1 #{item.product.title}
             h2 Quantity: #{item.quantity}
-              form(action="/cart-delete-item" method="POST")
-                input(type="hidden" name="_csrf" value= csrfToken)
-                input(type="hidden" value= item.product._id name="productId")
-                button.btn.danger(type="submit") Delete
+            form(action="/cart-delete-item" method="POST")
+              input(type="hidden" name="_csrf" value= csrfToken)
+              input(type="hidden" value= item.product._id name="productId")
+              button.btn.danger(type="submit") 
+                span.glyphicon.glyphicon-trash
 
       hr
       div.centered
         form(action="/create-order" method="POST")
           input(type="hidden" name="_csrf" value= csrfToken)
-          button(type="submit" class="btn") Order Now!
+          button(type="submit").btn Order Now!
     else
       h1 
         | No Products in Cart!

@@ -19,43 +19,29 @@
  *  * 
  */
 const
-  formidable = require('formidable'),
-  path = require('path'),
-  currentTime = require('../util/currentTime'),
-  form = new formidable.IncomingForm();
-  
-let formFields, formFiles
+    formidable = require('formidable'),
+    path = require('path'),
+    currentTime = require('../util/currentTime'),
+    form = new formidable.IncomingForm();
 
-async function uploadTopicFiles(req, res, next) {  
-    try{
-      await getFormInfo(req);
-      loadFileToServerLocation(req);
-      next()
-    } catch(err){
+
+
+async function uploadTopicFiles(req, res, next) {
+    req.fileExist = (req.files.fileurl.size > 0)
+    try {
+
+        loadFileToServerLocation(req);
+        next()
+    } catch (err) {
         next(err)
     }
 }
 
-function getFormInfo(req){
-    let p = new Promise((resolve, reject)=>{
 
-        form.parse(req, function (err, fields, files) {
-           if(err){
-               reject(err)
-           } 
-           req.fileExist = (files.fileurl.size > 0)
-           req.files = files;
-           req.fields = fields
-           resolve()
-        })
-    })
-    return p
-}
-
-function loadFileToServerLocation(req){
-    if(req.fileExist){
+function loadFileToServerLocation(req) {
+    if (req.fileExist) {
         req.filePath = req.files.fileurl.path
-        req.fileName = `${currentTime()}${req.files.fileurl.name}`;  
+        req.fileName = `${currentTime()}${req.files.fileurl.name}`;
     }
 }
 

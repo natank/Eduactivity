@@ -1,6 +1,7 @@
 import express from "express";
 import path from 'path';
 import session from 'express-session';
+import multipartExtract from './middleware/multipartExtract';
 import webpack from 'webpack';
 import User from './models/User';
 const MongoDBStore = require('connect-mongodb-session')(session);
@@ -58,6 +59,9 @@ const sessionMW = (function (app) {
   );
 })(app)
 
+/**
+ * data middleware
+ */
 const dataMW = (function (app) {
   app.use(
     bodyParser.urlencoded({
@@ -68,6 +72,18 @@ const dataMW = (function (app) {
     bodyParser.json()
   )
 })(app)
+
+
+/**
+ * multipart middleware
+ */
+
+app.post('*', multipartExtract)
+
+/**
+ * Webpack middleware
+ */
+
 const webpackMW = (function (app) {
   app.use(webpackDevMiddleware);
   app.use(webpackHotMiddleware);
@@ -94,6 +110,7 @@ const generalMW = (function (app) {
  */
 
 const csrfMW = (function (app) {
+
   app.use(csrfProtection);
 })(app)
 
@@ -126,9 +143,17 @@ const userMW = (function (app) {
 
 const endPointsMW = (function (app) {
   app.use('/', shopRoutes)
+  app.use('/shop', shopRoutes)
   app.use('/admin', adminRoutes)
   app.use('/auth', authRoutes)
 })(app)
+
+app.use((req, res, next) => {
+  console.log('endpoints mw done')
+  next()
+})
+
+
 
 const connect = (async function (app) {
   await mongoConnect();

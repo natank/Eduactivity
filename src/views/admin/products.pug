@@ -6,6 +6,7 @@ block content
   a.btn.btn-primary.btn-lg.mx-auto.my-4(href='/admin/createProduct', role='button')
     | Create Product
   form(action='products' ).w-25.mx-auto
+    input(type="hidden" name="_csrf" value=csrfToken)
     div.form-group
       label(for="topic") Filter by Topic
       select(name="topic" id="topic").form-control
