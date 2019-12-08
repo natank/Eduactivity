@@ -7,11 +7,17 @@ block content
   h2.text-center.mb-4  
     | #{product.title}
   .product
+    - const imagePath = `/images/${product.imageName}`
     .card(style='width: 33%;').mx-auto
-      img(src=require("../../images/maze.jpg"), alt="maze").card-img-top
+      img(src=imagePath, alt=product.title).card-img-top
       .card-body.text-center
-        -const path = `/addToCart/${product.id}`
-        a.btn.btn-primary(href='/addToCart/') Add to Cart
+      .card-body
+        p.card-text
+          | #{product.description}
+        -const addToCart = `/addToCart/${product.id}`
+        -const orderNow = `/order/${product.id}`
+        a.btn.btn-primary(href= addToCart) Add to Cart
+        a.btn.btn-primary(href= orderNow) Order Now
 
   include ../includes/footer.pug 
 

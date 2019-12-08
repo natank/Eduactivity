@@ -45,7 +45,6 @@ exports.getProduct = async function (req, res, next) {
   const prodId = req.params.id;
   const product = await Product.findById(prodId);
   res.render('./shop/product', { product: product })
-  res.sendFile(path.resolve(__dirname, '../../dist/product.html'))
 }
 
 
