@@ -2,6 +2,8 @@ const path = require('path');
 const Category = require('../models/Category');
 const Topic = require('../models/Topic');
 const Product = require('../models/Product');
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 
 exports.getHome = async function (req, res, next) {
 

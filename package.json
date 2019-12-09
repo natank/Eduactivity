@@ -58,6 +58,7 @@
     "nodemailer": "^6.3.1",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "nodemon": "^1.19.4",
+    "pdfkit": "^0.10.0",
     "popper.js": "^1.16.0",
     "pug": "^2.0.4",
     "pug-loader": "^2.4.0",
