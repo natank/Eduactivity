@@ -224,3 +224,63 @@ exports.getInvoiceFile = async (req, res, next) => {
     next(err)
   }
 }
+
+exports.getCheckout = async (req, res, next) => {
+  try {
+    let user = await req.user.populate({
+      path: 'cart.product',
+    }).execPopulate();
+
+    let uiCart = user.cart.reduce((prev, item, index, cart) => {
+      if (item.product) {
+        let cartItem = {
+          product: item.product,
+          quantity: item.quantity
+        }
+        prev.push(cartItem)
+      } else {
+        // if product not exist anymore - remove it from cart
+        cart.splice(index)
+      }
+      return prev;
+    }, []);
+    // await user.save();
+
+    let totalCartValue = uiCart.reduce((prev, curr) => {
+      return prev + curr.product.price * curr.quantity
+    }, 0)
+
+    const stripe = require('stripe')('sk_test_nnqXbNzNuX3Fy5p9NjjHX9ft00wlTX6B5H');
+
+    const checkoutSession = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [{
+        name: 'T-shirt',
+        description: 'Comfortable cotton t-shirt',
+        images: ['https://example.com/t-shirt.png'],
+        amount: 500,
+        currency: 'usd',
+        quantity: 1,
+      }],
+      success_url: 'http://127.0.0.1:3000/create-order/?session_id={CHECKOUT_SESSION_ID}',
+      cancel_url: 'https://example.com/cancel',
+    });
+
+    const {
+      id
+    } = checkoutSession;
+
+
+    res.render('shop/checkout', {
+      path: '/checkout',
+      pageTitle: 'Checkout',
+      cart: uiCart,
+      totalSum: totalCartValue,
+      checkoutSessionId: id
+    });
+  } catch (err) {
+    const error = new Error(err)
+    error.httpStatusCode = 500;
+    return next(error)
+  }
+}

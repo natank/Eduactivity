@@ -1,0 +1,19 @@
+extends ../templates/container.pug
+	block content
+		include ../includes/header.pug
+
+		script(src="https://js.stripe.com/v3/")
+		script(src="./scripts/stripe.js")
+		h1.text-center.my-4
+		| Checkout
+		main
+			ul class="cart__item-list"
+				each item in cart
+					li.cart__item
+						h1 #{item.product.title}
+						h2 Quantity: #{item.quantity}
+
+			div
+				h2.centered Total: #{totalSum}
+
+			button(onclick='createOrder('+#{checkoutSessionId}+')' Order Now!
