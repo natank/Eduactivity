@@ -262,7 +262,7 @@ exports.getCheckout = async (req, res, next) => {
         currency: 'usd',
         quantity: 1,
       }],
-      success_url: 'http://127.0.0.1:3000/create-order/?session_id={CHECKOUT_SESSION_ID}',
+      success_url: 'http://127.0.0.1:8080/create-order/?session_id={CHECKOUT_SESSION_ID}',
       cancel_url: 'https://example.com/cancel',
     });
 
