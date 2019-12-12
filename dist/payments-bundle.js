@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "ccda791e9c07e27f9209";
+/******/ 	var hotCurrentHash = "e1a396617324e049905c";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -1596,11 +1596,13 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 /*!*******************************!*\
   !*** ./src/scripts/stripe.js ***!
   \*******************************/
-/*! no exports provided */
+/*! exports provided: test1, createOrder */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "test1", function() { return test1; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createOrder", function() { return createOrder; });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ "./node_modules/@babel/runtime/helpers/asyncToGenerator.js");
@@ -1608,14 +1610,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var stripe = Stripe('pk_test_ONmXQwGjCyI0CVdXNjQrDUnq00vDxZmvml');
+function test1() {
+  alert("this is a test");
+}
+function createOrder(_x) {
+  return _createOrder.apply(this, arguments);
+}
 
-exports.createOrder =
-/*#__PURE__*/
-function () {
-  var _ref = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
+function _createOrder() {
+  _createOrder = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()(
   /*#__PURE__*/
   _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(sessionId) {
-    var _ref2, error;
+    var _ref, error;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
       while (1) {
@@ -1631,8 +1637,8 @@ function () {
             });
 
           case 3:
-            _ref2 = _context.sent;
-            error = _ref2.error;
+            _ref = _context.sent;
+            error = _ref.error;
 
           case 5:
           case "end":
@@ -1641,11 +1647,8 @@ function () {
       }
     }, _callee);
   }));
-
-  return function (_x) {
-    return _ref.apply(this, arguments);
-  };
-}();
+  return _createOrder.apply(this, arguments);
+}
 
 /***/ }),
 
