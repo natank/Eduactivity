@@ -3,7 +3,7 @@ block content
 	include ../includes/header.pug
 
 	script(src="https://js.stripe.com/v3/")
-	script(src="./scripts/stripe.js")
+	script(src="./payments-bundle.js")
 	h1.text-center.my-4
 		| Checkout
 	main
@@ -15,5 +15,5 @@ block content
 
 		div
 			h2.centered Total: #{totalSum}
-		
+
 		button(onclick=`createOrder('${checkoutSessionId}')`) Order Now!

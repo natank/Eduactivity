@@ -5,7 +5,8 @@ const isDevelopment = false//process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: {
-    main: ["./src/main.js"]
+    main: ["./src/main.js"],
+    payments: ["./src/scripts/stripe.js"]
   },
   mode: "development",
   output: {

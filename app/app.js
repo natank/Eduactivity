@@ -148,12 +148,6 @@ const endPointsMW = (function (app) {
   app.use('/auth', authRoutes)
 })(app)
 
-app.use((req, res, next) => {
-  console.log('endpoints mw done')
-  next()
-})
-
-
 
 const connect = (async function (app) {
   await mongoConnect();

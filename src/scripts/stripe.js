@@ -1,7 +1,7 @@
 var stripe = Stripe('pk_test_ONmXQwGjCyI0CVdXNjQrDUnq00vDxZmvml');
 
 
-exports.createOrder = async function(sessionId) {
+async function createOrder(sessionId) {
   console.log(JSON.stringify(sessionId))
   const {
     error
