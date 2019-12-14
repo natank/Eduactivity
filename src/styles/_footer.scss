@@ -1,0 +1,25 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  background-color: #2f3f2d;
+  color: #fff;
+  padding: 2rem;
+  .navbar-brand {
+    color: #fff;
+  }
+  grid-template-columns: repeat(2, 1fr);
+  &__nav{
+    padding-inline-start: 0;
+    display: flex;
+    list-style-type: none;
+    li {
+      margin-right: 1rem;
+    }
+    li a {
+      color: #fff
+    }
+  }
+
+}

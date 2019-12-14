@@ -1,9 +1,9 @@
 extends ../templates/container.pug
 block content
   include ../includes/header.pug 
-  h1.text-center.my-4
-    | DIY PRINTABLES FOR HOLIDAYS & PARTIES
-
+  .section.hero
+    h1.text-center.my-4
+      | DIY PRINTABLES FOR HOLIDAYS & PARTIES
   section.categories.mt-5
     each entry in data
       .category.card
