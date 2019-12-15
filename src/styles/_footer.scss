@@ -1,9 +1,10 @@
 .footer {
   display: flex;
+  background-color: $dark;
   flex-direction: column;
   margin-top: 3rem;
   margin-bottom: 3rem;
-  background-color: #2f3f2d;
+  
   color: #fff;
   padding: 2rem;
   .navbar-brand {

@@ -1,12 +1,12 @@
 @import "custom";
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+
 @import "auth";
 @import "cart";
 @import "orders";
 @import "hero";
 @import "footer";
-@import "../../node_modules/bootstrap/scss/bootstrap";
-@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
-
 
 
 body {
