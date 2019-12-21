@@ -7,10 +7,14 @@ block content
   section.categories.mt-5
     each entry in data
       .category.card
-        h2.card-title.text-center.text-uppercase #{entry.category.title}
+        - const category = entry.category
+        - categoryRoute = `/category/${category.id}`
+        a(href=categoryRoute).card-title.text-center.text-uppercase
+          h2 #{entry.category.title}
         div.topics.list-group
           each topic in entry.topics
-            - const href = `/topic/${topic.id}`
-            a(href=href).list-group-item.list-group-item-action #{topic.title}
+            - const topicRoute = `/topic/${topic.id}`
+            a(href=topicRoute).list-group-item.list-group-item-action.text-center.bg-success.text-light 
+              | #{topic.title}
   include ../includes/footer.pug 
 

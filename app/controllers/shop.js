@@ -4,15 +4,18 @@ const Topic = require('../models/Topic');
 const Product = require('../models/Product');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
-
+const mkdirp = require('mkdirp')
 exports.getHome = async function (req, res, next) {
 
   try {
     const categories = await Category.find({}, 'title')
+    // For every category - get the topics with that category
     let topicsPerCategoryPromise = categories.map(category => {
       return Topic.find({ category: category.id }, "title").exec()
     })
-    let topicsPerCategory = await Promise.all(topicsPerCategoryPromise)
+    let topicsPerCategory = await Promise.all(topicsPerCategoryPromise);
+
+    // Create the data stracture for the ui
     let data = topicsPerCategory.map((topics, index) => {
       let entry = {
         category: categories[index],
@@ -20,10 +23,29 @@ exports.getHome = async function (req, res, next) {
       }
       return entry
     })
+
+    // Filter categories that don't have topic yet.
+    data = data.filter(entry => {
+      const hasTopics = Array.isArray(entry.topics) && entry.topics.length;
+      return hasTopics;
+    })
+
     res.render('./shop/index', { data: data })
   } catch (err) {
     next(err)
   }
+}
+
+exports.getCategory = async function (req, res, next) {
+  try {
+    const category = await Category.findById(req.params.id);
+    const topics = await Topic.find({ category: req.params.id });
+
+    res.render('./shop/category', { category: category, topics: topics })
+  } catch (err) {
+    next(err)
+  }
+
 }
 
 exports.getTopic = async function (req, res, next) {
@@ -177,7 +199,16 @@ exports.findOrderToDownload = async (req, res, next) => {
 
 exports.getInvoiceName = (req, res, next) => {
   req.invoiceName = `invoice_${req.params.orderId}.pdf`
-  req.invoicePath = path.join('data', 'invoices', req.invoiceName);
+  const dir = path.join('data', 'invoices');
+  if (!fs.existsSync(dir)) {
+    mkdirp(dir, err => {
+      if (err) console.log(err);
+      else console.log('dir created');
+    })
+  }
+
+  req.invoicePath = path.join(dir, req.invoiceName);
+
   next()
 }
 
@@ -191,7 +222,12 @@ exports.getInvoiceFile = async (req, res, next) => {
       'inline; filename="' + req.invoiceName + '"'
     );
 
-    pdfDoc.pipe(fs.createWriteStream(req.invoicePath));
+    const ws = fs.createWriteStream(req.invoicePath)
+    ws.on('error', e => {
+      console.log(`failed creating write stream: ${e}`)
+    })
+    pdfDoc.pipe(ws);
+
     pdfDoc.pipe(res);
 
     pdfDoc.fontSize(26).text('Invoice', {

@@ -25,7 +25,8 @@ block content
         - const imgUrl = "/images/"+topic.imageName
         - const editUrl = "/admin/editTopic/"+topic._id
         - const deleteUrl = "/admin/deleteTopic/"+topic._id
-        img(src= imgUrl alt= title).img-fluid
+        picture
+          img(src= imgUrl alt= title).simg-fluid
         .card-body
           h5.card-title= title
           p.class-text #{description }

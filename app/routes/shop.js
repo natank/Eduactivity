@@ -9,6 +9,7 @@ router.get('/', shopController.getHome)
 
 router.get('/topic/:id', shopController.getTopic)
 router.get('/product/:id', shopController.getProduct)
+router.get('/category/:id', shopController.getCategory)
 
 router.get('/cart', isAuth, shopController.getCart);
 router.post('/cart', isAuth, shopController.postCart);

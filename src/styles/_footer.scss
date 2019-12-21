@@ -1,25 +1,35 @@
 .footer {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 1rem;
   background-color: $dark;
-  flex-direction: column;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  
-  color: #fff;
   padding: 2rem;
+  color: #fff;
   .navbar-brand {
     color: #fff;
   }
-  grid-template-columns: repeat(2, 1fr);
-  &__nav{
-    padding-inline-start: 0;
+  &__logo{
+    display: block;
+    grid-column: 1 / last-col;
+    grid-row-start: 1;
+  }
+  &__main {
+    grid-column: 2 / 11;
     display: flex;
-    list-style-type: none;
-    li {
-      margin-right: 1rem;
+    justify-content: space-between;
+    
+  }
+  &__copyrights{
+    grid-column: 1 / last-col;
+    font-size: 0.8rem;
+    p {
+      margin-bottom: 0rem
     }
-    li a {
-      color: #fff
+  }
+  &__content {
+    text-align: center;
+    a {
+      color: #fff;
     }
   }
 

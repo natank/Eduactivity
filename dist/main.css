@@ -8680,35 +8680,51 @@ a.text-dark:hover, a.text-dark:focus {
             transform: translate(-50%, -50%); }
 
 .footer {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 1rem;
   background-color: #343a40;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  color: #fff;
   padding: 2rem;
-  grid-template-columns: repeat(2, 1fr); }
+  color: #fff; }
   .footer .navbar-brand {
     color: #fff; }
-  .footer__nav {
-    -webkit-padding-start: 0;
-            padding-inline-start: 0;
+  .footer__logo {
+    display: block;
+    grid-column: 1 / last-col;
+    grid-row-start: 1; }
+  .footer__main {
+    grid-column: 2 / 11;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    list-style-type: none; }
-    .footer__nav li {
-      margin-right: 1rem; }
-    .footer__nav li a {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
+  .footer__copyrights {
+    grid-column: 1 / last-col;
+    font-size: 0.8rem; }
+    .footer__copyrights p {
+      margin-bottom: 0rem; }
+  .footer__content {
+    text-align: center; }
+    .footer__content a {
       color: #fff; }
+
+.section {
+  margin-top: 3rem;
+  margin-bottom: 3rem; }
+
+a.card-title {
+  text-decoration: none; }
+  a.card-title h2 {
+    margin: 0; }
+
+.card .card-title {
+  background-color: #007bff;
+  color: #f8f9fa;
+  padding: 1rem; }
 
 body {
   font-family: 'Roboto1', sans-serif; }
@@ -8725,7 +8741,14 @@ body {
   row-gap: 2rem;
   justify-items: center; }
   .categories .card, .topics .card, .products .card {
-    max-width: 350px; }
+    width: 100%; }
+  .categories picture, .topics picture, .products picture {
+    width: 100%;
+    height: 200px;
+    text-align: center; }
+    .categories picture img, .topics picture img, .products picture img {
+      max-height: 100%;
+      max-width: 100%; }
 
 .dashboard__options {
   font-size: 1.5rem; }
