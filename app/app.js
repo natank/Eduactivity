@@ -42,6 +42,29 @@ const store = new MongoDBStore({
 const csrfProtection = csrf();
 
 /**
+ * data middleware
+ */
+const dataMW = (function (app) {
+  app.use(
+    bodyParser.urlencoded({
+      extended: false
+    })
+  );
+  app.use(
+    bodyParser.json()
+  )
+
+})(app)
+
+/**
+ * multipart middleware
+ */
+
+app.post('*', multipartExtract)
+
+
+
+/**
  * 
  * Session middleware
  * 
@@ -59,26 +82,8 @@ const sessionMW = (function (app) {
   );
 })(app)
 
-/**
- * data middleware
- */
-const dataMW = (function (app) {
-  app.use(
-    bodyParser.urlencoded({
-      extended: false
-    })
-  );
-  app.use(
-    bodyParser.json()
-  )
-})(app)
 
 
-/**
- * multipart middleware
- */
-
-app.post('*', multipartExtract)
 
 /**
  * Webpack middleware

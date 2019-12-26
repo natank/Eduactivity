@@ -14,7 +14,8 @@ const formidable = require('formidable'),
 
 async function uploadProductFiles(req, res, next) {
 
-  const { files, fields } = { ...req }
+  const { files, body } = { ...req }
+  const fields = body;
   const tempPrintablePath = files.printable.path;
   const tempImagePath = files.imageurl.path;
   const printableDir = path.join(

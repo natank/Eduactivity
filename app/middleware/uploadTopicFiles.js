@@ -17,7 +17,7 @@ const
 async function uploadTopicFiles(req, res, next) {
   let newImageName = null;
   const files = req.files;
-  const fields = req.fields;
+  const fields = req.body;
 
   if (files.fileurl.size) {
     const oldImageUrlPath = files.fileurl.path;

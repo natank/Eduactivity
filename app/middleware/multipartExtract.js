@@ -6,8 +6,8 @@ module.exports = async (req, res, next) => {
       const form = new formidable.IncomingForm();
       form.parse(req, function (err, fields, files) {
         req.files = files;
-        req.fields = fields;
         req.body._csrf = fields._csrf ? fields._csrf : req.body._csrf;
+        req.body = { ...req.body, ...fields };
         resolve()
       })
     })

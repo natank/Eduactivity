@@ -10,6 +10,7 @@ import Category from '../models/Category';
 import mongoose from 'mongoose';
 import fs from 'fs';
 import renamePath from '../util/renamePath';
+const { check, validationResult } = require('express-validator');
 
 exports.getDashboard = function (req, res, next) {
     res.render('./admin/dashboard')
@@ -169,26 +170,51 @@ exports.getDeleteTopic = async function (req, res, next) {
 }
 
 exports.postCreateProduct = async function (req, res, next) {
-    try {
-        const { title, price, description, imageName, printableName, topic } = req.fields;
-        let product = await Product.create({
-            title: title,
-            price: price,
-            description: description,
-            imageName: imageName,
-            printableName: printableName,
-            topic: topic,
-            createdBy: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
+    const errors = validationResult(req);
+    const { title, price, description, imageName, printableName, topic } = req.body;
+    if (errors.isEmpty()) {
+        await createTheProduct()
+    } else {
+        showErrors()
+    }
+    async function createTheProduct() {
+        try {
+            let product = await Product.create({
+                title: title,
+                price: price,
+                description: description,
+                imageName: imageName,
+                printableName: printableName,
+                topic: topic,
+                createdBy: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
+            })
+            res.redirect('/admin/products')
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    async function showErrors() {
+        let topics = await Topic.find({}, 'title')
+        const validationErrors = errors.array().reduce((errorObj, error) => {
+            let { param } = error
+            // if field contains more than one validation error - show only the first
+            if (!errorObj[param]) errorObj[param] = error.msg
+            console.log(`param = ${param} msg = ${error.msg}`)
+            return errorObj
+        }, {})
+        res.status(422).render('admin/createProduct', {
+            renderAs: 'errors',
+            topics: topics,
+            product: { title, price, description, topic },
+            validationErrors
         })
-        res.redirect('/admin/products')
-    } catch (err) {
-        next(err)
     }
 
 }
 
 exports.postEditProduct = async function (req, res, next) {
-    const { title, price, description, imageName, printableName, topic, prodId } = req.fields;
+    const { title, price, description, imageName, printableName, topic, prodId } = req.body;
 
     // check if new files where uploaded and update the db
     let newValues = { title, price, description, topic }
@@ -226,7 +252,7 @@ exports.postEditCategory = async function (req, res, next) {
 }
 
 exports.postCreateTopic = async function (req, res, next) {
-    const { title, description, category, imageName } = req.fields
+    const { title, description, category, imageName } = req.body
     await Topic.create({
         title,
         category: category,
@@ -238,7 +264,7 @@ exports.postCreateTopic = async function (req, res, next) {
 }
 
 exports.postEditTopic = async function (req, res, next) {
-    const { title, description, category, topicId } = req.fields,
+    const { title, description, category, topicId } = req.body,
         fileName = req.fileName,
         filePath = req.filePath,
         fileExist = req.fileExist;

@@ -4,6 +4,7 @@ const express = require('express'),
 const uploadProductFiles = require('../middleware/uploadProductFiles')
 const uploadTopicFiles = require('../middleware/uploadTopicFiles');
 const uploadSingleFile = require('../middleware/uploadSingleFile');
+const { check } = require('express-validator');
 
 
 router.get('/', adminController.getDashboard);
@@ -21,7 +22,29 @@ router.get('/topics', adminController.getTopics);
 router.get('/categories', adminController.getCategories);
 router.get('/products', adminController.getProducts);
 
-router.post('/createProduct', uploadProductFiles, adminController.postCreateProduct);
+router.post('/createProduct', uploadProductFiles, [
+  check('title')
+    .isLength({
+      min: 2
+    }).withMessage('Title must contain 2 or more chars'),
+  check('description')
+    .isLength({
+      min: 15,
+      max: 100
+    }).withMessage('Description must contain 15-100 characters'),
+  check('price')
+    .isNumeric()
+    .withMessage('Price must contain only digits'),
+  check('topic')
+    .isAscii()
+    .withMessage('One topic must be selected'),
+  check('imageName')
+    .isAscii()
+    .withMessage('Please provide proudct image'),
+  check('printableName')
+    .isAscii()
+    .withMessage('Please provide printable file')
+], adminController.postCreateProduct);
 router.post('/editProduct', uploadProductFiles, adminController.postEditProduct);
 
 router.post('/createCategory', adminController.postCreateCategory);
