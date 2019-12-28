@@ -10,14 +10,15 @@ block content
     - const imagePath = `/images/${product.imageName}`
     .card(style='width: 33%;').mx-auto
       img(src=imagePath, alt=product.title).card-img-top
-      .card-body.text-center
       .card-body
         p.card-text
           | #{product.description}
-        -const addToCart = `/addToCart/${product.id}`
-        -const orderNow = `/order/${product.id}`
-        a.btn.btn-primary(href= addToCart) Add to Cart
-        a.btn.btn-primary(href= orderNow) Order Now
+        if(product.isBought || product.price === 0)
+          a(href='/shop/download?id=product._id').btn.btn-primary DOWNLOAD
+        else if(product.price > 0)
+          h4.card-text.mb-4
+            | $#{product.price}
+          include ../includes/add-to-cart.pug
 
   include ../includes/footer.pug 
 

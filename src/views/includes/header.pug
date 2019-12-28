@@ -1,38 +1,46 @@
-nav.navbar.navbar-expand-lg.navbar-light.bg-light
+nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
   a.navbar-brand(href='/') EDUACTIVITY
   button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
     span.navbar-toggler-icon
   .collapse.navbar-collapse#navbarSupportedContent
     ul.navbar-nav.mr-auto
-      li.nav-item.active
+      - let isActive = 'not-active'
+
+      - isActive = page==='shop' ? 'active' : 'not-active'
+      li.nav-item(class=isActive)
         a.nav-link(href='/')
-          | Home
+          | Shop
           span.sr-only (current)
-      li.nav-item
-        a.nav-link(href='/cart')
-          span.glyphicon.glyphicon-shopping-cart
-          span.sr-only (current)
-      li.nav-item
-        a.nav-link(href='/admin/') Admin
+      if(isLoggedIn)
+        - isActive = page==='cart' ? 'active' : 'not-active'
+        li.nav-item(class=isActive)
+          a.nav-link(href='/cart')
+            span.glyphicon.glyphicon-shopping-cart
+            span.sr-only (current)
+      if(isAdmin)
+        - isActive = page==='admin' ? 'active' : 'not-active'
+        li.nav-item(class=isActive)
+          a.nav-link(href='/admin/') Admin
     form.form-inline.my-2.my-lg-0.mr-0.justify-content-end.mx-4
       input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search')
-      button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
+      button.btn.btn-outline-light.my-2.my-sm-0(type='submit') Search
 
     ul.nav.navbar-nav.navbar-right
       if !isLoggedIn
-        li.mx-2
-          a(href='/auth/signup').btn
+        li.mx-2.nav-item
+          a(href='/auth/signup').nav-link
             span.glyphicon.glyphicon-user
             |  Sign Up
-        li
-          a(href='/auth/login').btn
+        li.nav-item
+          a(href='/auth/login').nav-link
             span.glyphicon.glyphicon-log-in
             |  Login
       else
-        li
-          span.btn.text-info Hello #{user}
+        li.nav-item
+          a(href='/shop/account/id').nav-link
+            | Hello #{user}
 
-        li
-          a(href='/auth/logout').btn
+        li.nav-item
+          a(href='/auth/logout').nav-link
             span.glyphicon.glyphicon-log-out
-            |  Logout
+            span.mx-1 Logout

@@ -4,6 +4,7 @@ import session from 'express-session';
 import multipartExtract from './middleware/multipartExtract';
 import webpack from 'webpack';
 import User from './models/User';
+const isAdmin = require('./middleware/is-auth').isAdmin;
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const mongoConnect = require('./util/database').mongoConnect;
@@ -149,7 +150,7 @@ const userMW = (function (app) {
 const endPointsMW = (function (app) {
   app.use('/', shopRoutes)
   app.use('/shop', shopRoutes)
-  app.use('/admin', adminRoutes)
+  app.use('/admin', isAdmin, adminRoutes)
   app.use('/auth', authRoutes)
 })(app)
 

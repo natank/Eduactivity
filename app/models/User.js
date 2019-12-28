@@ -39,6 +39,13 @@ const userSchema = new Schema({
       ref: 'Order',
       required: false
     }
+  }],
+  myProducts: [{
+    product: {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true
+    }
   }]
 })
 
@@ -94,7 +101,7 @@ userSchema.methods.addToCart = async function (prodId) {
       order.userId = this._id;
       order = await order.save();
     })
-
+    user.myProducts.push(product);
     user.orders.push(order)
     user.cart = [];
 
@@ -123,7 +130,6 @@ userSchema.methods.getOrders = function () {
   })
   return p;
 }
-
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

@@ -30,7 +30,7 @@ exports.getHome = async function (req, res, next) {
       return hasTopics;
     })
 
-    res.render('./shop/index', { data: data })
+    res.render('./shop/index', { data: data, page: 'shop', isLoggedIn: req.user, isAdmin: req.user && req.user.admin })
   } catch (err) {
     next(err)
   }
@@ -41,7 +41,7 @@ exports.getCategory = async function (req, res, next) {
     const category = await Category.findById(req.params.id);
     const topics = await Topic.find({ category: req.params.id });
 
-    res.render('./shop/category', { category: category, topics: topics })
+    res.render('./shop/category', { category: category, topics: topics, page: 'shop' })
   } catch (err) {
     next(err)
   }
@@ -53,7 +53,7 @@ exports.getTopic = async function (req, res, next) {
     const topic = await Topic.findById(req.params.id);
     const products = await Product.find({ topic: req.params.id });
 
-    res.render('./shop/topic', { topic: topic, products: products })
+    res.render('./shop/topic', { topic: topic, products: products, page: 'shop' })
   } catch (err) {
     next(err)
   }
@@ -68,7 +68,7 @@ exports.getProduct = async function (req, res, next) {
   }
   const prodId = req.params.id;
   const product = await Product.findById(prodId);
-  res.render('./shop/product', { product: product })
+  res.render('./shop/product', { product: product, page: 'shop' })
 }
 
 
@@ -88,7 +88,7 @@ exports.getCart = async (req, res, next) => {
     res.render('shop/cart', {
       path: '/cart',
       pageTitle: 'Your Cart',
-      cart: uiCart
+      cart: uiCart, page: 'shop'
     });
   } catch (err) {
     const error = new Error(err)
@@ -169,7 +169,8 @@ exports.getOrders = async (req, res, next) => {
     res.render('shop/orders', {
       path: '/orders',
       pageTitle: 'Your Orders',
-      orders: uiOrders
+      orders: uiOrders,
+      page: 'shop'
     });
   } catch (err) {
     const error = new Error(err)
@@ -312,7 +313,8 @@ exports.getCheckout = async (req, res, next) => {
       pageTitle: 'Checkout',
       cart: uiCart,
       totalSum: totalCartValue,
-      checkoutSessionId: id
+      checkoutSessionId: id,
+      page: 'shop'
     });
   } catch (err) {
     const error = new Error(err)

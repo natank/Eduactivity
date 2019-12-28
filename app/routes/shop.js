@@ -1,4 +1,4 @@
-const isAuth = require('../middleware/is-auth');
+const isAuth = require('../middleware/is-auth').isLoggedIn;
 
 const express = require("express");
 const path = require('path')

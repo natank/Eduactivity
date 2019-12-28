@@ -8679,13 +8679,18 @@ a.text-dark:hover, a.text-dark:focus {
     -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%); }
 
+.section {
+  margin-top: 3rem;
+  margin-bottom: 3rem; }
+
 .footer {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-gap: 1rem;
   background-color: #343a40;
   padding: 2rem;
-  color: #fff; }
+  color: #fff;
+  margin-top: 10rem; }
   .footer .navbar-brand {
     color: #fff; }
   .footer__logo {
@@ -8711,10 +8716,6 @@ a.text-dark:hover, a.text-dark:focus {
     text-align: center; }
     .footer__content a {
       color: #fff; }
-
-.section {
-  margin-top: 3rem;
-  margin-bottom: 3rem; }
 
 a.card-title {
   text-decoration: none; }

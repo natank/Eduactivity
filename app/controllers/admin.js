@@ -13,31 +13,34 @@ import renamePath from '../util/renamePath';
 const { check, validationResult } = require('express-validator');
 
 exports.getDashboard = function (req, res, next) {
-    res.render('./admin/dashboard')
+    res.render('./admin/dashboard', { page: 'admin', isAdmin: req.user.admin })
 }
 exports.getCreateProduct = async function (req, res, next) {
     try {
         let topics = await Topic.find({}, 'title')
-        res.render('admin/createProduct', { isEdit: false, topics: topics });
+        res.render('admin/createProduct', { isEdit: false, topics: topics, page: 'admin' });
     } catch (err) {
         next(err)
     }
 }
 
 exports.getCreateCategory = function (req, res, next) {
-    res.render('admin/createCategory', { edit: false })
+    res.render('admin/createCategory', { edit: false, page: 'admin' })
 }
 
 exports.getCreateTopic = async function (req, res, next) {
     const categories = await Category.find({}, 'title');
-    res.render('admin/createTopic', { edit: false, categories: categories })
+    res.render('admin/createTopic', { edit: false, categories: categories, page: 'admin' })
 }
 
 exports.getEditProduct = async function (req, res, next) {
     try {
         let product = await Product.findById(req.params.id).populate({ path: 'topic', select: 'title' });
         let topics = await Topic.find({}, 'title')
-        res.render('admin/createProduct', { product: product, isEdit: true, topics: topics })
+        res.render('admin/createProduct', {
+            product: product, isEdit: true,
+            topics: topics, page: 'admin'
+        })
     } catch (err) {
         next(err)
     }
@@ -46,7 +49,7 @@ exports.getEditProduct = async function (req, res, next) {
 
 exports.getEditCategory = async function (req, res, next) {
     const category = await Category.findById(req.params.id);
-    res.render('admin/createCategory', { category: category, isEdit: true })
+    res.render('admin/createCategory', { category: category, isEdit: true, page: 'admin' })
 }
 
 exports.getEditTopic = async function (req, res, next) {
@@ -63,7 +66,7 @@ exports.getEditTopic = async function (req, res, next) {
             category.id === topic.category.id ? category.selected = true : category.selected = false;
             return category;
         })
-        res.render('admin/createTopic', { topic: topic, isEdit: true, categories: categories })
+        res.render('admin/createTopic', { topic: topic, isEdit: true, categories: categories, page: 'admin' })
     } catch (err) {
         next(err)
     }
@@ -83,7 +86,7 @@ exports.getTopics = async function (req, res, next) {
             select: 'title'
         });
         const categories = await Category.find({}, 'title')
-        res.render('admin/topics', { topics: topics, categories: categories, filter: filter })
+        res.render('admin/topics', { topics: topics, categories: categories, filter: filter, page: 'admin' })
     } catch (err) {
         next(err)
     }
@@ -104,7 +107,7 @@ exports.getProducts = async function (req, res, next) {
             select: 'title'
         });
         const topics = await Topic.find({}, 'title')
-        res.render('admin/products', { products: products, topics: topics, filter: filter })
+        res.render('admin/products', { products: products, topics: topics, filter: filter, page: 'admin' })
     } catch (err) {
         next(err)
     }
@@ -114,7 +117,7 @@ exports.getCategories = async function (req, res, next) {
     try {
         const categories = await Category.find();
 
-        res.render('admin/categories', { categories: categories })
+        res.render('admin/categories', { categories: categories, page: 'admin' })
 
     } catch (err) {
         next(err)
@@ -207,7 +210,8 @@ exports.postCreateProduct = async function (req, res, next) {
             renderAs: 'errors',
             topics: topics,
             product: { title, price, description, topic },
-            validationErrors
+            validationErrors,
+            page: 'admin'
         })
     }
 

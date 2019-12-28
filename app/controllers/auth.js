@@ -54,6 +54,7 @@ exports.postLogin = async (req, res, next) => {
             try {
                 let user = req.user;
                 req.session.isLoggedIn = true;
+                req.session.isAdmin = req.user.admin;
                 req.session.user = user;
                 await req.session.save();
                 res.redirect('/');
