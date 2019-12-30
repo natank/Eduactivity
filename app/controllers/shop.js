@@ -52,7 +52,12 @@ exports.getTopic = async function (req, res, next) {
   try {
     const topic = await Topic.findById(req.params.id);
     const products = await Product.find({ topic: req.params.id });
-
+    // Determine which products are in myProducts of the user
+    products = products.map(product => {
+      let prodId = product.id;
+      product.myProduct = req.user.myProducts.find(productId => productId === prodId)
+      return product
+    })
     res.render('./shop/topic', { topic: topic, products: products, page: 'shop' })
   } catch (err) {
     next(err)
@@ -61,14 +66,21 @@ exports.getTopic = async function (req, res, next) {
 }
 
 exports.getProduct = async function (req, res, next) {
+  const prodId = req.params.id;
   try {
-
+    const product = await Product.findById(prodId);
   } catch (err) {
     next(err)
   }
-  const prodId = req.params.id;
-  const product = await Product.findById(prodId);
-  res.render('./shop/product', { product: product, page: 'shop' })
+
+  if (product) {
+    // Determine if the product is in myProducts of the user
+    product.myProduct = req.user.myProducts.find(productId => productId === prodId)
+    res.render('./shop/product', { product: product, page: 'shop' })
+  } else {
+    let err = "Error: No such product"
+    next(err)
+  }
 }
 
 
