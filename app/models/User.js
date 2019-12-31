@@ -88,20 +88,24 @@ userSchema.methods.addToCart = async function (prodId) {
 },
 
 
-  userSchema.methods.addOrder = function () {
+  userSchema.methods.addOrder = async function () {
     let user = this;
     let cart = [...user.cart]
     let order = new Order([]);
-    cart.forEach(async cartItem => {
+    cart.forEach(cartItem => {
       let orderItem = {
         product: cartItem.product,
         quantity: cartItem.quantity
       }
       order.items.push(orderItem);
       order.userId = this._id;
-      order = await order.save();
+      user.myProducts.push({ product: cartItem.product });
     })
-    user.myProducts.push(product);
+    try {
+      order = await order.save();
+    } catch (err) {
+      throw (err)
+    }
     user.orders.push(order)
     user.cart = [];
 

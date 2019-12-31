@@ -5,6 +5,8 @@ const Product = require('../models/Product');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const mkdirp = require('mkdirp')
+const mongoose = require('mongoose')
+const ObjectId = mongoose.Types.ObjectId;
 exports.getHome = async function (req, res, next) {
 
   try {
@@ -51,7 +53,7 @@ exports.getCategory = async function (req, res, next) {
 exports.getTopic = async function (req, res, next) {
   try {
     const topic = await Topic.findById(req.params.id);
-    const products = await Product.find({ topic: req.params.id });
+    let products = await Product.find({ topic: req.params.id });
     // Determine which products are in myProducts of the user
     products = products.map(product => {
       let prodId = product.id;
@@ -67,15 +69,19 @@ exports.getTopic = async function (req, res, next) {
 
 exports.getProduct = async function (req, res, next) {
   const prodId = req.params.id;
+  let product;
   try {
-    const product = await Product.findById(prodId);
+    product = await Product.findById(prodId);
   } catch (err) {
     next(err)
   }
 
   if (product) {
     // Determine if the product is in myProducts of the user
-    product.myProduct = req.user.myProducts.find(productId => productId === prodId)
+    product.myProduct = req.user.myProducts.reduce((prev, product) => {
+      prev = prev || product.product._id.toString() === prodId.toString();
+      return prev
+    }, false)
     res.render('./shop/product', { product: product, page: 'shop' })
   } else {
     let err = "Error: No such product"
