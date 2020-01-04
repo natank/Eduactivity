@@ -13,8 +13,8 @@ block content
       .card-body
         p.card-text
           | #{product.description}
-        if(product.isBought || product.price === 0)
-          a(href='/shop/download?id=product._id').btn.btn-primary DOWNLOAD
+        if(product.myProduct || product.price === 0)
+          a(href='/download?id=product._id').btn.btn-primary DOWNLOAD
         else if(product.price > 0)
           h4.card-text.mb-4
             | $#{product.price}

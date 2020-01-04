@@ -4,7 +4,7 @@ block content
   h1.text-center.my-4
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
 
-  h2.text-center.mb-4 #{topic.title} Printables
+  h2.text-center.mb-4 #{title}
   .products
     each product in products
       - const imagePath = `/images/${product.imageName}`
@@ -15,8 +15,14 @@ block content
           h5.card-title #{product.title}
           p.card-text
             | #{product.description}
-          a.btn.btn-primary(href=productPath) Learn More
-          include ../includes/add-to-cart.pug
+          - let priceVisibility = (product.myProduct || product.price === 0) ? 'hidden' : 'visible'
+          h2(style=`visibility: ${priceVisibility}`) #{product.price}
+
+          a.btn.btn-primary(href=productPath).d-block Learn More
+          if(product.myProduct || product.price === 0)
+            a(href=`/download/${product._id}`).btn.btn-primary.d-block DOWNLOAD
+          else
+            include ../includes/add-to-cart.pug
   include ../includes/footer.pug 
 
 

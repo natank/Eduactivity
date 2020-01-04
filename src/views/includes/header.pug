@@ -25,7 +25,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
       input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search')
       button.btn.btn-outline-light.my-2.my-sm-0(type='submit') Search
 
-    ul.nav.navbar-nav.navbar-right
+    ul.navbar-nav.navbar-right
       if !isLoggedIn
         li.mx-2.nav-item
           a(href='/auth/signup').nav-link
@@ -36,9 +36,14 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
             span.glyphicon.glyphicon-log-in
             |  Login
       else
-        li.nav-item
-          a(href='/shop/account/id').nav-link
+        li.nav-item.dropdown
+          a(href='#' role='button' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").nav-link.dropdown-toggle#navbarDropdown
             | Hello #{user}
+          div.dropdown-menu(aria-labelledby="navbarDropdown")
+            a.dropdown-item(href="/my-products")
+              | My Products
+            a.dropdown-item(href="/orders")
+              | My Orders
 
         li.nav-item
           a(href='/auth/logout').nav-link

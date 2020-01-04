@@ -55,16 +55,23 @@ exports.getTopic = async function (req, res, next) {
     const topic = await Topic.findById(req.params.id);
     let products = await Product.find({ topic: req.params.id });
     // Determine which products are in myProducts of the user
-    products = products.map(product => {
+    products = products && products.map(product => {
       let prodId = product.id;
-      product.myProduct = req.user.myProducts.find(productId => productId === prodId)
+      product.myProduct = req.user && isMyProduct(req.user.myProducts, prodId)
       return product
     })
-    res.render('./shop/topic', { topic: topic, products: products, page: 'shop' })
+    res.render('./shop/products', { title: `${topic.title} Printables`, products: products, page: 'shop' })
   } catch (err) {
     next(err)
   }
+}
 
+function isMyProduct(myProducts, prodId) {
+  let isMyProduct = myProducts.reduce((prev, product) => {
+    prev = prev || product.product._id.toString() === prodId.toString();
+    return prev
+  }, false)
+  return isMyProduct;
 }
 
 exports.getProduct = async function (req, res, next) {
@@ -78,10 +85,8 @@ exports.getProduct = async function (req, res, next) {
 
   if (product) {
     // Determine if the product is in myProducts of the user
-    product.myProduct = req.user.myProducts.reduce((prev, product) => {
-      prev = prev || product.product._id.toString() === prodId.toString();
-      return prev
-    }, false)
+    product.myProduct = isMyProduct(req.user.myProducts, prodId);
+
     res.render('./shop/product', { product: product, page: 'shop' })
   } else {
     let err = "Error: No such product"
@@ -263,18 +268,7 @@ exports.getInvoiceFile = async (req, res, next) => {
     pdfDoc.text(`Total Price: $${totalPrice}`);
 
     pdfDoc.end();
-    // let data = await new Promise((resolve, reject) => {
-    //   fs.readFile(req.invoicePath, (err, data) => {
-    //     if (err) reject(err)
-    //     else resolve(data)
-    //   })
-    // })
-    // res.setHeader('Content-Type', 'application/pdf');
-    // res.setHeader('Content-Disposition', 'inline; filename="' + req.invoiceName + '"');
-    // res.send(data);
 
-    // const file = fs.createReadStream(req.invoicePath);
-    // file.pipe(res);
   } catch (err) {
     next(err)
   }
@@ -340,3 +334,53 @@ exports.getCheckout = async (req, res, next) => {
     return next(error)
   }
 }
+
+exports.getDownloadProduct = async (req, res, next) => {
+  const prodId = req.params.id;
+
+  let product;
+  try {
+    product = await Product.findById(prodId)
+  } catch (err) {
+    next(err)
+  }
+  const printableName = product.printableName;
+  const file = path.join(__dirname, `../printables/${printableName}`);
+  res.download(file);
+}
+
+exports.validateProductOwnership = async (req, res, next) => {
+  const prodId = req.params.id;
+  if (isMyProduct(req.user.myProducts, prodId)) next();
+  else {
+    const err = `You don't own this product`
+    next(err)
+  }
+}
+
+exports.getMyProducts = async (req, res, next) => {
+  let products = req.user.myProducts.map(elem => {
+    let p = new Promise((resolve, reject) => {
+      Product.findById(elem.product, function (err, product) {
+        if (err) reject(err)
+        else (resolve(product))
+      });
+    })
+    return p;
+  })
+  try {
+    products = await Promise.all(products)
+  } catch (err) {
+    console.log(err)
+  }
+
+  // Determine which products are in myProducts of the user
+  products = products && products.map(product => {
+    let prodId = product.id;
+    product.myProduct = isMyProduct(req.user.myProducts, prodId)
+    return product
+  })
+  res.render('./shop/products', { title: `My Printables`, products: products, page: 'shop' })
+}
+
+

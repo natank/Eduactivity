@@ -10,6 +10,11 @@ router.get('/', shopController.getHome)
 router.get('/topic/:id', shopController.getTopic)
 router.get('/product/:id', shopController.getProduct)
 router.get('/category/:id', shopController.getCategory)
+router.get('/my-products', shopController.getMyProducts)
+router.get('/download/:id',
+  shopController.validateProductOwnership,
+  shopController.getDownloadProduct
+)
 
 router.get('/cart', isAuth, shopController.getCart);
 router.post('/cart', isAuth, shopController.postCart);
@@ -25,4 +30,4 @@ router.get('/orders/:orderId',
   shopController.getInvoiceName,
   shopController.getInvoiceFile);
 
-module.exports = router;
+module.exports = router; 
