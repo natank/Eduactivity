@@ -53,14 +53,39 @@ exports.getCategory = async function (req, res, next) {
 exports.getTopic = async function (req, res, next) {
   try {
     const topic = await Topic.findById(req.params.id);
-    let products = await Product.find({ topic: req.params.id });
+    const acquisition = req.query.acquisition || "free";
+    let priceOption;
+    switch (acquisition) {
+      case 'free':
+        priceOption = { $eq: 0 };
+        break;
+      case 'premium':
+        priceOption = { $gt: 0 };
+        break;
+      case 'all':
+        priceOption = { $gte: 0 };
+        break;
+      default:
+        let err = `No such option: ${acquisition}`
+        next(err);
+    }
+    let products = await Product.find({
+      topic: req.params.id,
+      price: priceOption
+    });
     // Determine which products are in myProducts of the user
     products = products && products.map(product => {
       let prodId = product.id;
       product.myProduct = req.user && isMyProduct(req.user.myProducts, prodId)
       return product
     })
-    res.render('./shop/products', { title: `${topic.title} Printables`, products: products, page: 'shop' })
+    res.render('./shop/products', {
+      title: `${topic.title} Printables`,
+      products: products,
+      page: 'shop',
+      route: req.originalUrl,
+      acquisition: acquisition
+    })
   } catch (err) {
     next(err)
   }

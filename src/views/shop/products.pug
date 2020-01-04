@@ -5,6 +5,17 @@ block content
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
 
   h2.text-center.mb-4 #{title}
+  form(action=route method='GET').mb-5
+    div.form-group.w-25.m-auto
+      select(name="acquisition").form-control#opt.w-50.submit-on-toggle.m-auto
+        - let selected = false;
+        - selected = acquisition === 'free' 
+        option(value='free' selected= selected) Free
+        - selected = acquisition === 'premium' 
+        option(value='premium' selected= selected) Premium
+        - selected = acquisition === 'all' 
+        option(value='all' selected= selected) All
+
   .products
     each product in products
       - const imagePath = `/images/${product.imageName}`
