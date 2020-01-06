@@ -5,4 +5,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let form = event.target.closest('form');
     form.submit();
   })
+
+
 })
+
+let product = (function () {
+  return {
+    wiishlistProduct: function (prodId) {
+      alert("product wishlisted")
+    }
+  }
+})()
+
+export const wishlistProduct = product.wishlistProduct;

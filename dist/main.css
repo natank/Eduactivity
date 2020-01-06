@@ -8730,6 +8730,12 @@ a.card-title {
 body {
   font-family: 'Roboto1', sans-serif; }
 
+html {
+  -webkit-writing-mode: horizontal-lr;
+      -ms-writing-mode: horizontal-lr;
+          writing-mode: horizontal-lr;
+  direction: ltr; }
+
 .navbar-brand {
   font-family: 'McLaren', cursive; }
 

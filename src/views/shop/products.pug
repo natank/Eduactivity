@@ -20,8 +20,10 @@ block content
     each product in products
       - const imagePath = `/images/${product.imageName}`
       - const productPath = `/product/${product.id}`
-      .card(style='width: 18rem;')
+      .card(style='width: 18rem;').position-relative
         img(src= imagePath alt="maze").card-img-top
+        include ../includes/heart.pug
+        include ../includes/heart-fill.pug
         .card-body
           h5.card-title #{product.title}
           p.card-text

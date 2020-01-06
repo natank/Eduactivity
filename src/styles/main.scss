@@ -15,6 +15,11 @@ body {
   font-family:'Roboto1', sans-serif;
 }
 
+html {
+  writing-mode: horizontal-lr;
+  direction: ltr;
+}
+
 .navbar-brand {
   font-family: 'McLaren', cursive;
 }
