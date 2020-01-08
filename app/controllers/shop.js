@@ -409,3 +409,24 @@ exports.getMyProducts = async (req, res, next) => {
 }
 
 
+exports.getAddWishlist = async (req, res, next)=>{
+  prodId = req.query.prodId
+  User.wishlist.push(prodId)
+  try{
+    await User.save()
+  } catch(err){
+    next(err)
+  }
+  res.status(200);
+}
+
+exports.getRemoveWishlist = async (req, res, next)=>{
+  prodId = req.query.prodId
+  User.wishlist = User.wishlist.filter(item => item != prodId);
+  try{
+    await User.save()
+  } catch(err){
+    next(err)
+  }
+  res.status(200);
+}

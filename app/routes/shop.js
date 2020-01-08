@@ -20,6 +20,9 @@ router.get('/cart', isAuth, shopController.getCart);
 router.post('/cart', isAuth, shopController.postCart);
 router.post('/cart-delete-item', isAuth, shopController.postCartDeleteProduct);
 
+router.get('/wishlist/add/:id', shopController.getAddWishlist)
+router.get('/wishlist/remove/:id', shopController.getRemoveWishlist)
+
 router.get('/checkout', isAuth, shopController.getCheckout);
 
 router.get('/create-order', isAuth, shopController.postOrder); // from cart
