@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Order = require('./order');
-
+const Product = require('./Product');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -135,6 +135,43 @@ userSchema.methods.getOrders = function () {
   })
   return p;
 }
+
+userSchema.methods.getMyProducts = async function () {
+  let myProducts = this.myProducts.map(elem => {
+    let p = new Promise((resolve, reject) => {
+      Product.findById(elem.product, function (err, product) {
+        if (err) reject(err)
+        else (resolve(product))
+      });
+    })
+    return p;
+  })
+  try {
+    myProducts = await Promise.all(myProducts)
+    return myProducts;
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+userSchema.methods.getWishlistProducts = async function () {
+  let wishlistProducts = this.wishlist.map(prodId => {
+    let p = new Promise((resolve, reject) => {
+      Product.findById(prodId, function (err, product) {
+        if (err) reject(err)
+        else (resolve(product))
+      });
+    })
+    return p;
+  })
+  try {
+    wishlistProducts = await Promise.all(wishlistProducts)
+    return wishlistProducts;
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

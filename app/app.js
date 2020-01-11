@@ -5,6 +5,7 @@ import multipartExtract from './middleware/multipartExtract';
 import webpack from 'webpack';
 import User from './models/User';
 const isAdmin = require('./middleware/is-auth').isAdmin;
+const getWishlist = require('./middleware/getWishlist');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const mongoConnect = require('./util/database').mongoConnect;
@@ -115,19 +116,13 @@ const generalMW = (function (app) {
  * 
  */
 
+
 const csrfMW = (function (app) {
 
   app.use(csrfProtection);
 })(app)
 
 
-const localsMW = (function (app) {
-  app.use((req, res, next) => {
-    res.locals.isLoggedIn = req.session.isLoggedIn;
-    res.locals.csrfToken = req.csrfToken();
-    next();
-  })
-})(app)
 
 const userMW = (function (app) {
   app.use(async (req, res, next) => {
@@ -146,6 +141,19 @@ const userMW = (function (app) {
     next();
   });
 })(app)
+
+const localsMW = (function (app) {
+  app.use((req, res, next) => {
+    res.locals.isLoggedIn = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
+  })
+  // set wishlist object in each response 
+  app.use(getWishlist);
+
+})(app)
+
+
 
 const endPointsMW = (function (app) {
   app.use('/', shopRoutes)

@@ -20,8 +20,9 @@ block content
     each product in products
       - const imagePath = `/images/${product.imageName}`
       - const productPath = `/product/${product.id}`
-      .card(style='width: 18rem;' data-id=product.id).position-relative
-        img(src= imagePath alt="maze").card-img-top
+      .card(style='width: 18rem;' data-id=product.id data-csrf=csrfToken).position-relative
+        img(src= imagePath alt=product.title).card-img-top
+        - let heartVisibility = "hidden"
         include ../includes/heart.pug
         include ../includes/heart-fill.pug
         .card-body

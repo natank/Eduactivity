@@ -54,6 +54,7 @@ exports.getTopic = async function (req, res, next) {
   try {
     const topic = await Topic.findById(req.params.id);
     const acquisition = req.query.acquisition || "free";
+    // determine price option
     let priceOption;
     switch (acquisition) {
       case 'free':
@@ -75,8 +76,9 @@ exports.getTopic = async function (req, res, next) {
     });
     // Determine which products are in myProducts of the user
     products = products && products.map(product => {
-      let prodId = product.id;
-      product.myProduct = req.user && isMyProduct(req.user.myProducts, prodId)
+      let prodId = product.id.toString();
+      product.myProduct = req.user && isMyProduct(req.user.myProducts, prodId);
+      product.wishlisted = req.user && !!req.user.wishlist.find(item => item.toString() === prodId)
       return product
     })
     res.render('./shop/products', {
@@ -384,49 +386,46 @@ exports.validateProductOwnership = async (req, res, next) => {
 }
 
 exports.getMyProducts = async (req, res, next) => {
-  let products = req.user.myProducts.map(elem => {
-    let p = new Promise((resolve, reject) => {
-      Product.findById(elem.product, function (err, product) {
-        if (err) reject(err)
-        else (resolve(product))
-      });
-    })
-    return p;
-  })
-  try {
-    products = await Promise.all(products)
-  } catch (err) {
-    console.log(err)
-  }
 
+  myProducts = user.getMyProducts();
   // Determine which products are in myProducts of the user
   products = products && products.map(product => {
     let prodId = product.id;
-    product.myProduct = isMyProduct(req.user.myProducts, prodId)
+    product.myProduct = true
     return product
   })
-  res.render('./shop/products', { title: `My Printables`, products: products, page: 'shop' })
+  res.render('./shop/products', { title: `My Printables`, products: myProducts, page: 'shop' })
 }
 
 
-exports.getAddWishlist = async (req, res, next)=>{
-  prodId = req.query.prodId
-  User.wishlist.push(prodId)
-  try{
-    await User.save()
-  } catch(err){
-    next(err)
+exports.postWishlist = async (req, res, next) => {
+  const prodId = req.body.prodId.toString();
+  const user = req.user;
+  if (user && !user.wishlist.find(item => item.toString() === prodId)) {
+    user.wishlist.push(prodId)
+    try {
+      await user.save()
+      res.status(200).send();
+    } catch (err) {
+      next(err)
+    }
+  } else {
+    res.status(404).send('User not found');
   }
-  res.status(200);
 }
 
-exports.getRemoveWishlist = async (req, res, next)=>{
-  prodId = req.query.prodId
-  User.wishlist = User.wishlist.filter(item => item != prodId);
-  try{
-    await User.save()
-  } catch(err){
-    next(err)
+exports.deleteWishlist = async (req, res, next) => {
+  const prodId = req.body.prodId.toString();
+  const user = req.user;
+  if (user && user.wishlist.find(item => item.toString() === prodId)) {
+    user.wishlist = user.wishlist.filter(item => item.toString() != prodId);
+    try {
+      await user.save()
+      res.status(200).send();
+    } catch (err) {
+      next(err)
+    }
+  } else {
+    res.status(404).send('User not found');
   }
-  res.status(200);
 }

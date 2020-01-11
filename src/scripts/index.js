@@ -1,4 +1,4 @@
-
+const axios = require('axios');
 document.addEventListener('DOMContentLoaded', (event) => {
   let select = document.querySelector(".submit-on-toggle");
   select.addEventListener('change', (event) => {
@@ -6,27 +6,64 @@ document.addEventListener('DOMContentLoaded', (event) => {
     form.submit();
   })
 
-  document.querySelectorAll('.bi-heart').forEach(elem=>elem.addEventListener('click', product.wishlistProduct))
-  document.querySelectorAll('.bi-heart-fill').forEach(elem=>elem.addEventListener('click', product.unWishlistProduct))
+  document.querySelectorAll('.bi-heart').forEach(elem => elem.addEventListener('click', product.wishlistProduct))
+  document.querySelectorAll('.bi-heart-fill').forEach(elem => elem.addEventListener('click', product.un_wishlistProduct))
 
 })
 
 let product = (function () {
   return {
-    wishlistProduct: function () {
-      const heart = event.target;
-      const id = heart.closest('.card').getAttribute('data-id');
-      const heartFill = heart.closest('.card').querySelector('.bi-heart-fill')
-      heart.style.visibility='hidden';
-      heartFill.style.visibility = 'visible';
+    wishlistProduct: async function () {
+      const card = event.target.closest('.card');
+      const heart = card.querySelector('.bi-heart');
+      const id = card.getAttribute('data-id');
+      const heartFill = card.querySelector('.bi-heart-fill')
+      const csrf = card.getAttribute('data-csrf')
+
+      let response = await axios({
+        method: 'post',
+        url: `/shop/wishlist`,
+        data: {
+          prodId: id,
+          _csrf: csrf
+        }
+      })
+      switch (response.status) {
+        case 200:
+          heart.style.visibility = 'hidden';
+          heartFill.style.visibility = 'visible';
+          break;
+        case 404:
+          break;
+        default:
+          break;
+      }
       //alert(`product ${id} wishlisted`)
     },
-    unWishlistProduct: function(){
-      const heartFill = event.target;
-      const id = heartFill.closest('.card').getAttribute('data-id');
-      const heart = heartFill.closest('.card').querySelector('.bi-heart')
-      heartFill.style.visibility='hidden';
-      heart.style.visibility = 'visible';
+    un_wishlistProduct: async function () {
+      const card = event.target.closest('.card');
+      const heartFill = card.querySelector('.bi-heart-fill');
+      const heart = card.querySelector('.bi-heart')
+      const id = card.getAttribute('data-id');
+      const csrf = card.getAttribute('data-csrf')
+
+      let response = await axios({
+        method: 'delete',
+        url: `/shop/wishlist`,
+        data: {
+          prodId: id,
+          _csrf: csrf
+        }
+      })
+      switch (response.status) {
+        case 200:
+          heartFill.style.visibility = 'hidden';
+          heart.style.visibility = 'visible';
+        case 404:
+          break;
+        default:
+          break
+      }
     }
   }
 })()
