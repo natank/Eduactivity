@@ -9,14 +9,12 @@ module.exports = async function (req, res, next) {
         // set res.locals.wishlistProducts to products obj
         res.locals.wishlist = wishlist;
         // call the next middleware
-        next();
       } catch (err) {
         next(err)
       }
     } else {
       // if user is not logged in, just call the next middleware 
-      next()
     }
-
   }
+  next();
 }

@@ -122,8 +122,6 @@ const csrfMW = (function (app) {
   app.use(csrfProtection);
 })(app)
 
-
-
 const userMW = (function (app) {
   app.use(async (req, res, next) => {
     if (req.session.user) {
@@ -153,15 +151,12 @@ const localsMW = (function (app) {
 
 })(app)
 
-
-
 const endPointsMW = (function (app) {
   app.use('/', shopRoutes)
   app.use('/shop', shopRoutes)
   app.use('/admin', isAdmin, adminRoutes)
   app.use('/auth', authRoutes)
 })(app)
-
 
 const connect = (async function (app) {
   await mongoConnect();

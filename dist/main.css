@@ -8753,7 +8753,7 @@ a.card-title {
       border-left: 11px solid transparent;
       -webkit-transform: translateY(-100%);
               transform: translateY(-100%); }
-  .wishlist__item {
+  .wishlist__item a {
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -8763,7 +8763,7 @@ a.card-title {
         -ms-flex-align: center;
             align-items: center;
     margin-bottom: 1rem; }
-    .wishlist__item img {
+    .wishlist__item a img {
       width: 4rem;
       height: auto; }
   .wishlist:hover .wishlist__list {

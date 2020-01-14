@@ -27,12 +27,14 @@
       }
     }
     &__item{
-      display: flex;
-      align-items: center;
-      margin-bottom: 1rem;
-      img {
-        width: 4rem;
-        height: auto;
+      a {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        img {
+          width: 4rem;
+          height: auto;
+        }
       }
     }
     &:hover &__list{
