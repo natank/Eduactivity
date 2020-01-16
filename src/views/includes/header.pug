@@ -32,20 +32,17 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
       else
         li.nav-item.position-relative.wishlist
           a(href='#').nav-link
-            svg.bi.bi-heart-fill(width='25', height='25', viewbox='0 0 20 20', fill='currentColor',  xmlns='http://www.w3.org/2000/svg')
-              path(fill-rule='evenodd', d='M10 3.314C14.438-1.248 25.534 6.735 10 17-5.534 6.736 5.562-1.248 10 3.314z', clip-rule='evenodd')
-          ul.wishlist__list.position-absolute
-            if(wishlist)
-              each product in wishlist
-                li.wishlist__item
-                  - const imagePath = `/images/${product.imageName}`
-                  - const productPath = `/product/${product.id}`
-                  a(href=productPath)
-                    img(src= imagePath)
-                    p #{product.title}
-            li.wishlist__item
-              img(src="/images/maze.jpg")
-              p description
+            if(wishlist.length)
+              svg.bi.bi-heart-fill(width='25', height='25', viewbox='0 0 20 20', fill='currentColor',  xmlns='http://www.w3.org/2000/svg')
+                path(fill-rule='evenodd', d='M10 3.314C14.438-1.248 25.534 6.735 10 17-5.534 6.736 5.562-1.248 10 3.314z', clip-rule='evenodd')
+              ul.wishlist__list.position-absolute
+                  each product in wishlist
+                    li.wishlist__item
+                      - const imagePath = `/images/${product.imageName}`
+                      - const productPath = `/product/${product.id}`
+                      a(href=productPath)
+                        img(src= imagePath)
+                        p #{product.title}
 
         li.nav-item.dropdown
           a(href='#' role='button' data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").nav-link.dropdown-toggle#navbarDropdown

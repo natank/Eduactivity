@@ -8731,7 +8731,7 @@ a.card-title {
   list-style: none;
   padding: 0; }
   .wishlist__list {
-    visibility: visible;
+    visibility: hidden;
     background-color: #fff;
     list-style: none;
     padding: 0;
