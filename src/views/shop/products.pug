@@ -26,17 +26,18 @@ block content
         include ../includes/heart.pug
         include ../includes/heart-fill.pug
         .card-body
-          h5.card-title #{product.title}
+          h5.card-title.text-center #{product.title}
           p.card-text
             | #{product.description}
           - let priceVisibility = (product.myProduct || product.price === 0) ? 'hidden' : 'visible'
-          h2(style=`visibility: ${priceVisibility}`) #{product.price}
+          h3(style=`visibility: ${priceVisibility}`).text-center $#{product.price}
 
-          a.btn.btn-primary(href=productPath).d-block Learn More
+          a.btn.btn-primary(href=productPath).d-block.w-50.mr-auto.ml-auto Learn More
           if(product.myProduct || product.price === 0)
-            a(href=`/download/${product._id}`).btn.btn-primary.d-block DOWNLOAD
+            a(href=`/download/${product._id}`).btn.btn-primary.d-block.w-50.ml-auto.mr-auto.mt-2 DOWNLOAD
           else
-            include ../includes/add-to-cart.pug
+            div.w-50.ml-auto.mr-auto.mt-2
+              include ../includes/add-to-cart.pug
   include ../includes/footer.pug 
 
 

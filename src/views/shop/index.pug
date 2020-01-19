@@ -1,20 +1,23 @@
 extends ../templates/container.pug
 block content
   include ../includes/header.pug 
-  .section.hero
+  section.hero
     h1.text-center.my-4
       | DIY PRINTABLES FOR HOLIDAYS & PARTIES
-  section.categories.mt-5
-    each entry in data
-      .category.card
-        - const category = entry.category
-        - categoryRoute = `/category/${category.id}`
-        a(href=categoryRoute).card-title.text-center.text-uppercase
-          h2 #{entry.category.title}
-        div.topics.list-group
-          each topic in entry.topics
-            - const topicRoute = `/topic/${topic.id}`
-            a(href=topicRoute).list-group-item.list-group-item-action.text-center.bg-success.text-light 
-              | #{topic.title}
+  section.mt-5.bg-secondary.p-3
+    h2.text-center
+      | Printables by Category
+    div.categories
+      each entry in data
+        .category.card
+          - const category = entry.category
+          - categoryRoute = `/category/${category.id}`
+          a(href=categoryRoute).card-title.text-center.text-uppercase
+            h2 #{entry.category.title}
+          div.topics.list-group
+            each topic in entry.topics
+              - const topicRoute = `/topic/${topic.id}`
+              a(href=topicRoute).list-group-item.list-group-item-action.text-center.bg-success.text-light 
+                | #{topic.title}
   include ../includes/footer.pug 
 

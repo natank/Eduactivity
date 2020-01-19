@@ -127,9 +127,10 @@ const userMW = (function (app) {
     if (req.session.user) {
       try {
         let user = await User.findById(req.session.user._id);
-
         if (user) {
           req.user = user;
+          res.locals.isLoggedIn = !!req.user
+          res.locals.isAdmin = req.user.admin;
           res.locals.user = user.email
         }
       } catch (err) {

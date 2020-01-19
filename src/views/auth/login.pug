@@ -3,7 +3,7 @@ block content
   include ../includes/header.pug
   main.d-flex.flex-column.align-items-center.flex-grow-1
     if(errorMessage.length > 0)
-      div.alert.alert-danger #{errorMessage}
+      div.alert.alert-danger.mt-3 #{errorMessage}
     form.login-form(action="/auth/login" method="POST").w-25.d-flex.flex-column.justify-content-center.flex-grow-1
       input(type="hidden" name="_csrf" value=csrfToken)
       div.form-group

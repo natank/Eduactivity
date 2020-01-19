@@ -32,7 +32,7 @@ exports.getHome = async function (req, res, next) {
       return hasTopics;
     })
 
-    res.render('./shop/index', { data: data, page: 'shop', isLoggedIn: req.user, isAdmin: req.user && req.user.admin })
+    res.render('./shop/index', { data: data, page: 'shop' })
   } catch (err) {
     next(err)
   }
