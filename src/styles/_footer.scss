@@ -1,30 +1,43 @@
 .footer {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-gap: 1rem;
+  display: flex;
+  flex-direction: column;
   background-color: $dark;
   padding: 2rem;
   color: #fff;
-  margin-top: 10rem;
+  margin-top: 0rem;
+  @include media-breakpoint-up(md){
+    margin-top: 10rem;
+  }
   .navbar-brand {
     color: #fff;
   }
   &__logo{
     display: block;
-    grid-column: 1 / last-col;
-    grid-row-start: 1;
+    text-align: center;
+    @include media-breakpoint-up(md){
+      text-align: initial;
+    }
   }
   &__main {
-    grid-column: 2 / 11;
-    display: flex;
-    justify-content: space-between;
+    display: flex; 
+    flex-direction: column;
+    margin-top: 1rem;
+    justify-content: space-around;
+    @include media-breakpoint-up(md){
+      flex-direction: row;
+      margin-top: 3rem;
+    }
+    
     
   }
   &__copyrights{
-    grid-column: 1 / last-col;
+    margin-top: 1rem;
     font-size: 0.8rem;
     p {
-      margin-bottom: 0rem
+      margin-bottom: 0rem;
+    }
+    @include media-breakpoint-up(md){
+      margin-top: 3rem;
     }
   }
   &__content {
@@ -33,5 +46,14 @@
       color: #fff;
     }
   }
-
+  &__contact {
+    text-align: center;
+    @include media-breakpoint-up(md){
+      text-align: initial;
+    }
+    p {
+      margin-bottom: 0;
+    }
+    
+  }
 }

@@ -8562,7 +8562,6 @@ a.text-dark:hover, a.text-dark:focus {
     /* Extra style for the cancel button (red) */
     /* Center the avatar image inside this container */
     /* Avatar image */
-    /* Add padding to containers */
     /* The "Forgot password" text */
     /* Change styles for span and cancel button on extra small screens */ }
     .auth__form input[type=text], .auth__form input[type=password] {
@@ -8594,8 +8593,6 @@ a.text-dark:hover, a.text-dark:focus {
     .auth__form img.avatar {
       width: 40%;
       border-radius: 50%; }
-    .auth__form .container {
-      padding: 16px; }
     .auth__form span.psw {
       float: right;
       padding-top: 16px; }
@@ -8670,7 +8667,10 @@ a.text-dark:hover, a.text-dark:focus {
   background-size: 100%;
   background-position: 100% 30%;
   background-repeat: no-repeat;
-  height: 50vh; }
+  height: 230px; }
+  @media (min-width: 768px) {
+    .hero {
+      height: 50vh; } }
   .hero h1 {
     width: 100%;
     position: absolute;
@@ -8680,43 +8680,80 @@ a.text-dark:hover, a.text-dark:focus {
             transform: translate(-50%, -50%); }
 
 section {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   position: relative; }
+  @media (min-width: 768px) {
+    section {
+      margin-top: 3rem;
+      margin-bottom: 3rem; } }
 
 .footer {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-gap: 1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   background-color: #343a40;
   padding: 2rem;
   color: #fff;
-  margin-top: 10rem; }
+  margin-top: 0rem; }
+  @media (min-width: 768px) {
+    .footer {
+      margin-top: 10rem; } }
   .footer .navbar-brand {
     color: #fff; }
   .footer__logo {
     display: block;
-    grid-column: 1 / last-col;
-    grid-row-start: 1; }
+    text-align: center; }
+    @media (min-width: 768px) {
+      .footer__logo {
+        text-align: initial; } }
   .footer__main {
-    grid-column: 2 / 11;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-            justify-content: space-between; }
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-top: 1rem;
+    -webkit-justify-content: space-around;
+        -ms-flex-pack: distribute;
+            justify-content: space-around; }
+    @media (min-width: 768px) {
+      .footer__main {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+                flex-direction: row;
+        margin-top: 3rem; } }
   .footer__copyrights {
-    grid-column: 1 / last-col;
+    margin-top: 1rem;
     font-size: 0.8rem; }
     .footer__copyrights p {
       margin-bottom: 0rem; }
+    @media (min-width: 768px) {
+      .footer__copyrights {
+        margin-top: 3rem; } }
   .footer__content {
     text-align: center; }
     .footer__content a {
       color: #fff; }
+  .footer__contact {
+    text-align: center; }
+    @media (min-width: 768px) {
+      .footer__contact {
+        text-align: initial; } }
+    .footer__contact p {
+      margin-bottom: 0; }
 
 a.card-title {
   text-decoration: none; }
@@ -8829,7 +8866,7 @@ html {
 
 .categories, .topics, .products {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   -webkit-column-gap: 1rem;
      -moz-column-gap: 1rem;
           column-gap: 1rem;
