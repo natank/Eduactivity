@@ -112,7 +112,7 @@ exports.getProduct = async function (req, res, next) {
 
   if (product) {
     // Determine if the product is in myProducts of the user
-    product.myProduct = isMyProduct(req.user.myProducts, prodId);
+    product.myProduct = req.user && isMyProduct(req.user.myProducts, prodId);
 
     res.render('./shop/product', { product: product, page: 'shop' })
   } else {

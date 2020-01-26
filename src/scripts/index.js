@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   document.querySelectorAll('.bi-heart').forEach(elem => elem.addEventListener('click', product.wishlistProduct))
   document.querySelectorAll('.bi-heart-fill').forEach(elem => elem.addEventListener('click', product.un_wishlistProduct))
-
 })
 
 let product = (function () {

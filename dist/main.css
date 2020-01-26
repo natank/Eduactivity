@@ -8555,8 +8555,8 @@ a.text-dark:hover, a.text-dark:focus {
   height: 92vh; }
   .auth__form {
     border: 3px solid #f1f1f1;
-    width: 25%;
     margin: auto;
+    width: 90%;
     /* Full-width inputs */
     /* Set a style for all buttons */
     /* Extra style for the cancel button (red) */
@@ -8564,6 +8564,15 @@ a.text-dark:hover, a.text-dark:focus {
     /* Avatar image */
     /* The "Forgot password" text */
     /* Change styles for span and cancel button on extra small screens */ }
+    @media (min-width: 576px) {
+      .auth__form {
+        width: 70%; } }
+    @media (min-width: 768px) {
+      .auth__form {
+        width: 50%; } }
+    @media (min-width: 992px) {
+      .auth__form {
+        width: 30%; } }
     .auth__form input[type=text], .auth__form input[type=password] {
       width: 100%;
       padding: 12px 20px;
@@ -8701,7 +8710,7 @@ section {
   background-color: #343a40;
   padding: 2rem;
   color: #fff;
-  margin-top: 0rem; }
+  margin-top: 3rem; }
   @media (min-width: 768px) {
     .footer {
       margin-top: 10rem; } }
@@ -8851,6 +8860,48 @@ a.card-title {
     left: 50%;
     margin-left: -76px;
     z-index: 999; }
+
+@media (min-width: 768px) {
+  .w-md-50 {
+    width: 50%; } }
+
+.mw-1 {
+  max-width: 260px; }
+
+@media (min-width: 768px) {
+  .w-md-25 {
+    width: 25% !important; } }
+
+@media (min-width: 768px) {
+  .w-md-35 {
+    width: 35% !important; } }
+
+.speech-bubble {
+  position: relative;
+  background: #00aabb;
+  border-radius: .4em; }
+  .speech-bubble:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 20px solid transparent;
+    border-top-color: #00aabb;
+    border-bottom: 0;
+    border-right: 0;
+    margin-left: -10px;
+    margin-bottom: -20px; }
+  .speech-bubble--product {
+    bottom: 55%;
+    right: -60%;
+    width: 60%; }
+
+.category__topics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 1rem; }
 
 body {
   font-family: 'Roboto1', sans-serif; }
