@@ -8554,9 +8554,9 @@ a.text-dark:hover, a.text-dark:focus {
 .auth {
   height: 92vh; }
   .auth__form {
-    border: 3px solid #f1f1f1;
     margin: auto;
     width: 90%;
+    max-width: 300px;
     /* Full-width inputs */
     /* Set a style for all buttons */
     /* Extra style for the cancel button (red) */

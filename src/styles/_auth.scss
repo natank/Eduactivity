@@ -2,9 +2,10 @@
   height: 92vh;
 
   &__form {
-    border: 3px solid #f1f1f1;
+
     margin: auto;
     width: 90%;
+    max-width: 300px;
     @include media-breakpoint-up(sm){
       width: 70%;
     }
@@ -13,6 +14,7 @@
     }
     @include media-breakpoint-up(lg){
       width: 30%;
+
     }
   
     /* Full-width inputs */
