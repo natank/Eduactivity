@@ -5,3 +5,7 @@
     grid-gap: 1rem;
   }
 }
+
+.products a.notLoggedIn:hover ~ .alert  {
+  visibility: visible !important;
+}

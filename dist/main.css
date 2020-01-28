@@ -8903,6 +8903,9 @@ a.card-title {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 1rem; }
 
+.products a.notLoggedIn:hover ~ .alert {
+  visibility: visible !important; }
+
 body {
   font-family: 'Roboto1', sans-serif; }
 

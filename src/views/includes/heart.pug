@@ -1,4 +1,5 @@
-a(href='#')
+- let loggedIn = isLoggedIn ? "loggedIn" : "notLoggedIn"
+a(href='#' class= loggedIn)
   - heartVisibility= product.wishlisted ? "hidden" : "visible"
   svg(class="bi bi-heart position-absolute" 
     style= `top:.5rem; right: .5rem; visibility: ${heartVisibility}`
