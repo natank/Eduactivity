@@ -14,19 +14,29 @@
   &__logo{
     display: block;
     text-align: center;
-    @include media-breakpoint-up(md){
-      text-align: initial;
-    }
   }
   &__main {
     display: flex; 
     flex-direction: column;
-    margin-top: 1rem;
+    
     justify-content: space-around;
+    margin: auto;
+    margin-top: 3rem;
+    width: 100%;
+    
     @include media-breakpoint-up(md){
       flex-direction: row;
-      margin-top: 3rem;
+      width: 50%;
+      min-width: 600px;
     }
+    @include media-breakpoint-up(lg){
+      width:70%;
+    }
+    @include media-breakpoint-up(xl){
+      width:30%;
+      min-width: 800px;
+    }
+
     
     
   }

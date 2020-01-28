@@ -4,8 +4,8 @@ block content
   section.hero
     h1.text-center.my-4
       | DIY PRINTABLES FOR HOLIDAYS & PARTIES
-  section.mt-5.bg-secondary.p-3
-    h2.text-center
+  section.mt-5.bg-secondary.p-3.pb-5
+    h1.text-center.text-light.mb-5.text-uppercase
       | Printables by Category
     div.categories
       each entry in data
@@ -17,7 +17,7 @@ block content
           div.topics.list-group
             each topic in entry.topics
               - const topicRoute = `/topic/${topic.id}`
-              a(href=topicRoute).list-group-item.list-group-item-action.text-center.bg-success.text-light 
+              a(href=topicRoute).list-group-item.list-group-item-action.text-center.bg-success.text-light.card__content
                 | #{topic.title}
   include ../includes/footer.pug 
 
