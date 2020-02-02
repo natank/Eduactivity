@@ -11,6 +11,6 @@ block content
 					h1 #{item.product.title}
 					h2 Quantity: #{item.quantity}
 
-		div
-			h2.centered Total: #{totalSum}
-		button(onclick=`createOrder('${checkoutSessionId}')`) Order Now!
+		div.text-center
+			h2.text-center Total: #{totalSum}
+			button.btn.btn-success(type="button" onclick=`createOrder('${checkoutSessionId}')`) Order Now!

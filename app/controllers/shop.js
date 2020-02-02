@@ -315,29 +315,42 @@ exports.getCheckout = async (req, res, next) => {
         }
         prev.push(cartItem)
       } else {
-        // if product not exist anymore - remove it from cart
+        // if product not available anymore in shop stock - remove it from cart
         cart.splice(index)
       }
       return prev;
     }, []);
-    // await user.save();
 
     let totalCartValue = uiCart.reduce((prev, curr) => {
       return prev + curr.product.price * curr.quantity
     }, 0)
 
+    const line_items = uiCart.map(item => {
+      const Cents = 100;
+      let obj = {
+        name: item.product.title,
+        description: item.product.description,
+        images: [],
+        amount: item.product.price * Cents,
+        currency: 'usd',
+        quantity: item.quantity
+      }
+      return obj;
+    })
+
     const stripe = require('stripe')('sk_test_nnqXbNzNuX3Fy5p9NjjHX9ft00wlTX6B5H');
 
     const checkoutSession = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      line_items: [{
-        name: 'T-shirt',
-        description: 'Comfortable cotton t-shirt',
-        images: ['https://example.com/t-shirt.png'],
-        amount: 500,
-        currency: 'usd',
-        quantity: 1,
-      }],
+      // line_items: [{
+      //   name: 'T-shirt',
+      //   description: 'Comfortable cotton t-shirt',
+      //   images: ['https://example.com/t-shirt.png'],
+      //   amount: 500,
+      //   currency: 'usd',
+      //   quantity: 1,
+      // }],
+      line_items,
       success_url: 'http://127.0.0.1:8080/shop/create-order/?session_id={CHECKOUT_SESSION_ID}',
       cancel_url: 'https://example.com/cancel',
     });

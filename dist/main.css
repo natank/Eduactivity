@@ -8794,6 +8794,18 @@ a.card-title {
   .card__content {
     font-size: 1.5rem; }
 
+h1 {
+  font-size: 1.5rem; }
+  @media (min-width: 768px) {
+    h1 {
+      font-size: 2.5rem; } }
+
+h2 {
+  font-size: 1.2rem; }
+  @media (min-width: 768px) {
+    h2 {
+      font-size: 2rem; } }
+
 .wishlist {
   list-style: none;
   padding: 0; }
@@ -8913,17 +8925,19 @@ a.card-title {
     border-right: 0;
     margin-left: -10px;
     margin-bottom: -20px; }
-  .speech-bubble--product {
-    bottom: 55%;
-    right: -60%;
-    width: 60%; }
 
 .category__topics {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 1rem; }
 
-.products a.notLoggedIn:hover ~ .alert {
+.speech-bubble--product {
+  top: -5rem;
+  right: -3rem;
+  width: 60%;
+  visibility: visible; }
+
+.product a.toolTipVisible:hover ~ .alert {
   visibility: visible !important; }
 
 body {

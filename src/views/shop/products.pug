@@ -5,6 +5,7 @@ block content
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
 
   h2.text-center.mb-4.text-uppercase #{title}
+
   form(action=route method='GET').mb-5
     div.form-group.w-50.m-auto
       select(name="acquisition").form-control#opt.w-70.w-md-50.submit-on-toggle.m-auto
@@ -20,12 +21,12 @@ block content
     each product in products
       - const imagePath = `/images/${product.imageName}`
       - const productPath = `/product/${product.id}`
-      .card(style='width: 18rem' data-id=product.id data-csrf=csrfToken).position-relative
+      .card.product(style='width: 18rem' data-id=product.id data-csrf=csrfToken).position-relative
         img(src= imagePath alt=product.title style='width: 100%; height: 16rem; object-fit: cover').card-img-top
         - let heartVisibility = "hidden"
         include ../includes/heart.pug
         include ../includes/heart-fill.pug
-        .alert.alert-success.speech-bubble.speech-bubble--product.invisible
+        .alert.alert-success.speech-bubble.speech-bubble--product.invisible.position-absolute
           strong Login
           |  to create your wishlist
 
@@ -33,7 +34,7 @@ block content
           h5.card-title.text-center #{product.title}
           p.card-text
             | #{product.description}
-          - let priceVisibility = (product.myProduct || product.price === 0) ? 'hidden' : 'visible'
+          -let priceVisibility = (product.myProduct || product.price === 0) ? 'hidden' : 'visible'
           h3(style=`visibility: ${priceVisibility}`).text-center $#{product.price}
 
           a.btn.btn-primary(href=productPath).d-block.w-50.mr-auto.ml-auto Learn More

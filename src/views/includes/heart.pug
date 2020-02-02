@@ -1,5 +1,8 @@
-- let loggedIn = isLoggedIn ? "loggedIn" : "notLoggedIn"
-a(href='#' class= loggedIn)
+// heart visible if the product is not included in the wishlist.
+// tool tip is visible if the user is not logged in
+- let isToolTipVisible = isLoggedIn ? "toolTipNotVisible" : "toolTipVisible"
+- let route = isLoggedIn ? '#' : '/auth/login'
+a(href= route class= isToolTipVisible)
   - heartVisibility= product.wishlisted ? "hidden" : "visible"
   svg(class="bi bi-heart position-absolute" 
     style= `top:.5rem; right: .5rem; visibility: ${heartVisibility}`

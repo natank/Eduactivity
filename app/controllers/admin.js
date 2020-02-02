@@ -18,7 +18,7 @@ exports.getDashboard = function (req, res, next) {
 exports.getCreateProduct = async function (req, res, next) {
     try {
         let topics = await Topic.find({}, 'title')
-        res.render('admin/createProduct', { isEdit: false, topics: topics, page: 'admin' });
+        res.render('admin/createProduct', { renderAs: 'new', topics: topics, page: 'admin' });
     } catch (err) {
         next(err)
     }
@@ -38,7 +38,7 @@ exports.getEditProduct = async function (req, res, next) {
         let product = await Product.findById(req.params.id).populate({ path: 'topic', select: 'title' });
         let topics = await Topic.find({}, 'title')
         res.render('admin/createProduct', {
-            product: product, isEdit: true,
+            product: product, renderAs: 'edit',
             topics: topics, page: 'admin'
         })
     } catch (err) {

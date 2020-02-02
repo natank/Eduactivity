@@ -17,11 +17,11 @@ block content
                 span.glyphicon.glyphicon-trash
 
       hr
-      div.centered
+      div.text-center
         //- form(action="/create-order" method="POST")
         //-   input(type="hidden" name="_csrf" value= csrfToken)
         //-   button(type="submit").btn Order Now!
-        a.btn.btn-success(href="/checkout") Order Now! 
+        a.btn.btn-success.mx-auto.d-inline-block(href="/checkout") Order Now! 
     else
       h1 
         | No Products in Cart!

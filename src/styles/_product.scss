@@ -1,0 +1,13 @@
+.speech-bubble{
+  &--product{
+    top: -5rem;
+    right: -3rem;
+    width: 60%;
+    visibility: visible;
+  }
+}
+
+// show a tool tip on the wishlist icon if not logged in
+.product a.toolTipVisible:hover ~ .alert  {
+  visibility: visible !important;
+}
