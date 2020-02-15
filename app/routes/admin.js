@@ -23,8 +23,9 @@ router.get('/topics', adminController.getTopics);
 router.get('/categories', adminController.getCategories);
 router.get('/products', adminController.getProducts);
 
-router.post('/createProduct', uploadProductFiles, [
-  check('title')
+router.post('/createProduct',
+  //first check for existance of numerical inputs
+  [check('title')
     .isLength({
       min: 2
     }).withMessage('Title must contain 2 or more chars'),
@@ -38,14 +39,19 @@ router.post('/createProduct', uploadProductFiles, [
     .withMessage('Price must contain only digits'),
   check('topic')
     .isAscii()
-    .withMessage('One topic must be selected'),
-  check('imageName')
+    .withMessage('One topic must be selected')],
+  // Continue for files input
+  uploadProductFiles,
+  // Validate existance of files
+  [check('imageName')
     .isAscii()
     .withMessage('Please provide proudct image'),
   check('printableName')
     .isAscii()
     .withMessage('Please provide printable file')
-], adminController.postCreateProduct);
+  ], adminController.postCreateProduct);
+
+// TODO: Add validation checks for other forms
 router.post('/editProduct', uploadProductFiles, adminController.postEditProduct);
 
 router.post('/createCategory', adminController.postCreateCategory);

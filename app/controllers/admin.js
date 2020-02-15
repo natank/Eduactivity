@@ -203,7 +203,6 @@ exports.postCreateProduct = async function (req, res, next) {
             let { param } = error
             // if field contains more than one validation error - show only the first
             if (!errorObj[param]) errorObj[param] = error.msg
-            console.log(`param = ${param} msg = ${error.msg}`)
             return errorObj
         }, {})
         res.status(422).render('admin/createProduct', {
