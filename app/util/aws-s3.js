@@ -6,7 +6,7 @@ const BUCKET_NAME = 'eduactivity';
 const s3 = new AWS.S3({
   accessKeyId: ID,
   secretAccessKey: SECRET
-})
+});
 s3.bucketName = BUCKET_NAME;
 
 s3.cUploadFile = async (source, dest) => {
@@ -15,26 +15,22 @@ s3.cUploadFile = async (source, dest) => {
     Bucket: BUCKET_NAME,
     Key: dest,
     Body: fileContent
-  }
+  };
 
   let p = new Promise((resolve, reject) => {
-    s3.upload(params, function (err, data) {
+    s3.upload(params, function(err, data) {
       if (err) {
-        reject(err)
+        reject(err);
+      } else {
+        resolve();
       }
-      else {
-        console.log(`File uploaded successfully. ${data.Location}`);
-        resolve()
-      }
-    })
-  })
+    });
+  });
 
   try {
     await p;
   } catch (err) {
-    throw (err)
+    throw err;
   }
-
-}
+};
 module.exports = s3;
-
