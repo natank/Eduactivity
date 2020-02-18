@@ -26,7 +26,7 @@ async function uploadTopicFiles(req, res, next) {
     const imagePath = `${imageDir}/${newImageName}`;
 
     try {
-      await s3.cUploadFile(oldImageUrlPath, imagePath);
+      await s3.uploadFile(oldImageUrlPath, imagePath);
     } catch (err) {
       next(err);
     }

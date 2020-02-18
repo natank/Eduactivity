@@ -16,11 +16,11 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
-  imageName: {
+  imageUrl: {
     type: String,
     required: true
   },
-  printableName: {
+  printableUrl: {
     type: String,
     required: true
   },
@@ -34,7 +34,6 @@ const productSchema = new Schema({
     ref: 'User',
     required: true
   }
-
-})
+});
 
 module.exports = mongoose.model('Product', productSchema);
