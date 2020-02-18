@@ -22,7 +22,7 @@ block content
       input(type="hidden", id="id", name= "prodId", value= prodId)
     div.form-group
       label(for='title') 
-        | Title:
+        | Title: 
       - let titleError = validationErrors && validationErrors['title']
       if(titleError) 
         - validityClass = "is-invalid"
@@ -33,21 +33,27 @@ block content
       - validityClass = null
       label(for='printable') 
         | Printable File: 
-      - let pdfError = validationErrors && validationErrors['printableName']
-      if(pdfError)
+      - let pdfNameError = validationErrors && validationErrors['printableName']
+      - let pdfError = validationErrors && validationErrors['printableUrl']
+      if(pdfError || pdfNameError)
         - validityClass = 'is-invalid'
       input(type='file', name='printable', accept=".pdf" required=isRequired class=validityClass).form-control-file
       if(pdfError)
         small(class="text-danger") #{pdfError}
+      if(pdfNameError)
+        small(class="text-danger") #{pdfNameError}
     div.form-group
       - validityClass = null
       label(for='imageurl') 
         | Image: 
-      - let imageError = validationErrors && validationErrors['imageName']
-      if(imageError)
+      - let imageError = validationErrors && validationErrors['imageUrl']
+      - let imageNameError = validationErrors && validationErrors['imageName']
+      if(imageError || imageNameError)
         - validityClass = 'is-invalid'
       input(type='file', name='imageurl' accept="image/*" required=isRequired).form-control-file
       if(imageError)
+        small(class="text-danger") #{imageError}
+      if(imageNameError)
         small(class="text-danger") #{imageError}
 
     div.form-group

@@ -24,7 +24,8 @@ async function uploadProductFiles(req, res, next) {
 
     if (files.printable.name && files.imageurl.name) {
       // upload the printable
-      const printablePath = `${printableDir}/${files.printable.name}`;
+      const printableName = `${currentTime()}${files.printable.name}`;
+      const printablePath = `${printableDir}/${printableName}`;
       let data;
       try {
         //await renamePath(tempPrintablePath, printablePath)

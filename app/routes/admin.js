@@ -24,8 +24,26 @@ router.get('/products', adminController.getProducts);
 
 router.post(
   '/createProduct',
+  // Extract file names and include them in the body for validation
+  (req, res, next) => {
+    let { files } = { ...req };
+    if (files.printable && files.imageurl) {
+      req.body.printableName = files.printable.name || undefined;
+      req.body.imageName = files.imageurl.name || undefined;
+    }
+    next();
+  },
   //first check for existance of numerical inputs
   [
+    check('printableName')
+      .custom(value => {
+        let hasSpaces = !/\s/.test(value);
+        return hasSpaces;
+      })
+      .withMessage('No spaces are allowed in the printable name'),
+    check('imageName')
+      .custom(value => !/\s/.test(value))
+      .withMessage('No spaces are allowed in the image name'),
     check('title')
       .isLength({
         min: 2
