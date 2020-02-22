@@ -37,7 +37,7 @@ topicSchema.pre('remove', async function (next) {
   const imageDir = 'images';
   const imagePath = `${imageDir}/${imageName}`;
   await s3.deleteFile(imagePath);
-  console.log('pre delete hoook 1111111111111111111111111111111111')
+
 })
 
 module.exports = mongoose.model('Topic', topicSchema);

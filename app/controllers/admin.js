@@ -207,7 +207,7 @@ exports.getDeleteTopic = async function (req, res, next) {
     const topic = await Topic.findById(topicId).select('imageUrl');
 
     await topic.remove();
-    // await Topic.deleteOne({ _id: topicId });
+
     res.redirect('/admin/topics');
   } catch (err) {
     next(err);

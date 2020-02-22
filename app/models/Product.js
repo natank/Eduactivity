@@ -36,4 +36,19 @@ const productSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Product', productSchema);
+const Product = mongoose.model('Product', productSchema);
+productSchema.pre('deleteMany', async function (next) {
+  // Delete related products
+  const topicId = this.getQuery().topic;
+  const products = await Product.find({ topic: topicId });
+  const productsPromise = products.map(product => {
+    const { imageUrl } = { ...product };
+    const imageName = imageUrl.split('/').pop();
+    const imageDir = "images";
+    const imagePath = `${imageDir}/${imageName}`;
+    return s3.deleteFile(imagePath)
+  });
+  promise.all(productsPromise);
+})
+
+module.exports = Product;
