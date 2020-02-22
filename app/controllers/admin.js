@@ -3,21 +3,20 @@
  * Topic - Belongs to category, has many products
  * Category - has many topics
  */
-import path from 'path';
+
 import Product from '../models/Product';
 import Topic from '../models/Topic';
 import Category from '../models/Category';
 import mongoose from 'mongoose';
-import fs from 'fs';
-import renamePath from '../util/renamePath';
+
 
 const s3 = require('../util/aws-s3');
 const { check, validationResult } = require('express-validator');
 
-exports.getDashboard = function(req, res, next) {
+exports.getDashboard = function (req, res, next) {
   res.render('./admin/dashboard', { page: 'admin', isAdmin: req.user.admin });
 };
-exports.getCreateProduct = async function(req, res, next) {
+exports.getCreateProduct = async function (req, res, next) {
   try {
     let topics = await Topic.find({}, 'title');
     res.render('admin/createProduct', {
@@ -30,11 +29,11 @@ exports.getCreateProduct = async function(req, res, next) {
   }
 };
 
-exports.getCreateCategory = function(req, res, next) {
+exports.getCreateCategory = function (req, res, next) {
   res.render('admin/createCategory', { edit: false, page: 'admin' });
 };
 
-exports.getCreateTopic = async function(req, res, next) {
+exports.getCreateTopic = async function (req, res, next) {
   const categories = await Category.find({}, 'title');
   res.render('admin/createTopic', {
     edit: false,
@@ -43,7 +42,7 @@ exports.getCreateTopic = async function(req, res, next) {
   });
 };
 
-exports.getEditProduct = async function(req, res, next) {
+exports.getEditProduct = async function (req, res, next) {
   try {
     let product = await Product.findById(req.params.id).populate({
       path: 'topic',
@@ -61,7 +60,7 @@ exports.getEditProduct = async function(req, res, next) {
   }
 };
 
-exports.getEditCategory = async function(req, res, next) {
+exports.getEditCategory = async function (req, res, next) {
   const category = await Category.findById(req.params.id);
   res.render('admin/createCategory', {
     category: category,
@@ -70,7 +69,7 @@ exports.getEditCategory = async function(req, res, next) {
   });
 };
 
-exports.getEditTopic = async function(req, res, next) {
+exports.getEditTopic = async function (req, res, next) {
   try {
     const topic = await Topic.findById(req.params.id).populate({
       path: 'category',
@@ -97,7 +96,7 @@ exports.getEditTopic = async function(req, res, next) {
   }
 };
 
-exports.getTopics = async function(req, res, next) {
+exports.getTopics = async function (req, res, next) {
   const filter = req.query.filter;
   let query;
   if (filter && filter != 'all') {
@@ -122,7 +121,7 @@ exports.getTopics = async function(req, res, next) {
   }
 };
 
-exports.getProducts = async function(req, res, next) {
+exports.getProducts = async function (req, res, next) {
   const filter = req.query.topic;
   let query;
 
@@ -148,7 +147,7 @@ exports.getProducts = async function(req, res, next) {
   }
 };
 
-exports.getCategories = async function(req, res, next) {
+exports.getCategories = async function (req, res, next) {
   try {
     const categories = await Category.find();
 
@@ -158,7 +157,7 @@ exports.getCategories = async function(req, res, next) {
   }
 };
 
-exports.getDeleteProduct = async function(req, res, next) {
+exports.getDeleteProduct = async function (req, res, next) {
   try {
     const product = await Product.findById(req.params.id);
     let { imageUrl, printableUrl } = product;
@@ -173,13 +172,13 @@ exports.getDeleteProduct = async function(req, res, next) {
     await s3.deleteFile(printablePath);
 
     await Product.deleteOne({ _id: req.params.id });
+    res.redirect('/admin/products');
   } catch (err) {
     next(err);
   }
-  res.redirect('/admin/products');
 };
 
-exports.getDeleteCategory = async function(req, res, next) {
+exports.getDeleteCategory = async function (req, res, next) {
   const categoryId = req.params.id;
   try {
     const topicsCount = await Topic.countDocuments({ category: categoryId });
@@ -200,7 +199,7 @@ exports.getDeleteCategory = async function(req, res, next) {
  * getDeleteTopic
  * Delete the a topic and all it's related products
  */
-exports.getDeleteTopic = async function(req, res, next) {
+exports.getDeleteTopic = async function (req, res, next) {
   const topicId = req.params.id;
   // TODO: Delete all related products before deleting the topic
   try {
@@ -217,7 +216,7 @@ exports.getDeleteTopic = async function(req, res, next) {
   res.redirect('/admin/topics');
 };
 
-exports.postCreateProduct = async function(req, res, next) {
+exports.postCreateProduct = async function (req, res, next) {
   const errors = validationResult(req);
   const { title, price, description, imageUrl, printableUrl, topic } = req.body;
   if (errors.isEmpty()) {
@@ -260,7 +259,7 @@ exports.postCreateProduct = async function(req, res, next) {
   }
 };
 
-exports.postEditProduct = async function(req, res, next) {
+exports.postEditProduct = async function (req, res, next) {
   const {
     title,
     price,
@@ -287,7 +286,7 @@ exports.postEditProduct = async function(req, res, next) {
   res.redirect('/admin/products');
 };
 
-exports.postCreateCategory = async function(req, res, next) {
+exports.postCreateCategory = async function (req, res, next) {
   const { title } = { ...req.body };
   const category = await Category.create({
     title,
@@ -296,7 +295,7 @@ exports.postCreateCategory = async function(req, res, next) {
   res.redirect('/admin/categories');
 };
 
-exports.postEditCategory = async function(req, res, next) {
+exports.postEditCategory = async function (req, res, next) {
   try {
     await Category.updateOne({ _id: req.body.id }, { title: req.body.title });
   } catch (err) {
@@ -306,65 +305,62 @@ exports.postEditCategory = async function(req, res, next) {
   res.redirect('/admin/categories');
 };
 
-exports.postCreateTopic = async function(req, res, next) {
-  const { title, description, category, imageName } = req.body;
+exports.postCreateTopic = async function (req, res, next) {
+  const { title, description, category, imageUrl } = req.body;
   await Topic.create({
     title,
     category: category,
     description,
-    imageName,
-    createdBy: mongoose.Types.ObjectId('4edd40c86762e0fb12000003')
+    imageUrl,
+    createdBy: req.user._id
   });
   res.redirect('topics');
 };
 
-exports.postEditTopic = async function(req, res, next) {
-  const { title, description, category, topicId } = req.body,
+exports.postEditTopic = async function (req, res, next) {
+  const { title, description, category, topicId } = { ...req.body },
     fileName = req.fileName,
     filePath = req.filePath,
     fileExist = req.fileExist;
 
-  const keys = { title, description, category, imageName: fileName };
-  if (fileExist) {
-    // new image was updated
-    let topic;
-    try {
-      topic = await Topic.findById(topicId, 'imageName');
-      if (!topic) throw err;
-    } catch (err) {
-      next(err);
-    }
-    // delete the previous image
-    const fileToDelete = `./app/images/${topic.imageName}`;
-    if (fs.existsSync(fileToDelete)) {
-      fs.unlinkSync(fileToDelete, err => {
-        if (err) next(err);
-      });
-    }
-
-    // save the new file to images folder
-    const imagePath = path.join(__dirname, '../images', fileName);
-
-    try {
-      await renamePath(filePath, imagePath);
-    } catch (err) {
-      next(err);
-    }
-  } else {
-    delete keys.imageName;
-  }
-
+  const keys = { title, description, category, imageUrl: null };
   try {
-    // const topic = await Topic.findOneAndUpdate({ _id: _id }, keys);
+    if (fileExist) {
+      // new image was updated
+      let topic;
+      topic = await Topic.findById(topicId);
+      if (!topic) throw err;
+
+      // delete the previous image
+      const imageDir = 'images';
+      const imageUrl = topic.imageUrl;
+      let imageName = imageUrl.split('/').pop();
+      let imagePath = `${imageDir}/${imageName}`;
+
+      await s3.deleteFile(imagePath);
+
+
+      // save the new file to images folder
+
+      imageName = fileName;
+      imagePath = `${imageDir}/${imageName}`;
+      let data = await s3.uploadFile(filePath, imagePath);
+      keys.imageUrl = data.Location;
+
+
+    } else {
+      delete keys.imageUrl;
+    }
     const topic = await Topic.updateOne({ _id: topicId }, keys);
+    res.redirect('topics');
+
   } catch (err) {
     next(err);
   }
-  res.redirect('topics');
 };
-exports.postFilterTopics = function(req, res, next) {
+exports.postFilterTopics = function (req, res, next) {
   res.redirect();
 };
-exports.postFilterProducts = function(req, res, next) {
+exports.postFilterProducts = function (req, res, next) {
   res.redirect();
 };

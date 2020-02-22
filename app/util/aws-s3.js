@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
+const credentials = require('./aws-credentials')
 const fs = require('fs');
-const ID = 'AKIAJ3ASROGRJEAMRXVA';
-const SECRET = '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';
+const { ID, SECRET } = { ...credentials };
 const BUCKET_NAME = 'eduactivity';
 const s3 = new AWS.S3({
   accessKeyId: ID,
@@ -14,7 +14,7 @@ exports.getFile = async source => {
     Key: 'HappyFace.jpg'
   };
   let p = new Promise((resolve, reject) => {
-    s3.getObject(params, function(err, data) {
+    s3.getObject(params, function (err, data) {
       if (err) reject(err);
       // an error occurred
       else resolve(data); // successful response
@@ -31,7 +31,7 @@ exports.uploadFile = (source, dest) => {
   };
 
   let p = new Promise((resolve, reject) => {
-    s3.upload(params, function(err, data) {
+    s3.upload(params, function (err, data) {
       if (err) {
         reject(err);
       } else {
@@ -51,7 +51,7 @@ exports.deleteFile = async key => {
     Key: key
   };
   let p = new Promise((resolve, reject) => {
-    s3.deleteObject(params, function(err, data) {
+    s3.deleteObject(params, function (err, data) {
       if (err) reject(err);
       // an error occurred
       else resolve(data); // successful response

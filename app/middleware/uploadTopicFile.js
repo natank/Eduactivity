@@ -19,29 +19,23 @@
  *  * 
  */
 const
-    formidable = require('formidable'),
-    path = require('path'),
-    currentTime = require('../util/currentTime'),
-    form = new formidable.IncomingForm();
-
-
-
+    currentTime = require('../util/currentTime');
+const s3 = require('../util/aws-s3');
+const path = require('path');
 async function uploadTopicFiles(req, res, next) {
     req.fileExist = (req.files.fileurl.size > 0)
     try {
+        let imageName = req.files.fileurl.name;
+        const tempFilePath = req.files.fileurl.path;
+        imageName = `${currentTime()}${imageName}`;
+        const imageDir = 'images';
+        const imagePath = `${imageDir}/${imageName}`;
 
-        loadFileToServerLocation(req);
+        const data = await s3.uploadFile(tempFilePath, imagePath);
+        req.body.imageUrl = data.Location;
         next()
     } catch (err) {
         next(err)
-    }
-}
-
-
-function loadFileToServerLocation(req) {
-    if (req.fileExist) {
-        req.filePath = req.files.fileurl.path
-        req.fileName = `${currentTime()}${req.files.fileurl.name}`;
     }
 }
 

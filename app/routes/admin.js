@@ -2,8 +2,8 @@ const express = require('express'),
   router = express.Router(),
   adminController = require('../controllers/admin');
 const uploadProductFiles = require('../middleware/uploadProductFiles');
-const uploadTopicFiles = require('../middleware/uploadTopicFiles');
-const uploadSingleFile = require('../middleware/uploadSingleFile');
+const uploadTopicFile = require('../middleware/uploadTopicFile');
+
 
 const { check } = require('express-validator');
 
@@ -86,8 +86,8 @@ router.post(
 router.post('/createCategory', adminController.postCreateCategory);
 router.post('/editCategory', adminController.postEditCategory);
 
-router.post('/createTopic', uploadTopicFiles, adminController.postCreateTopic);
-router.post('/editTopic', uploadTopicFiles, adminController.postEditTopic);
+router.post('/createTopic', uploadTopicFile, adminController.postCreateTopic);
+router.post('/editTopic', uploadTopicFile, adminController.postEditTopic);
 
 router.post('/filterTopics', adminController.postFilterTopics);
 router.post('/filterProducts', adminController.postFilterProducts);

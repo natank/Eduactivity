@@ -1,3 +1,4 @@
 node_modules
 app/images
 app/printables
+app/util/aws-credentials.js

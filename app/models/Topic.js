@@ -21,7 +21,7 @@ const topicSchema = new Schema({
     ref: 'User',
     required: true
   },
-  imageName: {
+  imageUrl: {
     type: String,
     required: true
   }
