@@ -57,4 +57,5 @@ exports.deleteFile = async key => {
       else resolve(data); // successful response
     });
   });
+  return p;
 };

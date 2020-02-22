@@ -201,19 +201,17 @@ exports.getDeleteCategory = async function (req, res, next) {
  */
 exports.getDeleteTopic = async function (req, res, next) {
   const topicId = req.params.id;
-  // TODO: Delete all related products before deleting the topic
   try {
-    // Delete the topic image from the storage
-    const topic = await Topic.findById(topicId).select('imageName');
+    //  Delete all related products before deleting the topic
+    // await Product.deleteMany({ topic: mongoose.Types.ObjectId(topicId) })
+    const topic = await Topic.findById(topicId).select('imageUrl');
 
-    const imageDir = 'images';
-    const imagePath = `${imageDir}/${topic.imageName}`;
-    await s3.deleteFile(imagePath);
-    await Topic.deleteOne({ _id: topicId });
+    await topic.remove();
+    // await Topic.deleteOne({ _id: topicId });
+    res.redirect('/admin/topics');
   } catch (err) {
     next(err);
   }
-  res.redirect('/admin/topics');
 };
 
 exports.postCreateProduct = async function (req, res, next) {

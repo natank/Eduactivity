@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
+import Product from './Product';
+const s3 = require('../util/aws-s3');
 
 const topicSchema = new Schema({
   title: {
@@ -26,6 +27,17 @@ const topicSchema = new Schema({
     required: true
   }
 
+})
+topicSchema.pre('remove', async function (next) {
+  // Delete related products
+  const topicId = this._id;
+  await Product.deleteMany({ topic: topicId })
+  // Delete the topic image from the storage
+  let imageName = this.imageUrl.split('/').pop();
+  const imageDir = 'images';
+  const imagePath = `${imageDir}/${imageName}`;
+  await s3.deleteFile(imagePath);
+  console.log('pre delete hoook 1111111111111111111111111111111111')
 })
 
 module.exports = mongoose.model('Topic', topicSchema);
