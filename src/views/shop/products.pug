@@ -19,7 +19,7 @@ block content
 
   .products
     each product in products
-      - const imagePath = `/images/${product.imageName}`
+      - const imagePath = product.imageUrl
       - const productPath = `/product/${product.id}`
       .card.product(style='width: 18rem' data-id=product.id data-csrf=csrfToken).position-relative
         img(src= imagePath alt=product.title style='width: 100%; height: 16rem; object-fit: cover').card-img-top

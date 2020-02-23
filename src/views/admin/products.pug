@@ -19,7 +19,7 @@ block content
     for product in products
       .card.product
         - const title = product.title
-        - const imgUrl = "/images/"+ product.imageName
+        - const imgUrl = product.imageUrl
         - const editUrl = "/admin/editProduct/"+product._id
         - const deleteUrl = "/admin/deleteProduct/"+product._id
 

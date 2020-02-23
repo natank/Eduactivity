@@ -27,7 +27,8 @@ exports.uploadFile = (source, dest) => {
   const params = {
     Bucket: BUCKET_NAME,
     Key: dest,
-    Body: fileContent
+    Body: fileContent,
+    ACL: "public-read"
   };
 
   let p = new Promise((resolve, reject) => {

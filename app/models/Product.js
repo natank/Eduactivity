@@ -40,15 +40,38 @@ productSchema.pre('deleteMany', async function (next) {
   // Delete related products
   const topicId = this.getQuery().topic;
   try {
+    // Get the products to delete
     const products = await Product.find({ topic: topicId });
-    const productsPromise = products.map(product => {
-      const { imageUrl } = { ...product.toObject() };
+
+    // The promise obj holds pending storage delete promises 
+    //   of the image and prinbles of each product 
+
+    const promiseObj = products.reduce((acc, product) => {
+      const { imageUrl, printableUrl } = { ...product.toObject() };
+
+      const printableName = printableUrl.split('/').pop();
       const imageName = imageUrl.split('/').pop();
+
       const imageDir = "images";
+      const printableDir = "printables";
+
       const imagePath = `${imageDir}/${imageName}`;
-      return s3.deleteFile(imagePath)
-    });
-    Promise.all(productsPromise);
+      const printablePath = `${printableDir}/${printableName}`;
+
+      // Create promises to delete the image and printable of each product
+      const imagePromise = s3.deleteFile(imagePath)
+      const printablePromise = s3.deleteFile(printablePath)
+
+      acc.images = [...acc.images, imagePromise];
+      acc.printables = [...acc.printables, printablePromise]
+
+      return acc;
+    }, { images: [], printables: [] });
+
+    // Fulfill the promises
+    await Promise.all(promiseObj.images);
+    await Promise.all(promiseObj.printables);
+
   } catch (err) {
     next(err)
   }
