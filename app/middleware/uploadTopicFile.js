@@ -18,10 +18,8 @@
  * 
  *  * 
  */
-const
-    currentTime = require('../util/currentTime');
+const currentTime = require('../util/currentTime');
 const s3 = require('../util/aws-s3');
-const path = require('path');
 async function uploadTopicFiles(req, res, next) {
     req.fileExist = (req.files.fileurl.size > 0)
     try {

@@ -262,26 +262,40 @@ exports.postEditProduct = async function (req, res, next) {
     title,
     price,
     description,
-    imageName,
-    printableName,
+    imageUrl,
+    printableUrl,
     topic,
     prodId
   } = req.body;
-
-  // check if new files where uploaded and update the db
-  let newValues = { title, price, description, topic };
-  if (imageName) {
-    newValues.imageName = imageName;
-  }
-  if (printableName) {
-    newValues.printableName = printableName;
-  }
   try {
-    await Product.updateOne({ _id: prodId }, newValues);
+    let product = await Product.findById(prodId);
+    let updatedProduct = product.toObject({ virtuals: true });
+    // update the product with the new values
+    updatedProduct = { ...updatedProduct, title, price, description, topic };
+    // check if the image has changed
+    if (imageUrl) {
+      // remove the old image
+      const imageName = updatedProduct.imageUrl.split('/').pop();
+      const imageDir = "images";
+      const imagePath = `${imageDir}/${imageName}`;
+      await s3.deleteFile(imagePath);
+      // save the url of the new image
+      updatedProduct.imageUrl = imageUrl;
+    }
+    if (printableUrl) {
+      const printableName = updatedProduct.printableUrl.split('/').pop();
+      const printableDir = "printables";
+      const printablePath = `${printableDir}/${printableName}`;
+      await s3.deleteFile(printablePath);
+      // save the url of the new printable
+      updatedProduct.printableUrl = printableUrl;
+    }
+    await product.update(updatedProduct)
+
+    res.redirect('/admin/products');
   } catch (err) {
     next(err);
   }
-  res.redirect('/admin/products');
 };
 
 exports.postCreateCategory = async function (req, res, next) {
@@ -337,14 +351,8 @@ exports.postEditTopic = async function (req, res, next) {
 
       await s3.deleteFile(imagePath);
 
-
-      // save the new file to images folder
-
-      imageName = fileName;
-      imagePath = `${imageDir}/${imageName}`;
-      let data = await s3.uploadFile(filePath, imagePath);
-      keys.imageUrl = data.Location;
-
+      // update the url of the new image
+      keys.imageUrl = req.body.imageUrl
 
     } else {
       delete keys.imageUrl;
