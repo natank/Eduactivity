@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 let _db;
 
 // let _dbURI = 'mongodb://nati:welcome10@ds241408.mlab.com:41408/eduactivity'
-let _dbURI = `mongodb://localhost:27017/eduactivity`
+// let _dbURI = `mongodb://localhost:27017/eduactivity`;
+let _dbURI = `mongodb+srv://Nati:Test123@cluster0-kiyxo.mongodb.net/Eduactivity`
 let mongoServerUri = process.env.MONGO_SERVER_URI;
 let mongoServerPort = process.env.MONGO_SERVER_PORT;
 let mongoDbName = process.env.MONGO_DB_NAME;
@@ -14,7 +15,7 @@ let mongoDbName = process.env.MONGO_DB_NAME;
 
 async function mongoConnect() {
   try {
-    await mongoose.connect(_dbURI);
+    await mongoose.connect(_dbURI, { useNewUrlParser: true });
     console.log("connected")
 
     _db = mongoose.connection;

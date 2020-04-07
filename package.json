@@ -7,6 +7,7 @@
     "start": "webpack-dev-server --config=config/webpack.dev.js",
     "dev": "nodemon --inspect --watch config --watch app app/main.js",
     "build": "webpack --config=config/webpack.dev.js",
+    "prod": "node app/main.js",
     "babel": "babel node_modules/core-js/fn/promise src/main.js"
   },
   "browserslist": [
@@ -49,6 +50,7 @@
     "connect-mongodb-session": "^2.2.0",
     "crypto": "^1.0.1",
     "csurf": "^1.10.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "express-validator": "^6.3.0",
@@ -57,6 +59,7 @@
     "formidable": "^1.2.1",
     "html-loader": "^0.5.5",
     "jquery": "^3.4.1",
+    "mongodb": "^3.5.3",
     "mongoose": "^5.7.7",
     "nodemailer": "^6.3.1",
     "nodemailer-sendgrid-transport": "^0.2.0",

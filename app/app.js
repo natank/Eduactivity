@@ -4,6 +4,9 @@ import session from 'express-session';
 import multipartExtract from './middleware/multipartExtract';
 import webpack from 'webpack';
 import User from './models/User';
+
+const isProd = process.env.NODE_ENV === "production";
+
 const isAdmin = require('./middleware/is-auth').isAdmin;
 const getWishlist = require('./middleware/getWishlist');
 const MongoDBStore = require('connect-mongodb-session')(session);
@@ -14,18 +17,18 @@ const bodyParser = require('body-parser');
 const config = require("../config/webpack.dev.js");
 const flash = require('connect-flash');
 const compiler = webpack(config);
-const webpackDevMiddleware = require("webpack-dev-middleware")(
-  compiler,
-  {
-    writeToDisk: (filePath) => {
-      // instruct the dev server to the home.html file to disk 
-      // so that the route handler will be able to read it 
-      return /.+\.css$/.test(filePath);
-    }
-  }
-)
+// // const webpackDevMiddleware = require("webpack-dev-middleware")(
+// compiler,
+// {
+//   writeToDisk: (filePath) => {
+//     // instruct the dev server to the home.html file to disk 
+//     // so that the route handler will be able to read it 
+//     return /.+\.css$/.test(filePath);
+//   }
+// }
+// )
 
-const webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
+// const webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
 const shopRoutes = require("./routes/shop");
 const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
@@ -90,12 +93,12 @@ const sessionMW = (function (app) {
 /**
  * Webpack middleware
  */
-
-const webpackMW = (function (app) {
-  app.use(webpackDevMiddleware);
-  app.use(webpackHotMiddleware);
-})(app)
-
+if (!isProd) {
+  const webpackMW = (function (app) {
+    app.use(webpackDevMiddleware);
+    app.use(webpackHotMiddleware);
+  })(app)
+}
 /**
  * 
  * General Middleware
@@ -161,7 +164,8 @@ const endPointsMW = (function (app) {
 
 const connect = (async function (app) {
   await mongoConnect();
-  app.listen(8080, () => {
-    console.log("app is listening")
+  const PORT = process.env.PORT || 8080;
+  app.listen(PORT, () => {
+    console.log(`app is listening on port http://localhost:${PORT}`)
   })
 })(app)
