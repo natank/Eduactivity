@@ -1,11 +1,9 @@
 const AWS = require('aws-sdk');
-const credentials = require('./aws-credentials')
 const fs = require('fs');
-const { ID, SECRET } = { ...credentials };
 const BUCKET_NAME = 'eduactivity';
 const s3 = new AWS.S3({
-  accessKeyId: ID,
-  secretAccessKey: SECRET
+  accessKeyId: process.env.AWS_ID,
+  secretAccessKey: process.env.AWS_SECRET
 });
 
 exports.getFile = async source => {
