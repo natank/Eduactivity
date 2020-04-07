@@ -2,7 +2,7 @@ import express from "express";
 import path from 'path';
 import session from 'express-session';
 import multipartExtract from './middleware/multipartExtract';
-import webpack from 'webpack';
+// import webpack from 'webpack';
 import User from './models/User';
 
 const isProd = process.env.NODE_ENV === "production";
@@ -16,7 +16,7 @@ const MONGODB_URI = require('./util/database').dbURI;
 const bodyParser = require('body-parser');
 const config = require("../config/webpack.dev.js");
 const flash = require('connect-flash');
-const compiler = webpack(config);
+// const compiler = webpack(config);
 // // const webpackDevMiddleware = require("webpack-dev-middleware")(
 // compiler,
 // {
