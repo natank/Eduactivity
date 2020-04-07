@@ -399,7 +399,7 @@ exports.validateProductOwnership = async (req, res, next) => {
 }
 
 exports.getMyProducts = async (req, res, next) => {
-
+  const user = req.user;
   myProducts = user.getMyProducts();
   // Determine which products are in myProducts of the user
   products = products && products.map(product => {
