@@ -99,19 +99,6 @@ if (!isProd) {
     app.use(webpackHotMiddleware);
   })(app)
 }
-/**
- * 
- * General Middleware
- * 
- */
-
-const generalMW = (function (app) {
-  app.set('view engine', 'pug')
-  app.set('views', path.join(__dirname, "../src/views"))
-  app.use(express.static(path.join(__dirname, '../dist')));
-  app.use('/images', express.static(path.join(__dirname, 'images')));
-  app.use(flash());
-})(app)
 
 /**
  * 
@@ -161,6 +148,26 @@ const endPointsMW = (function (app) {
   app.use('/admin', isAdmin, adminRoutes)
   app.use('/auth', authRoutes)
 })(app)
+
+/**
+ * 
+ * General Middleware
+ * 
+ */
+
+const generalMW = (function (app) {
+  app.set('view engine', 'pug')
+  app.set('views', path.join(__dirname, "../src/views"))
+
+  // app.use(express.static(path.join(__dirname, '../dist')));
+
+  const expressStaticGzip = require("express-static-gzip");
+  app.use("/", expressStaticGzip(path.join(__dirname, '../dist'), { enableBrotli: true }));
+
+  // app.use('/images', express.static(path.join(__dirname, 'images')));
+  app.use(flash());
+})(app)
+
 
 const connect = (async function (app) {
   await mongoConnect();
