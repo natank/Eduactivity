@@ -1,10 +1,11 @@
 const AWS = require('aws-sdk');
 const fs = require('fs');
-const BUCKET_NAME = 'eduactivity';
-const s3 = new AWS.S3({
+const BUCKET_NAME = process.env.BUCKET_NAME;
+let s3 = new AWS.S3({
   accessKeyId: process.env.AWS_ID,
   secretAccessKey: process.env.AWS_SECRET
 });
+
 
 exports.getFile = async source => {
   var params = {

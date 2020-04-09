@@ -2,10 +2,14 @@ import express from "express";
 import path from 'path';
 import session from 'express-session';
 import multipartExtract from './middleware/multipartExtract';
-// import webpack from 'webpack';
 import User from './models/User';
 
 const isProd = process.env.NODE_ENV === "production";
+
+console.log(`process.env: ${JSON.stringify({
+  DB_URI: process.env.DB_URI,
+  BUCKET_NAME: process.env.BUCKET_NAME
+})}`);
 
 const isAdmin = require('./middleware/is-auth').isAdmin;
 const getWishlist = require('./middleware/getWishlist');
@@ -14,21 +18,29 @@ const csrf = require('csurf');
 const mongoConnect = require('./util/database').mongoConnect;
 const MONGODB_URI = require('./util/database').dbURI;
 const bodyParser = require('body-parser');
-// const config = require("../config/webpack.dev.js");
 const flash = require('connect-flash');
-// const compiler = webpack(config);
-// // const webpackDevMiddleware = require("webpack-dev-middleware")(
-// compiler,
-// {
-//   writeToDisk: (filePath) => {
-//     // instruct the dev server to the home.html file to disk 
-//     // so that the route handler will be able to read it 
-//     return /.+\.css$/.test(filePath);
-//   }
-// }
-// )
 
-// const webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
+let webpackDevMiddleware;
+let webpackHotMiddleware;
+if (!isProd) {
+  console.log(`Execution mode: development`);
+  const webpack = require("webpack")
+
+  const config = require("../config/webpack.dev.js");
+  const compiler = webpack(config);
+  webpackDevMiddleware = require("webpack-dev-middleware")(
+    compiler,
+    {
+      writeToDisk: (filePath) => {
+        // instruct the dev server to the home.html file to disk 
+        // so that the route handler will be able to read it 
+        return /.+\.css$/.test(filePath);
+      }
+    }
+  )
+  webpackHotMiddleware = require("webpack-hot-middleware")(compiler);
+}
+
 const shopRoutes = require("./routes/shop");
 const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
@@ -102,15 +114,42 @@ if (!isProd) {
 
 /**
  * 
+ * General Middleware
+ * 
+ */
+
+const generalMW = (function (app) {
+  app.set('view engine', 'pug')
+  app.set('views', path.join(__dirname, "../src/views"))
+
+  app.use(express.static(path.join(__dirname, '../dist')));
+  // const expressStaticGzip = require("express-static-gzip");
+  // app.use("/", expressStaticGzip(path.join(__dirname, '../dist'), { enableBrotli: true }));
+})(app)
+
+
+
+/**
+ * 
  * csrf Middleware
  * 
  */
+
+/**
+ * flash Middleware
+ * 
+ */
+const flasHMW = (app => {
+  app.use(flash());
+})(app)
 
 
 const csrfMW = (function (app) {
 
   app.use(csrfProtection);
 })(app)
+
+
 
 const userMW = (function (app) {
   app.use(async (req, res, next) => {
@@ -147,23 +186,6 @@ const endPointsMW = (function (app) {
   app.use('/shop', shopRoutes)
   app.use('/admin', isAdmin, adminRoutes)
   app.use('/auth', authRoutes)
-})(app)
-
-/**
- * 
- * General Middleware
- * 
- */
-
-const generalMW = (function (app) {
-  app.set('view engine', 'pug')
-  app.set('views', path.join(__dirname, "../src/views"))
-
-  // app.use(express.static(path.join(__dirname, '../dist')));
-  const expressStaticGzip = require("express-static-gzip");
-  app.use("/", expressStaticGzip(path.join(__dirname, '../dist'), { enableBrotli: true }));
-
-  app.use(flash());
 })(app)
 
 

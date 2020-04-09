@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const isDevelopment = false//process.env.NODE_ENV !== 'production'
+const isDevelopment = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   entry: {
@@ -116,7 +116,7 @@ module.exports = {
     ]
   },
   plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({
       filename: isDevelopment ? '[name].css' : '[name].css',
       chunkFilename: isDevelopment ? '[id].css' : '[id].css'
