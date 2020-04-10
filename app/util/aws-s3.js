@@ -7,10 +7,10 @@ let s3 = new AWS.S3({
 });
 
 
-exports.getFile = async source => {
+exports.getFile = async fileName => {
   var params = {
-    Bucket: 'examplebucket',
-    Key: 'HappyFace.jpg'
+    Bucket: BUCKET_NAME,
+    Key: fileName
   };
   let p = new Promise((resolve, reject) => {
     s3.getObject(params, function (err, data) {
@@ -19,6 +19,7 @@ exports.getFile = async source => {
       else resolve(data); // successful response
     });
   });
+  return p;
 };
 
 exports.uploadFile = (source, dest) => {

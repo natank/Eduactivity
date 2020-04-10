@@ -101,6 +101,8 @@ userSchema.methods.addToCart = async function (prodId) {
       order.items.push(orderItem);
       order.userId = this._id;
       user.myProducts.push({ product: cartItem.product });
+      // remove the product from the wishlist
+      this.wishlist = this.wishlist.filter(productId => productId.toString() != cartItem.product.toString())
     })
     try {
       order = await order.save();
@@ -109,6 +111,8 @@ userSchema.methods.addToCart = async function (prodId) {
     }
     user.orders.push(order)
     user.cart = [];
+
+
 
     let p = new Promise(async (resolve, reject) => {
       try {

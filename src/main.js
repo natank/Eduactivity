@@ -1,4 +1,5 @@
 require("bootstrap");
 require("./styles/main.scss");
 require("bootstrap");
-require("./scripts/index.js");
+require("./scripts/index");
+require("./scripts/stripe");

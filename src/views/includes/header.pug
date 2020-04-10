@@ -40,10 +40,9 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-primary
             ul.wishlist__list.position-absolute
               each product in wishlist
                 li.wishlist__item
-                  - const imagePath = `/images/${product.imageName}`
                   - const productPath = `/product/${product.id}`
                   a(href=productPath)
-                    img(src= imagePath)
+                    img(src= product.imageUrl)
                     p #{product.title}
 
         li.nav-item.dropdown.greeting

@@ -1,7 +1,4 @@
 var stripe = Stripe('pk_test_ONmXQwGjCyI0CVdXNjQrDUnq00vDxZmvml');
-export function test1(){
-  alert("this is a test")
-}
 
 export async function createOrder(sessionId) {
   console.log(JSON.stringify(sessionId))
@@ -17,3 +14,5 @@ export async function createOrder(sessionId) {
   // error, display the localized error message to your customer
   // using `error.message`.
 }
+
+window.createOrder = createOrder;

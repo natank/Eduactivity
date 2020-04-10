@@ -4,9 +4,9 @@ const Topic = require('../models/Topic');
 const Product = require('../models/Product');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
-const mkdirp = require('mkdirp')
-const mongoose = require('mongoose')
-const ObjectId = mongoose.Types.ObjectId;
+const mkdirp = require('mkdirp');
+const s3 = require('../util/aws-s3');
+const stream = require('stream');
 exports.getHome = async function (req, res, next) {
 
   try {
@@ -53,7 +53,7 @@ exports.getCategory = async function (req, res, next) {
 exports.getTopic = async function (req, res, next) {
   try {
     const topic = await Topic.findById(req.params.id);
-    const acquisition = req.query.acquisition || "free";
+    const acquisition = req.query.acquisition || "all";
     // determine price option
     let priceOption;
     switch (acquisition) {
@@ -113,6 +113,7 @@ exports.getProduct = async function (req, res, next) {
   if (product) {
     // Determine if the product is in myProducts of the user
     product.myProduct = req.user && isMyProduct(req.user.myProducts, prodId);
+    product.wishlisted = req.user && !!req.user.wishlist.find(item => item.toString() === prodId)
 
     res.render('./shop/product', { product: product, page: 'shop' })
   } else {
@@ -381,12 +382,18 @@ exports.getDownloadProduct = async (req, res, next) => {
   let product;
   try {
     product = await Product.findById(prodId)
+    const printableName = product.printableUrl.split('/').pop();
+    const file = await s3.getFile(`printables/${printableName}`);
+    const data = file.Body
+    res.writeHead(200, {
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename=${printableName}`,
+      'Content-Length': data.length
+    });
+    res.end(data);
   } catch (err) {
     next(err)
   }
-  const printableName = product.printableName;
-  const file = path.join(__dirname, `../printables/${printableName}`);
-  res.download(file);
 }
 
 exports.validateProductOwnership = async (req, res, next) => {
@@ -400,9 +407,20 @@ exports.validateProductOwnership = async (req, res, next) => {
 
 exports.getMyProducts = async (req, res, next) => {
   const user = req.user;
-  const myProducts = user.getMyProducts();
+  let products = await user.getMyProducts();
 
-  res.render('./shop/products', { title: `My Printables`, products: myProducts, page: 'shop' })
+  products = products && products.map(product => {
+    let prodId = product.id.toString();
+    product.myProduct = req.user && isMyProduct(req.user.myProducts, prodId);
+    return product
+  })
+
+  res.render('./shop/products',
+    {
+      title: `My Printables`,
+      products: products,
+      page: 'shop',
+    })
 }
 
 

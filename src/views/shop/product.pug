@@ -6,18 +6,29 @@ block content
 
   h2.text-center.mb-4  
     | #{product.title}
-  .product
-    - const imagePath = `/images/${product.imageName}`
-    .card.w-75.w-md-35.mx-auto
-      img(src=product.imageUrl, alt=product.title style='width: 100%; height: 16rem; object-fit: contain').card-img-top
-      .card-body
-        p.card-text
-          | #{product.description}
-        if(product.myProduct || product.price === 0)
-          a(href='/download?id=product._id').btn.btn-primary DOWNLOAD
-        else if(product.price > 0)
-          h4.card-text.mb-4
-            | $#{product.price}
+
+  - const imagePath = `/images/${product.imageName}`
+  .card.product(style='width: 18rem' data-id=product.id data-csrf=csrfToken).position-relative.m-auto
+    img(src= product.imageUrl alt=product.title style='width: 100%; height: 16rem; object-fit: cover').card-img-top
+    - let heartVisibility = "hidden"
+    include ../includes/heart.pug
+    include ../includes/heart-fill.pug
+    .alert.alert-success.speech-bubble.speech-bubble--product.invisible.position-absolute
+      strong Login
+      |  to create your wishlist
+
+    .card-body
+      h5.card-title.text-center #{product.title}
+      p.card-text
+        | #{product.description}
+      -let priceVisibility = (product.myProduct || product.price < 0) ? 'hidden' : 'visible'
+      -let price = product.price === 0 ? 'FREE' : `$${product.price}`
+      h3(style=`visibility: ${priceVisibility}`).text-center #{price}
+
+      if(product.myProduct || product.price === 0)
+        a(href=`/download/${product._id}`).btn.btn-primary.d-block.w-50.ml-auto.mr-auto.mt-2 DOWNLOAD
+      else
+        div.w-50.ml-auto.mr-auto.mt-2
           include ../includes/add-to-cart.pug
 
   include ../includes/footer.pug 
