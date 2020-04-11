@@ -7,7 +7,7 @@
         position: absolute;
         width:140px;
         color: #FFFFFF;
-        background: #193c7b;
+        background: $success;
         height: auto;
         line-height: 30px;
         text-align: center;
@@ -22,7 +22,7 @@
           left: 50%;
           margin-left: -8px;
           width: 0; height: 0;
-          border-bottom: 8px solid #193c7b;
+          border-bottom: 8px solid $success;
           border-right: 8px solid transparent;
           border-left: 8px solid transparent;
       }

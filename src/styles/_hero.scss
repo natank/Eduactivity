@@ -1,18 +1,18 @@
 .hero{
   
   position: relative;
-  background: url('../images/eduactivity.jpg');
+  // background: url('../images/eduactivity.jpg');
   background-size: 100%;
   background-position: 100% 30%;
   background-repeat: no-repeat;
   height: 230px;
   @include media-breakpoint-up(md){
-    height: 50vh;
+    height: 10vh;
   }
   h1{
     width: 100%;
     position: absolute;
-    top: 50%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%,-50%)
   }

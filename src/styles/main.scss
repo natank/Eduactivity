@@ -1,5 +1,5 @@
-@import "../../node_modules/bootstrap/scss/bootstrap";
-@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
+@import "custom";
+
 
 @import "auth";
 @import "cart";
@@ -8,7 +8,7 @@
 @import "section";
 @import "footer";
 @import "base";
-@import "custom";
+
 @import "navbar";
 @import "search";
 @import "utilities";
@@ -60,7 +60,7 @@ html {
 }
 
 .container-page{
-  background-color: aliceblue;
+  background-color: $info;
 }
 
 html {
