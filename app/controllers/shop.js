@@ -210,7 +210,8 @@ exports.getOrders = async (req, res, next) => {
       uiOrder.prods = order.items.map(item => {
         let prod = {
           title: item.product.title,
-          quantity: item.quantity
+          quantity: item.quantity,
+          _id: item.product._id
         }
         return prod
       });
@@ -249,21 +250,6 @@ exports.findOrderToDownload = async (req, res, next) => {
 }
 
 
-exports.getInvoiceName = (req, res, next) => {
-  req.invoiceName = `invoice_${req.params.orderId}.pdf`
-  const dir = path.join('data', 'invoices');
-  if (!fs.existsSync(dir)) {
-    mkdirp(dir, err => {
-      if (err) console.log(err);
-      else console.log('dir created');
-    })
-  }
-
-  req.invoicePath = path.join(dir, req.invoiceName);
-
-  next()
-}
-
 exports.getInvoiceFile = async (req, res, next) => {
   try {
     const pdfDoc = new PDFDocument();
@@ -273,12 +259,6 @@ exports.getInvoiceFile = async (req, res, next) => {
       'Content-Disposition',
       'inline; filename="' + req.invoiceName + '"'
     );
-
-    const ws = fs.createWriteStream(req.invoicePath)
-    ws.on('error', e => {
-      console.log(`failed creating write stream: ${e}`)
-    })
-    pdfDoc.pipe(ws);
 
     pdfDoc.pipe(res);
 
@@ -343,17 +323,9 @@ exports.getCheckout = async (req, res, next) => {
 
     const checkoutSession = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      // line_items: [{
-      //   name: 'T-shirt',
-      //   description: 'Comfortable cotton t-shirt',
-      //   images: ['https://example.com/t-shirt.png'],
-      //   amount: 500,
-      //   currency: 'usd',
-      //   quantity: 1,
-      // }],
       line_items,
-      success_url: 'http://127.0.0.1:8080/shop/create-order/?session_id={CHECKOUT_SESSION_ID}',
-      cancel_url: 'https://example.com/cancel',
+      success_url: `${req.protocol}://${req.get('host')}/shop/create-order/?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: 'https://example.com/cancel'
     });
 
     const {

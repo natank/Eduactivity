@@ -30,7 +30,6 @@ router.get('/orders', isAuth, shopController.getOrders);
 router.get('/orders/:orderId',
   isAuth,
   shopController.findOrderToDownload,
-  shopController.getInvoiceName,
   shopController.getInvoiceFile);
 
 module.exports = router;  
