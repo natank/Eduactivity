@@ -6,7 +6,7 @@ block content
   - const category = isEdit ? topic.category : null
   - const description = isEdit ? topic.description : null
   - const action = isEdit ? "/admin/editTopic" : "/admin/CreateTopic"
-  include ../includes/header.pug 
+
   h2.text-center.my-4
     | #{isEdit ? "Edit Topic" : "Add Topic"}
   form(action= action method='POST' enctype="multipart/form-data").border.border-info.w-75.align-self-center.p-4

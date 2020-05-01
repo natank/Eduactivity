@@ -13,7 +13,6 @@ block content
   - let validityClass = null
   - let errorMessage = null
 
-  include ../includes/header.pug 
   h2.text-center.my-4
     | #{isEdit ? "Edit Product" : "Add Product"}
   form(action= action method='POST' enctype="multipart/form-data").border.border-info.w-75.align-self-center.p-4

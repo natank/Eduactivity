@@ -3,7 +3,6 @@ block content
   - const title = isEdit ? category.title : null
   - const id = isEdit ? category._id : null
   - const action = isEdit ? "/admin/editCategory" : "/admin/createCategory"
-  include ../includes/header.pug 
   h2.text-center.my-4
     | #{isEdit ? "Edit Category" : "Add Category"}
 

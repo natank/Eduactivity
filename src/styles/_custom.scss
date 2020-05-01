@@ -21,11 +21,14 @@ $theme-colors: (
 
 // Class customizations
 .card {
-  max-width: 460px;
+  max-width: 560px;
+  background-color: $secondary;
+  padding: 1rem;
   .card-title {
-    background-color: $primary;
     color: $light;
-    padding: 1rem;
+  }
+  .card-body {
+    padding: 0;
   }
   .list-group {
     flex-grow: 1;
