@@ -1,0 +1,11 @@
+extends ../templates/container.pug
+block content
+  h1.text-center.my-4
+    | DIY PRINTABLES FOR HOLIDAYS & PARTIES
+
+  each category in allCategories
+    .category.card
+      .card-body
+        h5.card-title= category.title
+        a(href="/shop/category/"+category._id).btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
+          Explore Printables

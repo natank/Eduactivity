@@ -38,4 +38,15 @@
       }  
     }
   }
+  &__input {
+    font-family: nunito;
+    border-width: .2rem;
+    &::placeholder {
+      color: $danger
+    }
+    color: $danger;
+    &:focus {
+      color: $success;
+    }
+  }
 }

@@ -12,6 +12,10 @@ const categorySchema = new Schema({
     type: ObjectId,
     ref: 'User',
     required: true
+  },
+  featured: {
+    type: Boolean,
+    default: false
   }
 
 })

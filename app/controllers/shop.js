@@ -7,32 +7,19 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const s3 = require('../util/aws-s3');
 const stream = require('stream');
+
+
 exports.getHome = async function (req, res, next) {
+
+  res.render('./shop/index', { page: 'shop' })
+
+}
+
+exports.getCategories = async function (req, res, next) {
 
   try {
     const categories = await Category.find({}, 'title')
-    // For every category - get the topics with that category
-    let topicsPerCategoryPromise = categories.map(category => {
-      return Topic.find({ category: category.id }, "title").exec()
-    })
-    let topicsPerCategory = await Promise.all(topicsPerCategoryPromise);
-
-    // Create the data stracture for the ui
-    let data = topicsPerCategory.map((topics, index) => {
-      let entry = {
-        category: categories[index],
-        topics: topics
-      }
-      return entry
-    })
-
-    // Filter categories that don't have topic yet.
-    data = data.filter(entry => {
-      const hasTopics = Array.isArray(entry.topics) && entry.topics.length;
-      return hasTopics;
-    })
-
-    res.render('./shop/index', { data: data, page: 'shop' })
+    res.render('./shop/categories', { page: 'shop', allCategories: categories })
   } catch (err) {
     next(err)
   }
@@ -47,7 +34,6 @@ exports.getCategory = async function (req, res, next) {
   } catch (err) {
     next(err)
   }
-
 }
 
 exports.getTopic = async function (req, res, next) {
@@ -77,7 +63,7 @@ exports.getTopic = async function (req, res, next) {
     // Determine which products are in myProducts of the user
     products = products && products.map(product => {
       let prodId = product.id.toString();
-      product.myProduct = req.user && isMyProduct(req.user.myProducts, prodId);
+      product.myProduct = req.user && product.isMyProduct(req.user.myProducts);
       product.wishlisted = req.user && !!req.user.wishlist.find(item => item.toString() === prodId)
       return product
     })
@@ -93,14 +79,6 @@ exports.getTopic = async function (req, res, next) {
   }
 }
 
-function isMyProduct(myProducts, prodId) {
-  let isMyProduct = myProducts.reduce((prev, product) => {
-    prev = prev || product.product._id.toString() === prodId.toString();
-    return prev
-  }, false)
-  return isMyProduct;
-}
-
 exports.getProduct = async function (req, res, next) {
   const prodId = req.params.id;
   let product;
@@ -110,9 +88,11 @@ exports.getProduct = async function (req, res, next) {
     next(err)
   }
 
+
   if (product) {
-    // Determine if the product is in myProducts of the user
-    product.myProduct = req.user && isMyProduct(req.user.myProducts, prodId);
+    // Set the myProducts of the user
+    product.myProduct = req.user && product.isMyProduct(req.user.myProducts);
+    // Set the wishlisted field
     product.wishlisted = req.user && !!req.user.wishlist.find(item => item.toString() === prodId)
 
     res.render('./shop/product', { product: product, page: 'shop' })
@@ -370,10 +350,15 @@ exports.getDownloadProduct = async (req, res, next) => {
 
 exports.validateProductOwnership = async (req, res, next) => {
   const prodId = req.params.id;
-  if (isMyProduct(req.user.myProducts, prodId)) next();
-  else {
-    const err = `You don't own this product`
-    next(err)
+  try {
+    const product = await Product.findById(prodId);
+    if (product.isMyProduct(req.user.myProducts) || product.price === 0) next();
+    else {
+      const err = `You don't own this product`
+      throw (err)
+    }
+  } catch (err) {
+    return next(err)
   }
 }
 
@@ -382,8 +367,7 @@ exports.getMyProducts = async (req, res, next) => {
   let products = await user.getMyProducts();
 
   products = products && products.map(product => {
-    let prodId = product.id.toString();
-    product.myProduct = req.user && isMyProduct(req.user.myProducts, prodId);
+    product.myProduct = req.user && product.isMyProduct(req.user.myProducts);
     return product
   })
 

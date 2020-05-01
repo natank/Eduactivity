@@ -1,13 +1,19 @@
 // Variable overrides
-$primary: #3b3334;
-$secondary: #8a8a8a;
-$success: #5d6464;
-$info: #ffffff;
+$primary: #f3f3f2;
+$secondary: #ff527e;
+$success: #158bb3;
+$info: #38ceff;
+$danger: #b3a91e;
 
 $theme-colors: (
   "primary": $primary,
-  "secondary": $secondary
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "danger": $danger
 );
+// fonts
+@import "fonts";
 
 // Bootstrap
 @import "../../node_modules/bootstrap/scss/bootstrap";
@@ -28,7 +34,81 @@ $theme-colors: (
   &__content{
     font-size: 1.5rem;
   }
+  
+
+  &--category {
+    border-radius: 1rem;
+    background-color: $success;
+    display:flex;
+    align-items: center;
+    color: #fff;
+    width: 100%;
+    max-width: 15rem ;
+     &:hover {
+        text-decoration: none;
+      }
+    .card-title {
+      background: none;
+      text-align: center;
+      margin:0;
+    }
+  }
+
+  &--hello {
+    color: dark;
+    padding: 1rem;
+    .card-title {
+      padding: 0;
+      color: $light;
+      background: none;
+    }
+  }
+  &--product {
+    padding: 1rem;
+    .card-title {
+      padding: 0;
+    }
+    a.toolTipVisible:hover ~ .alert  {
+      visibility: visible !important;
+    }
+    .card-body {
+      padding: 0;
+    }
+
+    &__price {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    font-family: nunito;
+    .card-title {
+      font-family: chewy;
+    }
+    .card-text {
+      display: none;
+      position: absolute;
+      top: -30px;
+      left: -60px;
+      opacity: 90%;;
+      width: 50%;
+      border-radius: 1rem;
+      padding: .5rem
+    }
+    &:hover {
+      .card-text {
+        display:block
+      }
+    }
+    .speech-bubble{
+      &--product{
+        top: -5rem;
+        right: -3rem;
+        width: 60%;
+        visibility: visible;
+      }
+    }
+  }
 }
+
 
 h1 {
   font-size: 1.5rem;

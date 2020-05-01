@@ -5,12 +5,12 @@ const path = require('path')
 const shopController = require('../controllers/shop')
 const router = express.Router();
 
-router.get('/', shopController.getHome)
-
-router.get('/topic/:id', shopController.getTopic)
-router.get('/product/:id', shopController.getProduct)
-router.get('/category/:id', shopController.getCategory)
-router.get('/my-products', shopController.getMyProducts)
+router.get('/', shopController.getHome);
+router.get('/categories', shopController.getCategories);
+router.get('/topic/:id', shopController.getTopic);
+router.get('/product/:id', shopController.getProduct);
+router.get('/category/:id', shopController.getCategory);
+router.get('/my-products', shopController.getMyProducts);
 router.get('/download/:id',
   shopController.validateProductOwnership,
   shopController.getDownloadProduct

@@ -151,7 +151,7 @@ exports.getCategories = async function (req, res, next) {
   try {
     const categories = await Category.find();
 
-    res.render('admin/categories', { categories: categories, page: 'admin' });
+    res.render('admin/categories', { allCategories: categories, page: 'admin' });
   } catch (err) {
     next(err);
   }

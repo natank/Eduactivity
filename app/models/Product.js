@@ -33,6 +33,10 @@ const productSchema = new Schema({
     type: ObjectId,
     ref: 'User',
     required: true
+  },
+  featured: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -76,6 +80,18 @@ productSchema.pre('deleteMany', async function (next) {
     next(err)
   }
 })
+
+productSchema.methods.isMyProduct = function (myProducts, id) {
+  let prodId = id ? id : this.id;
+  let isMyProduct = myProducts.reduce((prev, product) => {
+    prev = prev || product.product._id.toString() === prodId;
+    return prev
+  }, false)
+  return isMyProduct;
+}
+
+
 const Product = mongoose.model('Product', productSchema);
+
 
 module.exports = Product;

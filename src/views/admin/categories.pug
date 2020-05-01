@@ -1,6 +1,5 @@
 extends ../templates/container.pug
 block content
-  include ../includes/header.pug 
   h1.text-center.my-4
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
   a.btn.btn-primary.btn-lg.mx-auto(href='/admin/createCategory', role='button') 
@@ -8,7 +7,7 @@ block content
   form.w-25.mx-auto
   .categories.my-5
     input(type="hidden" name="_csrf" value=csrfToken)
-    each category in categories
+    each category in allCategories
       .category.card
         .card-body
           h5.card-title= category.title

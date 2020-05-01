@@ -1,6 +1,5 @@
 extends ../templates/container.pug
 block content
-  include ../includes/header.pug 
   h1.text-center.my-4
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
 
@@ -8,7 +7,7 @@ block content
     | #{product.title}
 
   - const imagePath = `/images/${product.imageName}`
-  .card.product(style='width: 18rem' data-id=product.id data-csrf=csrfToken).position-relative.m-auto
+  .card.product(style='width: 20%' data-id=product.id data-csrf=csrfToken).position-relative.m-auto
     img(src= product.imageUrl alt=product.title style='width: 100%; height: 16rem; object-fit: cover').card-img-top
     - let heartVisibility = "hidden"
     include ../includes/heart.pug
@@ -26,9 +25,9 @@ block content
       h3(style=`visibility: ${priceVisibility}`).text-center #{price}
 
       if(product.myProduct || product.price === 0)
-        a(href=`/download/${product._id}`).btn.btn-primary.d-block.w-50.ml-auto.mr-auto.mt-2 DOWNLOAD
+        a(href=`/download/${product._id}`).btn.btn-primary.d-block.w-70.ml-auto.mr-auto.mt-2 DOWNLOAD
       else
-        div.w-50.ml-auto.mr-auto.mt-2
+        div.w-70.ml-auto.mr-auto.mt-2
           include ../includes/add-to-cart.pug
 
   include ../includes/footer.pug 

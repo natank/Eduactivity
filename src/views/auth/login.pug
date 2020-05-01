@@ -1,6 +1,5 @@
 extends ../templates/container.pug
 block content
-  include ../includes/header.pug
   main.d-flex.flex-column.align-items-center.flex-grow-1
     if(errorMessage.length > 0)
       div.alert.alert-danger.mt-3 #{errorMessage}

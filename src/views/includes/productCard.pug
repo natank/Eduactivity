@@ -1,0 +1,28 @@
+
+.card.card--product(style='width: 100%' data-id=product.id data-csrf=csrfToken).position-relative.bg-secondary
+  picture.p-0.m-0.mb-3
+    img(src= product.imageUrl alt=product.title style='width: 100%; height: 10rem; object-fit: contain').card-img-top
+  if(acquisition)
+    - let heartVisibility = "hidden"
+  include heart.pug
+  include heart-fill.pug
+  .alert.alert-success.speech-bubble.speech-bubble--product.invisible.position-absolute
+    strong Login
+    |  to create your wishlist
+
+  .card-body.d-relative
+    h5.card-title.text-center.bg-transparent.text-dark #{product.title}
+
+    p.card-text.d-absolut.bg-success.text-light
+      | #{product.description}
+    -let priceVisibility = (product.myProduct || product.price < 0) ? 'hidden' : 'visible'
+    -let price = product.price === 0 ? 'FREE' : `$${product.price}`
+    h3(style=`visibility: ${priceVisibility}`).text-center.card--product__price.text-primary #{price}
+    .card--product__actions
+      - if(['shop'].includes(page))
+        a.btn.btn-success(href=productPath).d-block.w-70.mr-auto.ml-auto.border.border-dark.text-uppercase.mb-2 Learn More
+      if(product.myProduct || product.price === 0)
+        a(href=`/download/${product._id}`).btn.btn-success.d-block.w-70.ml-auto.mr-auto.border-dark DOWNLOAD
+      else
+        div.w-70.ml-auto.mr-auto.border.border-dark.rounded
+          include ../includes/add-to-cart.pug

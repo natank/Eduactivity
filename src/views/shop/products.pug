@@ -1,6 +1,5 @@
 extends ../templates/container.pug
 block content
-  include ../includes/header.pug 
   h1.text-center.my-4
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
 
@@ -20,30 +19,7 @@ block content
   .products
     each product in products
       - const productPath = `/product/${product.id}`
-      .card.product(style='width: 18rem' data-id=product.id data-csrf=csrfToken).position-relative
-        img(src= product.imageUrl alt=product.title style='width: 100%; height: 16rem; object-fit: cover').card-img-top
-        if(acquisition)
-          - let heartVisibility = "hidden"
-          include ../includes/heart.pug
-          include ../includes/heart-fill.pug
-        .alert.alert-success.speech-bubble.speech-bubble--product.invisible.position-absolute
-          strong Login
-          |  to create your wishlist
-
-        .card-body
-          h5.card-title.text-center #{product.title}
-          p.card-text
-            | #{product.description}
-          -let priceVisibility = (product.myProduct || product.price < 0) ? 'hidden' : 'visible'
-          -let price = product.price === 0 ? 'FREE' : `$${product.price}`
-          h3(style=`visibility: ${priceVisibility}`).text-center #{price}
-
-          a.btn.btn-primary(href=productPath).d-block.w-50.mr-auto.ml-auto Learn More
-          if(product.myProduct || product.price === 0)
-            a(href=`/download/${product._id}`).btn.btn-primary.d-block.w-50.ml-auto.mr-auto.mt-2 DOWNLOAD
-          else
-            div.w-50.ml-auto.mr-auto.mt-2
-              include ../includes/add-to-cart.pug
+      include ../includes/productCard
   include ../includes/footer.pug 
 
 
