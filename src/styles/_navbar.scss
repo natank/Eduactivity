@@ -1,5 +1,27 @@
 .navbar {
   font-family: nunito;
+  color: $secondary !important;
+  
+  .active {
+    background-color: $success;
+    &:hover {
+      background-color: darken($success, 10%)
+    }
+    a, a.text-secondary {
+      color: $light;
+    }
+  }
+  &.navbar-light .navbar-nav{
+     .nav-link {
+        color: $secondary;
+        &:hover{
+          color: darken($secondary, 20%);
+        }
+        &.active {
+          color: $light
+        }
+     }
+  }
 }
 .navbar-brand {
   display: flex;
@@ -8,19 +30,17 @@
   h2 {
     padding: 0;
     margin:0
-    
   }
-}
-.brand{
+
   &__main{
     font-family: Hellofreeday !important; // override bootstrap
+    color: $secondary
   }
   &__secondary {
     font-family: ArbeiBerry;
+    color: $success
   }
- 
 }
-
 
 
 .wishlist {
@@ -76,9 +96,9 @@
     }
   }
 
-  .greeting {
-    position: relative;
-    a#navbarDropdown{
-      color: $info
-    }
+.greeting {
+  position: relative;
+  a#navbarDropdown{
+    color: $info
   }
+}

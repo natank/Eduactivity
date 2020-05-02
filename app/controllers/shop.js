@@ -119,7 +119,7 @@ exports.getCart = async (req, res, next) => {
     res.render('shop/cart', {
       path: '/cart',
       pageTitle: 'Your Cart',
-      cart: uiCart, page: 'shop'
+      cart: uiCart, mode: 'shop', page: 'cart'
     });
   } catch (err) {
     const error = new Error(err)

@@ -1,7 +1,7 @@
 nav.navbar.navbar-expand-lg.navbar-light
   a.navbar-brand(href='/') 
-    h2.brand__main.text-secondary Eduactivity
-    h2.brand__secondary.text-success Printables
+    h2.navbar-brand__main Eduactivity
+    h2.navbar-brand__secondary.text-success Printables
   button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
     span.navbar-toggler-icon
   .collapse.navbar-collapse#navbarSupportedContent
@@ -9,21 +9,21 @@ nav.navbar.navbar-expand-lg.navbar-light
       - let isActive = 'not-active'
       if(isLoggedIn)
         - isActive = page==='cart' ? 'active' : 'not-active'
-      li.nav-item
+      li
         a.nav-link(href='/')
-          span.glyphicon.glyphicon-home.text-secondary
+          span.glyphicon.glyphicon-home
           span.sr-only (current)
-      li.nav-item(class=isActive)
+      li(class=isActive)
         a.nav-link(href='/cart')
-          span.glyphicon.glyphicon-shopping-cart.text-secondary
+          span.glyphicon.glyphicon-shopping-cart
           span.sr-only (current)
       if(isAdmin)
         - isActive = page==='admin' ? 'active' : 'not-active'
-        li.nav-item(class=isActive)
-          a.nav-link(href='/admin/').text-secondary Admin
-    form.form-inline.my-2.my-lg-0.mr-0.justify-content-end.mx-4.search__tooltip
+        li
+          a.nav-link(class=isActive, href='/admin/') Admin
+    form.form-inline.my-2.my-lg-0.mr-0.justify-content-end.mx-4.search--tooltip
       input.search__input.form-control.pl-15-at-small.mr-sm-2(type='search' placeholder='Search' aria-label='Search').border-danger
-      button.btn.btn-outline-secondary.my-2.my-sm-0.disabled(type='button').text-secondary Search
+      button.btn.btn-outline-secondary.my-2.my-sm-0.disabled(type='button') Search
       span.tooltiptext Searching products isn't active yet. Browse for products by Category
 
 

@@ -15,22 +15,9 @@ block content
           option(value=topic.id selected=selected) #{topic.title.toUpperCase()}
       input(type="submit").btn.btn-primary.mx-auto.d-block.mt-4
   .products.my-5
+    - let admin = true;
+
     for product in products
-      .card.product
-        - const title = product.title
-        - const imgUrl = product.imageUrl
-        - const editUrl = "/admin/editProduct/"+product._id
-        - const deleteUrl = "/admin/deleteProduct/"+product._id
+      include ../includes/productCard.pug
 
-        img(src=imgUrl alt=title).img-fluid
-        .card-body
-          h4.card-title #{product.title}
-          p.class-text
-            | Topic: 
-            span.text-uppercase #{product.topic.title}
-          p.class-text
-            = product.description
-
-          a(href= editUrl).btn.btn-outline-primary.btn-large.btn-lg.btn-block. 
-            Edit
-          a(href= deleteUrl).btn.btn-outline-primary.btn-lg.btn-block Delete
+  include ../includes/footer

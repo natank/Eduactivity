@@ -14,7 +14,7 @@ const s3 = require('../util/aws-s3');
 const { check, validationResult } = require('express-validator');
 
 exports.getDashboard = function (req, res, next) {
-  res.render('./admin/dashboard', { page: 'admin', isAdmin: req.user.admin });
+  res.render('./admin/dashboard', { mode: 'admin', isAdmin: req.user.admin });
 };
 exports.getCreateProduct = async function (req, res, next) {
   try {
@@ -22,7 +22,8 @@ exports.getCreateProduct = async function (req, res, next) {
     res.render('admin/createProduct', {
       renderAs: 'new',
       topics: topics,
-      page: 'admin'
+      page: 'product',
+      mode: 'admin'
     });
   } catch (err) {
     next(err);
@@ -30,7 +31,7 @@ exports.getCreateProduct = async function (req, res, next) {
 };
 
 exports.getCreateCategory = function (req, res, next) {
-  res.render('admin/createCategory', { edit: false, page: 'admin' });
+  res.render('admin/createCategory', { edit: false, mode: 'admin', page: 'category' });
 };
 
 exports.getCreateTopic = async function (req, res, next) {
@@ -38,7 +39,8 @@ exports.getCreateTopic = async function (req, res, next) {
   res.render('admin/createTopic', {
     edit: false,
     categories: categories,
-    page: 'admin'
+    mode: 'admin',
+    page: 'topic'
   });
 };
 
@@ -53,7 +55,8 @@ exports.getEditProduct = async function (req, res, next) {
       product: product,
       renderAs: 'edit',
       topics: topics,
-      page: 'admin'
+      mode: 'admin',
+      page: 'product'
     });
   } catch (err) {
     next(err);
@@ -65,7 +68,8 @@ exports.getEditCategory = async function (req, res, next) {
   res.render('admin/createCategory', {
     category: category,
     isEdit: true,
-    page: 'admin'
+    mode: 'admin',
+    page: 'category'
   });
 };
 
@@ -89,7 +93,8 @@ exports.getEditTopic = async function (req, res, next) {
       topic: topic,
       isEdit: true,
       categories: categories,
-      page: 'admin'
+      mode: 'admin',
+      page: 'topic'
     });
   } catch (err) {
     next(err);
@@ -114,7 +119,8 @@ exports.getTopics = async function (req, res, next) {
       topics: topics,
       categories: categories,
       filter: filter,
-      page: 'admin'
+      mode: 'admin',
+      page: 'topic'
     });
   } catch (err) {
     next(err);
@@ -135,12 +141,18 @@ exports.getProducts = async function (req, res, next) {
       path: 'topic',
       select: 'title'
     });
+    products = products.map(product => {
+      product.editUrl = `/admin/editProduct/${product.id}`
+      product.deleteUrl = `/admin/deleteProduct/${product.id}`
+      return product
+    })
     const topics = await Topic.find({}, 'title');
     res.render('admin/products', {
       products: products,
       topics: topics,
       filter: filter,
-      page: 'admin'
+      mode: 'admin',
+      page: 'product'
     });
   } catch (err) {
     next(err);
@@ -151,7 +163,7 @@ exports.getCategories = async function (req, res, next) {
   try {
     const categories = await Category.find();
 
-    res.render('admin/categories', { allCategories: categories, page: 'admin' });
+    res.render('admin/categories', { allCategories: categories, mode: 'admin', page: 'category' });
   } catch (err) {
     next(err);
   }
@@ -331,8 +343,6 @@ exports.postCreateTopic = async function (req, res, next) {
 
 exports.postEditTopic = async function (req, res, next) {
   const { title, description, category, topicId } = { ...req.body },
-    fileName = req.fileName,
-    filePath = req.filePath,
     fileExist = req.fileExist;
 
   const keys = { title, description, category, imageUrl: null };

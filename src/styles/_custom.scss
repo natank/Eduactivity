@@ -21,11 +21,21 @@ $theme-colors: (
 
 // Class customizations
 .card {
-  max-width: 560px;
+  max-width: 300px;
   background-color: $secondary;
   padding: 1rem;
+  .btn--action {
+    background-color: $success;
+    color: $light;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  &__description {
+    height: 3rem;
+  }
   .card-title {
     color: $light;
+
   }
   .card-body {
     padding: 0;
@@ -71,6 +81,7 @@ $theme-colors: (
     .card-title {
       padding: 0;
     }
+
     a.toolTipVisible:hover ~ .alert  {
       visibility: visible !important;
     }
@@ -127,4 +138,37 @@ h2 {
   }
 }
 
+.nav-item{
+  .nav-link{
+    position: relative;
+    text-transform: uppercase;
+    color: $success;
+    
+    .dropdown-menu-h {
+      position: absolute;
+      left:0;
+      top:100%;
+      border-top: 3px solid transparent;
+      display: none;
+      min-width: 100%;
+      z-index: 20; 
+      .dropdown-item {
+        color: $light;
+        background-color: $success;
+      }   
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    .nav-link{
+      box-sizing: border-box;
+      background-color: $success;
+      color: $light;
+    }
+    .dropdown-menu-h {
+      display: block;
+    }
+
+  }
+}
 $primary: #511845;

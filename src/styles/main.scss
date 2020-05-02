@@ -50,8 +50,17 @@ html {
 
 .dashboard{
   &__options {
-    font-size: 1.5rem
+    font-size: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1rem;
+    a.list-group-item {
+      color: $light;
+      background-color: $success;
+    }
   }
+
+  
 }
 
 .btn- {
@@ -82,10 +91,22 @@ html {
 
 }
 
-.nav_secondary {
+.nav-secondary {
   a.dropdown-item {
     &:hover {
       background-color: $danger !important;
+    }
+  }
+  &--admin {
+    .nav {
+      justify-content: center;
+    }
+  }
+  .nav-link.active {
+    background-color: $success;
+    color: $light;
+    &:hover {
+      background-color: darken($success, 10%)
     }
   }
 }
