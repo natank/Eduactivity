@@ -2,7 +2,7 @@ const Category = require('../models/Category');
 const Topic = require('../models/Topic');
 const Product = require('../models/Product');
 
-exports.getMenuData = async function (req, res, next) {
+exports.menuData = async function (req, res, next) {
   try {
 
     // Find up to 4 documents from the Product collection
@@ -43,4 +43,14 @@ exports.getMenuData = async function (req, res, next) {
   } catch (err) {
     next(err)
   }
+}
+
+exports.adminData = function (req, res, next) {
+  res.locals.mode = 'admin';
+  next();
+}
+
+exports.shopData = function (req, res, next) {
+  res.locals.mode = 'shop';
+  next();
 }

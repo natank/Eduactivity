@@ -3,9 +3,8 @@ import path from 'path';
 import session from 'express-session';
 import multipartExtract from './middleware/multipartExtract';
 import User from './models/User';
-import getMenuData from './middleware/getMenuData';
+let setLocals = require('./middleware/setLocals');
 
-const getMenuInfo = getMenuData.getMenuData;
 const isProd = process.env.NODE_ENV === "production";
 
 console.log(`process.env: ${JSON.stringify({
@@ -184,9 +183,9 @@ const localsMW = (function (app) {
 })(app)
 
 const endPointsMW = (function (app) {
-  app.use('/', getMenuInfo, shopRoutes)
-  app.use('/shop', getMenuInfo, shopRoutes)
-  app.use('/admin', isAdmin, getMenuInfo, adminRoutes)
+  app.use('/', setLocals.menuData, setLocals.shopData, shopRoutes)
+  app.use('/shop', setLocals.menuData, setLocals.shopData, shopRoutes)
+  app.use('/admin', isAdmin, setLocals.menuData, setLocals.adminData, adminRoutes)
   app.use('/auth', authRoutes)
 })(app)
 

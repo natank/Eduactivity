@@ -352,7 +352,7 @@ exports.validateProductOwnership = async (req, res, next) => {
   const prodId = req.params.id;
   try {
     const product = await Product.findById(prodId);
-    if (product.isMyProduct(req.user.myProducts) || product.price === 0) next();
+    if (product.isMyProduct(req.user.myProducts) || product.price === 0 || req.user.admin) next();
     else {
       const err = `You don't own this product`
       throw (err)

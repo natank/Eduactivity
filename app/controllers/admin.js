@@ -14,7 +14,7 @@ const s3 = require('../util/aws-s3');
 const { check, validationResult } = require('express-validator');
 
 exports.getDashboard = function (req, res, next) {
-  res.render('./admin/dashboard', { mode: 'admin', isAdmin: req.user.admin });
+  res.render('./admin/dashboard', { isAdmin: req.user.admin });
 };
 exports.getCreateProduct = async function (req, res, next) {
   try {
@@ -23,7 +23,6 @@ exports.getCreateProduct = async function (req, res, next) {
       renderAs: 'new',
       topics: topics,
       page: 'product',
-      mode: 'admin'
     });
   } catch (err) {
     next(err);
@@ -31,7 +30,7 @@ exports.getCreateProduct = async function (req, res, next) {
 };
 
 exports.getCreateCategory = function (req, res, next) {
-  res.render('admin/createCategory', { edit: false, mode: 'admin', page: 'category' });
+  res.render('admin/createCategory', { edit: false, page: 'category' });
 };
 
 exports.getCreateTopic = async function (req, res, next) {
@@ -39,7 +38,7 @@ exports.getCreateTopic = async function (req, res, next) {
   res.render('admin/createTopic', {
     edit: false,
     categories: categories,
-    mode: 'admin',
+
     page: 'topic'
   });
 };
@@ -55,7 +54,7 @@ exports.getEditProduct = async function (req, res, next) {
       product: product,
       renderAs: 'edit',
       topics: topics,
-      mode: 'admin',
+
       page: 'product'
     });
   } catch (err) {
@@ -68,7 +67,7 @@ exports.getEditCategory = async function (req, res, next) {
   res.render('admin/createCategory', {
     category: category,
     isEdit: true,
-    mode: 'admin',
+
     page: 'category'
   });
 };
@@ -93,7 +92,7 @@ exports.getEditTopic = async function (req, res, next) {
       topic: topic,
       isEdit: true,
       categories: categories,
-      mode: 'admin',
+
       page: 'topic'
     });
   } catch (err) {
@@ -119,7 +118,7 @@ exports.getTopics = async function (req, res, next) {
       topics: topics,
       categories: categories,
       filter: filter,
-      mode: 'admin',
+
       page: 'topic'
     });
   } catch (err) {
@@ -151,7 +150,7 @@ exports.getProducts = async function (req, res, next) {
       products: products,
       topics: topics,
       filter: filter,
-      mode: 'admin',
+
       page: 'product'
     });
   } catch (err) {
@@ -163,7 +162,7 @@ exports.getCategories = async function (req, res, next) {
   try {
     const categories = await Category.find();
 
-    res.render('admin/categories', { allCategories: categories, mode: 'admin', page: 'category' });
+    res.render('admin/categories', { allCategories: categories, page: 'category' });
   } catch (err) {
     next(err);
   }

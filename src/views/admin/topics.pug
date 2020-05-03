@@ -17,7 +17,7 @@ block content
       input(type="submit" onclick=getFilteredTopics).btn.btn-primary.mx-auto.d-block.mt-4
   .topics.my-5
     for topic in topics
-      .card.topic
+      .card.card--topic
         - const title = topic.title
         - const description = topic.description
         - const category = topic.category
