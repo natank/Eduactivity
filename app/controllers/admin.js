@@ -14,7 +14,7 @@ const s3 = require('../util/aws-s3');
 const { check, validationResult } = require('express-validator');
 
 exports.getDashboard = function (req, res, next) {
-  res.render('./admin/dashboard', { isAdmin: req.user.admin });
+  res.render('./admin/dashboard');
 };
 exports.getCreateProduct = async function (req, res, next) {
   try {
@@ -118,7 +118,7 @@ exports.getTopics = async function (req, res, next) {
       topics: topics,
       categories: categories,
       filter: filter,
-
+      itemType: "topic",
       page: 'topic'
     });
   } catch (err) {
@@ -161,7 +161,6 @@ exports.getProducts = async function (req, res, next) {
 exports.getCategories = async function (req, res, next) {
   try {
     const categories = await Category.find();
-
     res.render('admin/categories', { allCategories: categories, page: 'category' });
   } catch (err) {
     next(err);

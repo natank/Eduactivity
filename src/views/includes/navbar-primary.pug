@@ -1,4 +1,4 @@
-nav.navbar.navbar-expand-lg.navbar-light
+nav.navbar.navbar--primary.navbar-expand-lg.navbar-light
   a.navbar-brand(href='/') 
     h2.navbar-brand__main Eduactivity
     h2.navbar-brand__secondary.text-success Printables
@@ -18,7 +18,7 @@ nav.navbar.navbar-expand-lg.navbar-light
           span.glyphicon.glyphicon-shopping-cart
           span.sr-only (current)
       if(isAdmin)
-        - isActive = page==='admin' ? 'active' : 'not-active'
+        - isActive = section==='admin' ? 'active' : 'not-active'
         li
           a.nav-link(class=isActive, href='/admin/') Admin
     form.form-inline.my-2.my-lg-0.mr-0.justify-content-end.mx-4.search--tooltip

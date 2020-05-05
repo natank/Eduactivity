@@ -29,20 +29,21 @@ $theme-colors: (
     color: $light;
     margin-bottom: 1rem;
     text-transform: uppercase;
-  }
-  &__description {
-    height: 3rem;
+    display: block;
   }
   .card-title {
     color: $light;
-
   }
   .card-body {
     padding: 0;
+    min-width: 100%;
   }
   .list-group {
     flex-grow: 1;
     align-items: center;
+  }
+  &__description {
+    height: 3rem;
   }
   &__content{
     font-size: 1.5rem;
@@ -50,6 +51,7 @@ $theme-colors: (
   
 
   &--category {
+    
     border-radius: 1rem;
     background-color: $success;
     display:flex;
@@ -60,10 +62,13 @@ $theme-colors: (
      &:hover {
         text-decoration: none;
       }
-    .card-title {
+    .card-body .card-title {
       background: none;
       text-align: center;
       margin:0;
+      margin-bottom: 1rem;
+      color: $light;
+      font-family: nunito;
     }
   }
 
@@ -78,25 +83,16 @@ $theme-colors: (
   }
   &--product {
     padding: 1rem;
+    
     .card-title {
       padding: 0;
+      font-family: chewy;
     }
-
-    a.toolTipVisible:hover ~ .alert  {
-      visibility: visible !important;
-    }
+    
     .card-body {
       padding: 0;
     }
-
-    &__price {
-      font-size: 1.2em;
-      font-weight: bold;
-    }
-    font-family: nunito;
-    .card-title {
-      font-family: chewy;
-    }
+    
     .card-text {
       display: none;
       position: absolute;
@@ -107,6 +103,16 @@ $theme-colors: (
       border-radius: 1rem;
       padding: .5rem
     }
+    a.toolTipVisible:hover ~ .alert  {
+      visibility: visible !important;
+    }
+
+    &__price {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    font-family: nunito;
+ 
     &:hover {
       .card-text {
         display:block
@@ -120,9 +126,6 @@ $theme-colors: (
         visibility: visible;
       }
     }
-  }
-  &--topic {
-    
   }
 }
 

@@ -7,6 +7,10 @@ block content
     | #{product.title}
   div.m-auto
     - let gallery = false;
+    - let downloadUrl = `/download/${product._id}`;
+    - let { id, editUrl, deleteUrl, imageUrl, title, description, myProduct, price } = product;
+    - let isProduct = true;
+
     include ../includes/productCard
 
   include ../includes/footer.pug 

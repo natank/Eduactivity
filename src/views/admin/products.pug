@@ -15,9 +15,11 @@ block content
           option(value=topic.id selected=selected) #{topic.title.toUpperCase()}
       input(type="submit").btn.btn-primary.mx-auto.d-block.mt-4
   .products.my-5
-    - let admin = true;
-
-    for product in products
+    each product in products
+      - let displayMode = gallery;
+      - let downloadUrl = `/download/${product._id}`;
+      - let { id, editUrl, deleteUrl, imageUrl, title, description, myProduct, price } = product;
+      - let itemType = 'product';
       include ../includes/productCard.pug
 
   include ../includes/footer

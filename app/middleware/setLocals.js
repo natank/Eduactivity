@@ -45,12 +45,18 @@ exports.menuData = async function (req, res, next) {
   }
 }
 
+function setUserType(req, res) {
+  if (req.user)
+    res.locals.userType = req.user.admin ? 'admin' : 'user';
+  else res.locals.userType = 'guest';
+}
 exports.adminData = function (req, res, next) {
-  res.locals.mode = 'admin';
+  setUserType(req, res);
+  res.locals.section = 'admin';
   next();
 }
 
 exports.shopData = function (req, res, next) {
-  res.locals.mode = 'shop';
+  setUserType(req, res);
   next();
 }

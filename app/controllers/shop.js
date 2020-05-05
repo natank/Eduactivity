@@ -11,7 +11,7 @@ const stream = require('stream');
 
 exports.getHome = async function (req, res, next) {
 
-  res.render('./shop/index', { page: 'shop' })
+  res.render('./shop/index', { section: 'shop' })
 
 }
 
@@ -19,7 +19,7 @@ exports.getCategories = async function (req, res, next) {
 
   try {
     const categories = await Category.find({}, 'title')
-    res.render('./shop/categories', { page: 'shop', allCategories: categories })
+    res.render('./shop/categories', { section: 'shop', allCategories: categories })
   } catch (err) {
     next(err)
   }
@@ -30,7 +30,7 @@ exports.getCategory = async function (req, res, next) {
     const category = await Category.findById(req.params.id);
     const topics = await Topic.find({ category: req.params.id });
 
-    res.render('./shop/category', { category: category, topics: topics, page: 'shop' })
+    res.render('./shop/category', { category: category, topics: topics, section: 'shop' })
   } catch (err) {
     next(err)
   }
@@ -70,7 +70,7 @@ exports.getTopic = async function (req, res, next) {
     res.render('./shop/products', {
       title: `${topic.title} Printables`,
       products: products,
-      page: 'shop',
+      section: 'shop',
       route: req.originalUrl,
       acquisition: acquisition
     })
@@ -95,7 +95,7 @@ exports.getProduct = async function (req, res, next) {
     // Set the wishlisted field
     product.wishlisted = req.user && !!req.user.wishlist.find(item => item.toString() === prodId)
 
-    res.render('./shop/product', { product: product, page: 'shop' })
+    res.render('./shop/product', { product: product, section: 'shop' })
   } else {
     let err = "Error: No such product"
     next(err)
@@ -119,7 +119,7 @@ exports.getCart = async (req, res, next) => {
     res.render('shop/cart', {
       path: '/cart',
       pageTitle: 'Your Cart',
-      cart: uiCart, mode: 'shop', page: 'cart'
+      cart: uiCart, mode: 'shop', section: 'cart'
     });
   } catch (err) {
     const error = new Error(err)
@@ -202,7 +202,7 @@ exports.getOrders = async (req, res, next) => {
       path: '/orders',
       pageTitle: 'Your Orders',
       orders: uiOrders,
-      page: 'shop'
+      section: 'shop'
     });
   } catch (err) {
     const error = new Error(err)
@@ -319,7 +319,7 @@ exports.getCheckout = async (req, res, next) => {
       cart: uiCart,
       totalSum: totalCartValue,
       checkoutSessionId: id,
-      page: 'shop'
+      section: 'shop'
     });
   } catch (err) {
     const error = new Error(err)
@@ -375,7 +375,7 @@ exports.getMyProducts = async (req, res, next) => {
     {
       title: `My Printables`,
       products: products,
-      page: 'shop',
+      section: 'shop',
     })
 }
 

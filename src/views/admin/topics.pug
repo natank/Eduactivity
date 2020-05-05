@@ -2,39 +2,26 @@ extends ../templates/container.pug
 block content
   h1.text-center.my-4
     | DIY PRINTABLES FOR HOLIDAYS & PARTIES
-  a.btn.btn-primary.btn-lg.mx-auto(href='/admin/createTopic', role='button') 
-    | Create Topic
-  form.w-25.mx-auto(action='/admin/topics')
-    input(type="hidden" name="_csrf" value=csrfToken)
-    div.form-group
-      label(for="categories") Filter by Category
-      select(name="filter" id="categories").form-control 
-        option(name="all" value="all", selected) ALL CATEGORIES
-        each category in categories
-          - const selected = category.id === filter
-          option(value=category.id selected=selected) #{category.title.toUpperCase()}
 
-      input(type="submit" onclick=getFilteredTopics).btn.btn-primary.mx-auto.d-block.mt-4
+  - const createUrl = `/admin/createTopic/`
+  - const formAction = `/admin/topics`;
+  - const items = categories;
+  - const filterBy = "category";
+  - const filterGroup = "categories"
+
+  include ../includes/adminPanel
+
   .topics.my-5
-    for topic in topics
-      .card.card--topic
-        - const title = topic.title
-        - const description = topic.description
-        - const category = topic.category
-        - const imgUrl = topic.imageUrl
-        - const editUrl = "/admin/editTopic/"+topic._id
-        - const deleteUrl = "/admin/deleteTopic/"+topic._id
-        picture
-          img(src= imgUrl alt= title).simg-fluid
-        .card-body
-          h5.card-title= title
-          p.class-text #{description }
-          p.class-text Category: 
-            span.text-uppercase #{ category.title.toUpperCase() }
+    each topic in topics
+      - const displayMode = gallery;
+      - const itemType = 'topic';
+      - const title = topic.title
+      - const description = topic.description
+      - const category = topic.category
+      - const imageUrl = topic.imageUrl
+      - const editUrl = `/admin/editTopic/${topic._id}`
+      - const deleteUrl = `/admin/deleteTopic/${topic._id}`
 
-          a(href=editUrl).btn.btn-outline-primary.btn-large.btn-lg.btn-block
-            | Edit
-          a(href=deleteUrl).btn.btn-outline-primary.btn-lg.btn-block Delete
+      include ../includes/productCard.pug
 
-
-
+  include ../includes/footer

@@ -5,7 +5,7 @@
   .active {
     background-color: $success;
     &:hover {
-      background-color: darken($success, 10%)
+      background-color: darken($success, 30%)
     }
     a, a.text-secondary {
       color: $light;
@@ -21,6 +21,11 @@
           color: $light
         }
      }
+  }
+  &--primary {
+    .nav-item:hover .nav-link {
+      background-color: transparent;
+    }
   }
 }
 .navbar-brand {
