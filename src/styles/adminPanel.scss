@@ -27,6 +27,9 @@
       border-radius: 1rem;
       padding: .1rem 2rem;
       line-height: .5rem;
+      &:hover {
+        background-color: rgba(0,0,0,0.2);
+      }
     }
   }
   &__new-topic {

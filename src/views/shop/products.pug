@@ -18,7 +18,12 @@ block content
 
   .products
     each product in products
-      - const productPath = `/product/${product.id}`
+      - let displayMode = 'gallery';
+      - let itemType = 'product'; 
+      - let downloadUrl = `/download/${product._id}`;
+      - let { id, editUrl, deleteUrl, imageUrl, title, description, myProduct, price } = product;
+      - const productUrl = `/product/${product.id}`
+
       include ../includes/productCard
   include ../includes/footer.pug 
 

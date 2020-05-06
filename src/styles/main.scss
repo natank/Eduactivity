@@ -107,6 +107,11 @@ html {
     background-color: $success;
     color: $light;
     &:hover {
+      background-color: $success;
+    }
+  }
+  .nav-link {
+    &:hover {
       background-color: darken($success, 10%)
     }
   }
