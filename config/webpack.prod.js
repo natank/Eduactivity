@@ -43,7 +43,7 @@ module.exports = env => {
         test: /\.module\.s(a|c)ss$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: 'style-loader'
           },
           {
             loader: 'css-loader',
@@ -65,7 +65,7 @@ module.exports = env => {
         exclude: /\.module.(s(a|c)ss)$/,
         loader: [
           {
-            loader: MiniCssExtractPlugin.loader
+            loader: 'style-loader'
           },
           {
             loader: 'css-loader',
@@ -114,7 +114,14 @@ module.exports = env => {
             name: "images/[name].[ext]"
           }
         }]
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          'file-loader',
+        ],
       }
+
       ]
     },
     plugins: [
@@ -126,10 +133,9 @@ module.exports = env => {
         }
       }),
       new MinifyPlugin(),
-      new CompressionPlugin({
-        algorithm: "gzip"
-      }),
-      new BrotliPlugin()
-    ]
+    ],
+    resolve: {
+      extensions: ['.js', '.jsx', '.scss']
+    }
   }
 }
