@@ -21,7 +21,7 @@ nav.navbar.navbar--primary.navbar-expand-lg.navbar-light
         - isActive = section==='admin' ? 'active' : 'not-active'
         li
           a.nav-link(class=isActive, href='/admin/') Admin
-    form.form-inline.my-2.my-lg-0.mr-0.justify-content-end.mx-4.search--tooltip
+    form.form-inline.my-2.my-lg-0.mr-0.mx-lg-4.search--tooltip
       input.search__input.form-control.pl-15-at-small.mr-sm-2(type='search' placeholder='Search' aria-label='Search').border-danger
       button.btn.btn-outline-secondary.my-2.my-sm-0.disabled(type='button') Search
       span.tooltiptext Searching products isn't active yet. Browse for products by Category
@@ -29,7 +29,7 @@ nav.navbar.navbar--primary.navbar-expand-lg.navbar-light
 
     ul.navbar-nav.navbar-right
       if !isLoggedIn
-        li.mx-2.nav-item
+        li.mx-lg-2.nav-item
           a(href='/auth/signup').nav-link.text-secondary
             span.glyphicon.glyphicon-user
             |  Sign Up

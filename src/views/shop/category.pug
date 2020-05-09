@@ -5,7 +5,7 @@ block content
 
   h2.text-center.mb-4.text-uppercase  
     | #{category.title}
-  div.category__topics.m-auto
+  div.category__topics
     for topic in topics
       - const title = topic.title
       - const description = topic.description

@@ -1,5 +1,5 @@
 // Variable overrides
-$primary: #f3f3f2;
+$primary: #f8ef8b;
 $secondary: #ff527e;
 $success: #158bb3;
 $info: #38ceff;
@@ -66,9 +66,9 @@ $theme-colors: (
       background: none;
       text-align: center;
       margin:0;
-      margin-bottom: 1rem;
       color: $light;
       font-family: nunito;
+      text-transform: uppercase;
     }
   }
 
