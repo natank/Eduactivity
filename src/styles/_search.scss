@@ -2,7 +2,7 @@
   &--tooltip {
     position: relative;
     display: inline;
-    min-width: 17rem;
+    
   
     span {
         position: absolute;
@@ -15,7 +15,7 @@
         visibility: hidden;
         border-radius: 6px;
         padding: .3rem;
-    
+        min-width: 17rem;
       &:after {
           content: '';
           position: absolute;
