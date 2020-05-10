@@ -9,7 +9,7 @@
   
   &__text {
     width: 40%;
-    font-size: 1.6rem;
+    font-size: 1.1rem;
     @include media-breakpoint-up(lg) {
       font-size: 2.5rem;
     }
@@ -22,14 +22,15 @@
   &__image-box {
     position: relative;
     
-    height: 90%;
+    height: 60%;
     padding-left: 30%;
 
     @include media-breakpoint-up(md) {
+      height: 90%;
       padding-left: 22%;
     }
     @include media-breakpoint-up(lg) {
-
+      height: 90%;
       padding-left: 15%;
     }
  
