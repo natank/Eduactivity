@@ -8,15 +8,30 @@
   padding: 0;
   
   &__text {
-    color: $light;
-    font-size: 2.5rem;
     width: 40%;
+    font-size: 1.6rem;
+    @include media-breakpoint-up(lg) {
+      font-size: 2.5rem;
+    }
+    @include media-breakpoint-up(md) {
+      font-size: 1.8rem;
+    }
+    color: $light;
     text-align: center;
   }
   &__image-box {
     position: relative;
+    
     height: 90%;
-    padding-left: 15%;
+    padding-left: 30%;
+
+    @include media-breakpoint-up(md) {
+      padding-left: 22%;
+    }
+    @include media-breakpoint-up(lg) {
+
+      padding-left: 15%;
+    }
  
     
     &__image {
