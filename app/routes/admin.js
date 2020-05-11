@@ -3,7 +3,7 @@ const express = require('express'),
   adminController = require('../controllers/admin');
 const uploadProductFiles = require('../middleware/uploadProductFiles');
 const uploadTopicFile = require('../middleware/uploadTopicFile');
-
+const MAX_FILE_SIZE = 500000; // 500KB
 
 const { check } = require('express-validator');
 
@@ -30,6 +30,8 @@ router.post(
     if (files.printable && files.imageurl) {
       req.body.printableName = files.printable.name || undefined;
       req.body.imageName = files.imageurl.name || undefined;
+      req.body.printableSize = files.printable.size || undefined;
+      req.body.imageSize = files.imageurl.size || undefined;
     }
     next();
   },
@@ -41,6 +43,14 @@ router.post(
         return hasSpaces;
       })
       .withMessage('No spaces are allowed in the printable name'),
+    check('printableSize')
+      .custom(value => {
+        return value < MAX_FILE_SIZE;
+      }).withMessage(`Printable size must be smaller than ${MAX_FILE_SIZE/1000} KB`),
+      check('imageSize')
+      .custom(value => {
+        return value < MAX_FILE_SIZE;
+      }).withMessage(`Image size must be smaller than ${MAX_FILE_SIZE/1000} KB`),
     check('imageName')
       .custom(value => !/\s/.test(value))
       .withMessage('No spaces are allowed in the image name'),
