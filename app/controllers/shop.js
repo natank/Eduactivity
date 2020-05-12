@@ -1,12 +1,8 @@
-const path = require('path');
 const Category = require('../models/Category');
 const Topic = require('../models/Topic');
 const Product = require('../models/Product');
 const PDFDocument = require('pdfkit');
-const fs = require('fs');
-const mkdirp = require('mkdirp');
 const s3 = require('../util/aws-s3');
-const stream = require('stream');
 
 
 exports.getHome = async function (req, res, next) {
@@ -291,7 +287,7 @@ exports.getCheckout = async (req, res, next) => {
       let obj = {
         name: item.product.title,
         description: item.product.description,
-        images: [],
+        images: [item.product.imageUrl],
         amount: item.product.price * Cents,
         currency: 'usd',
         quantity: item.quantity
@@ -305,7 +301,7 @@ exports.getCheckout = async (req, res, next) => {
       payment_method_types: ['card'],
       line_items,
       success_url: `${req.protocol}://${req.get('host')}/shop/create-order/?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: 'https://example.com/cancel'
+      cancel_url: `${req.protocol}://${req.get('host')}/shop/checkout`
     });
 
     const {
