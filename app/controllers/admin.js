@@ -131,7 +131,7 @@ exports.getProducts = async function (req, res, next) {
   let query;
 
   if (filter && filter != 'all') {
-    query = Product.find({ topic: filter });
+    query = Product.find({ topic: filter, createdBy: req.user.id });
   } else {
     query = Product.find();
   }

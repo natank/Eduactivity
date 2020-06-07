@@ -14,12 +14,16 @@ block content
           - const selected = topic.id === filter
           option(value=topic.id selected=selected) #{topic.title.toUpperCase()}
       input(type="submit").btn.btn-primary.mx-auto.d-block.mt-4
-  .products.my-5
-    each product in products
-      - let displayMode = gallery;
-      - let downloadUrl = `/download/${product._id}`;
-      - let { id, editUrl, deleteUrl, imageUrl, title, description, myProduct, price } = product;
-      - let itemType = 'product';
-      include ../includes/productCard.pug
+  if(products.length)
+    .products.my-5
+      each product in products
+        - let displayMode = gallery;
+        - let downloadUrl = `/download/${product._id}`;
+        - let { id, editUrl, deleteUrl, imageUrl, title, description, myProduct, price } = product;
+        - let itemType = 'product';
+        include ../includes/productCard.pug
+  else 
+    h1 No products were found
+
 
   include ../includes/footer
