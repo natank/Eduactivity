@@ -49,12 +49,21 @@ exports.getEditProduct = async function (req, res, next) {
       path: 'topic',
       select: 'title'
     });
+
+    if(product.createdBy.toString() !== req.user.id) {
+      let errorMessage = 'You are not allowed to edit this product';
+      res.render('admin/createProduct', {
+        product: null, 
+        renderAs: 'editUnAuthorized',
+        topics: null,
+        errorMessage
+      })
+    }
     let topics = await Topic.find({}, 'title');
     res.render('admin/createProduct', {
       product: product,
       renderAs: 'edit',
       topics: topics,
-
       page: 'product'
     });
   } catch (err) {
@@ -126,14 +135,18 @@ exports.getTopics = async function (req, res, next) {
   }
 };
 
+
+// This function provides the products for the admin.
+// The admin should access only the products he owns 
 exports.getProducts = async function (req, res, next) {
   const filter = req.query.topic;
   let query;
 
   if (filter && filter != 'all') {
+    // Provide the admin with the product he created in the requsted topic
     query = Product.find({ topic: filter, createdBy: req.user.id });
   } else {
-    query = Product.find();
+    query = Product.find({createdBy: req.user.id});
   }
   try {
     let products = await query.populate({
@@ -170,21 +183,27 @@ exports.getCategories = async function (req, res, next) {
 exports.getDeleteProduct = async function (req, res, next) {
   try {
     const product = await Product.findById(req.params.id);
-    let { imageUrl, printableUrl } = product;
+    let { imageUrl, printableUrl, createdBy } = product;
+    if(product.createdBy.toString() !== req.user.id) {
+      let errorMessage = 'You are not allowed to delete this product';
+      throw(errorMessage);
+    }
+    else {
 
-    const imageName = imageUrl.split('/').pop();
-    const printableName = printableUrl.split('/').pop();
-    const printableDir = 'printables';
-    const imageDir = 'images';
-    const imagePath = `${imageDir}/${imageName}`;
-    const printablePath = `${printableDir}/${printableName}`;
-    await s3.deleteFile(imagePath);
-    await s3.deleteFile(printablePath);
-
-    await Product.deleteOne({ _id: req.params.id });
-    res.redirect('/admin/products');
+      const imageName = imageUrl.split('/').pop();
+      const printableName = printableUrl.split('/').pop();
+      const printableDir = 'printables';
+      const imageDir = 'images';
+      const imagePath = `${imageDir}/${imageName}`;
+      const printablePath = `${printableDir}/${printableName}`;
+      await s3.deleteFile(imagePath);
+      await s3.deleteFile(printablePath);
+  
+      await Product.deleteOne({ _id: req.params.id });
+      res.redirect('/admin/products');
+    }
   } catch (err) {
-    next(err);
+      next(err);
   }
 };
 
@@ -279,10 +298,15 @@ exports.postEditProduct = async function (req, res, next) {
   } = req.body;
   try {
     let product = await Product.findById(prodId);
-    let updatedProduct = product.toObject({ virtuals: true });
+    if(product.createdBy.toString() !== req.user.id) {
+      let errorMessage = 'You are not allowed to edit this product';
+      throw(errorMessage)
+    }
+    else {
+      let updatedProduct = product.toObject({ virtuals: true });
     // update the product with the new values
     updatedProduct = { ...updatedProduct, title, price, description, topic };
-    // check if the image has changed
+    // check if the request contains an updated image
     if (imageUrl) {
       // remove the old image
       const imageName = updatedProduct.imageUrl.split('/').pop();
@@ -303,6 +327,8 @@ exports.postEditProduct = async function (req, res, next) {
     await product.update(updatedProduct)
 
     res.redirect('/admin/products');
+    }
+    
   } catch (err) {
     next(err);
   }

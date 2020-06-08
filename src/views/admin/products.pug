@@ -22,8 +22,11 @@ block content
         - let { id, editUrl, deleteUrl, imageUrl, title, description, myProduct, price } = product;
         - let itemType = 'product';
         include ../includes/productCard.pug
-  else 
-    h1 No products were found
+  else if(filter === undefined) 
+    // all topics
+    h1.text-center You have no products, create one now !
+  else
+    h1.text-center No products were found
 
 
   include ../includes/footer
