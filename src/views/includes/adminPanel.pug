@@ -10,6 +10,6 @@
             - const selected = item.id === filter
             option(value=item.id selected=selected) #{item.title.toUpperCase()}
 
-        input(type="submit").btn
+        input(type="submit", value="Submit").btn
   a.btn.adminPanel__new-topic(href=createUrl, role='button') 
     | New #{itemType}

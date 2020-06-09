@@ -43,6 +43,11 @@
       color:$light;
       background-color: darken($secondary, 10%);
     }
+    &--small {
+      display: block;
+      margin: auto;
+      width: 10rem;
+    }
   }
   &--category {
     background-color: transparent;

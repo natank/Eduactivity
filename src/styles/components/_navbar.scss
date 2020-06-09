@@ -101,9 +101,71 @@
     }
   }
 
+
 .greeting {
   position: relative;
   a#navbarDropdown{
     color: $info
+  }
+}
+
+.nav-item{
+  .nav-link{
+    position: relative;
+    text-transform: uppercase;
+    color: $success;
+    
+    .dropdown-menu-h {
+      position: absolute;
+      left:0;
+      top:100%;
+      border-top: 3px solid transparent;
+      display: none;
+      min-width: 100%;
+      z-index: 20; 
+      .dropdown-item {
+        color: $light;
+        background-color: $success;
+      }   
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    .nav-link{
+      box-sizing: border-box;
+      background-color: $success;
+      color: $light;
+    }
+    .dropdown-menu-h {
+      display: block;
+    }
+
+  }
+}
+
+
+.nav-secondary {
+  display: flex;
+  a.dropdown-item {
+    &:hover {
+      background-color: $danger !important;
+    }
+  }
+  &--admin {
+    .nav {
+      justify-content: center;
+    }
+  }
+  .nav-link.active {
+    background-color: $success;
+    color: $light;
+    &:hover {
+      background-color: $success;
+    }
+  }
+  .nav-link {
+    &:hover {
+      background-color: darken($success, 10%)
+    }
   }
 }
