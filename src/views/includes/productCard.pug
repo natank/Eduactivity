@@ -2,7 +2,7 @@
   if(['product', 'topic'].includes(itemType))
     picture.p-0.m-0.mb-3
       img(src= imageUrl alt=title style='width: 100%; height: 10rem; object-fit: contain').card-img-top
-  if(userType === 'user' && itemType === 'product')  
+  if(itemType === 'product')  
     include heart.pug
     include heart-fill.pug
     .alert.alert-success.speech-bubble.speech-bubble--product.invisible.position-absolute
@@ -12,7 +12,7 @@
   .card-body.d-relative
     h5.card-title.text-center.bg-transparent #{title}
     if(['product', 'topic'].includes(itemType))
-      if( diplayMode === 'gallery' && userType === 'user')
+      if( diplayMode === 'gallery')
         p.card-text.card__description.line-clamp.line-clamp--2.bg-success.text-light
           | #{description}
       else
@@ -39,7 +39,7 @@
         if(myProduct || price === 0)
           a(href= downloadUrl).btn.btn--action.d-block.w-70.ml-auto.mr-auto.border-dark DOWNLOAD
         else
-          div.w-70.ml-auto.mr-auto.border.border-dark.rounded
+          div.w-70.ml-auto.mr-auto.border.border-dark.rounded.btn--action
             include ../includes/add-to-cart.pug
       if(section === 'admin' && userType === 'admin')
         a(href= editUrl).btn.btn--action.d-block.w-70.ml-auto.mr-auto.border-dark   Edit

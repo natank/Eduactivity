@@ -19,8 +19,8 @@ nav.navbar.navbar--primary.navbar-expand-lg.navbar-light
           span.sr-only (current)
       if(isAdmin)
         - isActive = section==='admin' ? 'active' : 'not-active'
-        li
-          a.nav-link(class=isActive, href='/admin/') Admin
+      li
+        a.nav-link(class=isActive, href='/admin/') Admin
     form.form-inline.my-2.my-lg-0.mr-0.mx-lg-4.search--tooltip
       input.search__input.form-control.pl-15-at-small.mr-sm-2(type='search' placeholder='Search' aria-label='Search').border-danger
       button.btn.btn-outline-secondary.my-2.my-sm-0.disabled(type='button') Search
