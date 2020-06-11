@@ -71,15 +71,6 @@ module.exports = env => {
             loader: 'css-loader',
           },
           {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: isDevelopment,
-              config: {
-                path: './config/postcss.config.js'
-              }
-            }
-          },
-          {
             loader: 'resolve-url-loader'
           },
           {
@@ -117,9 +108,12 @@ module.exports = env => {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [
-          'file-loader',
-        ],
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: "fonts/[name].[ext]"
+          }
+        },
       }
 
       ]

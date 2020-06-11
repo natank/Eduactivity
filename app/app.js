@@ -124,6 +124,7 @@ const generalMW = (function (app) {
   app.set('views', path.join(__dirname, "../src/views"))
 
   app.use(express.static(path.join(__dirname, '../dist')));
+  app.use(express.static(path.join(__dirname, '../fonts')));
   // const expressStaticGzip = require("express-static-gzip");
   // app.use("/", expressStaticGzip(path.join(__dirname, '../dist'), { enableBrotli: true }));
 })(app)

@@ -72,15 +72,6 @@ module.exports = {
         isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
         'css-loader',
         {
-          loader: 'postcss-loader',
-          options: {
-            sourceMap: isDevelopment,
-            config: {
-              path: './config/postcss.config.js'
-            }
-          }
-        },
-        {
           loader: 'resolve-url-loader'
         },
         {
