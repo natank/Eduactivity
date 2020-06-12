@@ -4,8 +4,8 @@ An online shop for digital products (e.g. printables)
 link to this app on heroku : https://arcane-cove-36976.herokuapp.com/
 
 ## How to use this site
-### You may sign up with any email address. No email validation is currently required.
-### Orders may be taken using a Stripe test card number e.g. 4242 4242 4242 4242 & dummy data.
+* You may sign up with any email address. No email validation is currently required.
+* Orders may be taken using a Stripe test card number e.g. 4242 4242 4242 4242 & dummy data.
 
 ## Roles
 * guest user - can browse the site products
