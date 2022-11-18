@@ -34,7 +34,7 @@
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-url": "^8.0.0",
-    "resolve-url-loader": "^3.1.1",
+    "resolve-url-loader": "^5.0.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.2"
@@ -80,7 +80,7 @@
     "pug": "^2.0.4",
     "pug-loader": "^2.4.0",
     "stripe": "^7.14.0",
-    "webpack-cli": "^3.3.9",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.9.0",
     "webpack-hot-middleware": "^2.25.0"
